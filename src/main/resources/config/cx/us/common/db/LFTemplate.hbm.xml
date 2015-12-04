@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.citigroup.liquifi.entities">
+  <class name="com.citigroup.liquifi.entities.LFTemplate" table = "LFTemplate">
+   		<id name ="templateName" type="java.lang.String" column = "TemplateName">
+        </id> 
+        <property name="appName" type="java.lang.String" column = "AppName"/>
+        <property name="msgType" type="java.lang.String" column = "MsgType"/>
+        <property name="msgTemplate" type="java.lang.String" column = "MsgTemplate"/>
+        <property name="description" type="java.lang.String" column = "Description"/>
+        <property name="commonOverwriteTagListName" type="java.lang.String" column = "CommonOverwriteTagListName"/>
+        <property name="isInput" type="java.lang.Character" column = "IsInput"/>
+  </class>
+</hibernate-mapping>

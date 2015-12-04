@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="brokerFactory" class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory">
+		<property name="initiatorBrokerMapping">
+			<map>
+				<entry key="AutoPilot.To.TotalTouch.Order">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="A-B" value="LIQFI.IOIORDER.INBOUND.P1" />
+								<entry key="C-D" value="LIQFI.IOIORDER.INBOUND.P2" />
+								<entry key="E-G" value="LIQFI.IOIORDER.INBOUND.P3" />
+								<entry key="H-K" value="UAT.US.INBOUND.TO.TTAUTOPILOT" />
+								<entry key="L-N" value="LIQFI.IOIORDER.INBOUND.P5" />
+								<entry key="O-R" value="LIQFI.IOIORDER.INBOUND.P6" />
+								<entry key="S-T" value="LIQFI.IOIORDER.INBOUND.P7" />
+								<entry key="U-Z" value="LIQFI.IOIORDER.INBOUND.P8" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.Brazil.TotalTouch.Order">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="A-B" value="UAT.US.AutoPilot.To.Brazil.TT.Order.P1" />
+								<entry key="C-D" value="UAT.US.AutoPilot.To.Brazil.TT.Order.P2" />
+								<entry key="E-G" value="UAT.US.AutoPilot.To.Brazil.TT.Order.P3" />
+								<entry key="H-K" value="UAT.US.AutoPilot.To.Brazil.TT.Order.P4" />
+								<entry key="L-N" value="UAT.US.AutoPilot.To.Brazil.TT.Order.P5" />
+								<entry key="O-R" value="UAT.US.AutoPilot.To.Brazil.TT.Order.P6" />
+								<entry key="S-T" value="UAT.US.AutoPilot.To.Brazil.TT.Order.P7" />
+								<entry key="U-Z" value="UAT.US.AutoPilot.To.Brazil.TT.Order.P8" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.TotalTouch.Admin">
+					<bean class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="A-B" value="UAT.US.ADMININBOUND.P1" />
+								<entry key="C-D" value="UAT.US.ADMININBOUND.P2" />
+								<entry key="E-G" value="UAT.US.ADMININBOUND.P3" />
+								<entry key="H-K" value="UAT.US.ADMININBOUND.P4" />
+								<entry key="L-N" value="UAT.US.ADMININBOUND.P5" />
+								<entry key="O-R" value="UAT.US.ADMININBOUND.P6" />
+								<entry key="S-T" value="UAT.US.ADMININBOUND.P7" />
+								<entry key="U-Z" value="UAT.US.ADMININBOUND.P8" />
+							</map>
+						</property>
+						<property name="replyAcceptor" value="TotalTouch.To.AutoPilot" />
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.XSVC.Heartbeat">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="UAT.US.XSVCHB.TO.TT" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+
+		<property name="acceptorBrokerMapping">
+			<map>
+				<entry key="TotalTouch.To.Comet">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.TO.COMET1" />
+								<entry key="I" value="UAT.US.TT.TO.COMET2" />
+								<entry key="J" value="UAT.US.TT.TO.COMET3" />
+								<entry key="K" value="UAT.US.TT.TO.COMET4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.QDMA">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.TO.QFF1" />
+								<entry key="I" value="UAT.US.TT.TO.QFF2" />
+								<entry key="J" value="UAT.US.TT.TO.QFF3" />
+								<entry key="K" value="UAT.US.TT.TO.QFF4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				
+				<entry key="TotalTouch.To.ARES">
+						<bean
+							class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+							<property name="brokerURL" value="${Dev23.Url}" />
+							<property name="user" value="${Dev23.User}" />
+							<property name="password" value="${Dev23.Password}" />
+							<property name="setup">
+									<map>
+										<entry key="H" value="UAT.US.TT.TO.AUTOPILOT.ARES.1" />
+										<entry key="I" value="UAT.US.TT.TO.AUTOPILOT.ARES.2" />
+										<entry key="J" value="UAT.US.TT.TO.AUTOPILOT.ARES.3" />
+										<entry key="K" value="UAT.US.TT.TO.AUTOPILOT.ARES.4" />
+									</map>
+								</property>
+						</bean>
+				</entry>
+				
+				<entry key="TotalTouch.To.CRB">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.TO.DUMMY.CRB.1" />
+								<entry key="I" value="UAT.US.TT.TO.DUMMY.CRB.2" />
+								<entry key="J" value="UAT.US.TT.TO.DUMMY.CRB.3" />
+								<entry key="K" value="UAT.US.TT.TO.DUMMY.CRB.4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				
+				<entry key="TotalTouch.To.RFQ">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.TO.RFQ1" />
+								<entry key="I" value="UAT.US.TT.TO.RFQ2" />
+								<entry key="J" value="UAT.US.TT.TO.RFQ3" />
+								<entry key="K" value="UAT.US.TT.TO.RFQ4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.IOI">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.TO.IOI1" />
+								<entry key="I" value="UAT.US.TT.TO.IOI2" />
+								<entry key="J" value="UAT.US.TT.TO.IOI3" />
+								<entry key="K" value="UAT.US.TT.TO.IOI4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.CitiSmart">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.TO.CSA1" />
+								<entry key="I" value="UAT.US.TT.TO.CSA2" />
+								<entry key="J" value="UAT.US.TT.TO.CSA3" />
+								<entry key="K" value="UAT.US.TT.TO.CSA4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.RIO">
+						<bean
+							class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+							<property name="brokerURL" value="${Dev23.Url}" />
+							<property name="user" value="${Dev23.User}" />
+							<property name="password" value="${Dev23.Password}" />
+							<property name="setup">
+								<map>
+									<entry key="H" value="UAT.US.TT.TO.RIO.AUTOPILOT1" />
+									<entry key="I" value="UAT.US.TT.TO.RIO.AUTOPILOT2" />
+									<entry key="J" value="UAT.US.TT.TO.RIO.AUTOPILOT3" />
+									<entry key="K" value="UAT.US.TT.TO.RIO.AUTOPILOT4" />
+								</map>
+							</property>
+						</bean>
+				</entry>
+				<entry key="TotalTouch.To.PE">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.TO.PE1" />
+								<entry key="I" value="UAT.US.TT.TO.PE2" />
+								<entry key="J" value="UAT.US.TT.TO.PE3" />
+								<entry key="K" value="UAT.US.TT.TO.PE4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.XSVC">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.TO.XSVC1" />
+								<entry key="I" value="UAT.US.TT.TO.XSVC2" />
+								<entry key="J" value="UAT.US.TT.TO.XSVC3" />
+								<entry key="K" value="UAT.US.TT.TO.XSVC4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.LiqFi">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.TO.AEE.P1" />
+								<entry key="I" value="UAT.US.TT.TO.AEE.P2" />
+								<entry key="J" value="UAT.US.TT.TO.AEE.P3" />
+								<entry key="K" value="UAT.US.TT.TO.AEE.P4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.DPM">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.TO.DPM1" />
+								<entry key="I" value="UAT.US.TT.TO.DPM2" />
+								<entry key="J" value="UAT.US.TT.TO.DPM3" />
+								<entry key="K" value="UAT.US.TT.TO.DPM4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.AutoPilot">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="IOI.TO.ADMINGUI" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.Thor">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.TO.DUMMY.THOR.1" />
+								<entry key="I" value="UAT.US.TT.TO.DUMMY.THOR.2" />
+								<entry key="J" value="UAT.US.TT.TO.DUMMY.THOR.3" />
+								<entry key="K" value="UAT.US.TT.TO.DUMMY.THOR.4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.CTRS">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="A-B" value="UAT.US.TT.RIO.TO.CTRS.1" />
+								<entry key="C-D" value="UAT.US.TT.RIO.TO.CTRS.2" />
+								<entry key="E-G" value="UAT.US.TT.RIO.TO.CTRS.3" />
+								<entry key="H-K" value="UAT.US.TT.RIO.TO.CTRS.4" />								
+								<entry key="L-N" value="UAT.US.TT.RIO.TO.CTRS.5" />
+								<entry key="O-R" value="UAT.US.TT.RIO.TO.CTRS.6" />
+								<entry key="S-T" value="UAT.US.TT.RIO.TO.CTRS.7" />
+								<entry key="U-Z" value="UAT.US.TT.RIO.TO.CTRS.8" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.ACT">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="UAT.US.TT.RIO.TO.CTRS.AUTOPILOT1" />
+								<entry key="I" value="UAT.US.TT.RIO.TO.CTRS.AUTOPILOT2" />
+								<entry key="J" value="UAT.US.TT.RIO.TO.CTRS.AUTOPILOT3" />
+								<entry key="K" value="UAT.US.TT.RIO.TO.CTRS.AUTOPILOT4" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.ThorOrder">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev23.Url}" />
+						<property name="user" value="${Dev23.User}" />
+						<property name="password" value="${Dev23.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="H" value="AEETT_TO_THOR_AUTOPILOT1" />
+								<entry key="I" value="AEETT_TO_THOR_AUTOPILOT2" />
+								<entry key="J" value="AEETT_TO_THOR_AUTOPILOT3" />
+								<entry key="K" value="AEETT_TO_THOR_AUTOPILOT4" />								
+							</map>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+		
+		<!-- used if 49 is set, but 50 isn't -->
+		<property name="senderSubIDMapping">
+			<map>
+				<entry key ="COMET">
+					<map>
+						<entry key="A-Z" value="CASH_COES_INSTANCE15"/>
+					</map>
+				</entry>
+				<entry key ="QFF">
+					<map>
+						<entry key="A-Z" value="QFFIOIX2"/>
+					</map>
+				</entry>
+ 			</map>
+		</property>
+
+		
+		
+		<!-- DEAD CONFIG -->
+		<property name='senderCompID' value="NA" /> 
+		<property name='senderSubID' value="NA" />
+	</bean>
+
+	<bean id="socketFactory" class="com.citigroup.liquifi.autopilot.messaging.AutoPilotSocketConnectionFactory">
+		<property name="socketList">
+			<list>
+				<bean
+					class="com.citigroup.liquifi.autopilot.messaging.SocketConnectionInfo">
+					<property name="host" value="eqliqap1d.eur.nsroot.net" />
+					<property name="port" value="18000" />
+					<property name="socketID" value="TOBtoAutoPilot" />
+				</bean>
+			</list>
+		</property>
+
+		<property name="sockets">
+			<list>
+				<bean class="com.citigroup.liquifi.autopilot.socket.PMMSocket">
+					<property name="host" value="localhost" />
+					<property name="port" value="18102" />
+					<property name="outbound" value="LiqFiToATDSocket" />
+					<property name="inbound" value="AutoPilotToLiqFiATDSocket" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

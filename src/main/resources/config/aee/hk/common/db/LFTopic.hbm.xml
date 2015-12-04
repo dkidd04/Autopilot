@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.citigroup.liquifi.entities">
+
+    <class name="com.citigroup.liquifi.entities.LFTopic" table="LFTopic">
+        <id name ="topicID" type="java.lang.String" column="TopicID">
+       </id> 
+      
+        <property name="topicName" type="java.lang.String" column = "TopicName"/>
+        <property name="brokerName" type="java.lang.String" column = "BrokerName"/>
+        <property name="description" type="java.lang.String" column = "Description"/>
+        <property name="active" type="java.lang.Character" column = "Active"/>
+    </class>
+
+</hibernate-mapping>

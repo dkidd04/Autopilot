@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+ "http://www.springframework.org/dtd/spring-beans.dtd">
+ 
+<beans>
+
+	<!-- GUI Beans   -->
+    <bean id = "templatePanel" class = "com.citigroup.liquifi.autopilot.gui.InputTemplatePanel" singleton ="true"/>
+    <bean id = "inputCommonOverwriteTagPanel" class = "com.citigroup.liquifi.autopilot.gui.InputCommonOverwriteTagPanel" singleton ="true"/>
+    <bean id = "inputStepPanel" class = "com.citigroup.liquifi.autopilot.gui.InputStepPanel" singleton ="true"/>
+    <bean id = "outputStepPanel" class = "com.citigroup.liquifi.autopilot.gui.OutputStepPanel" singleton ="true"/>
+    <bean id = "testcasePanel" class = "com.citigroup.liquifi.autopilot.gui.InputTestCasePanel" singleton ="true"/>
+    <bean id = "testRunPanel" class = "com.citigroup.liquifi.autopilot.gui.TestRunPanel" singleton ="true"/>
+    <bean id = "messagePanel" class = "com.citigroup.liquifi.autopilot.gui.MessagePanel" singleton ="true"/>
+    <bean id = "mainPanel" class = "com.citigroup.liquifi.autopilot.gui.MainPanel" singleton ="true"/>
+    <bean id = "resultPanel" class = "com.citigroup.liquifi.autopilot.gui.TestResultPanel" singleton ="true"/>
+
+
+    <!--  TableModel Beans -->
+    <bean id = "outputStepTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.OutputStepTableModel" singleton ="true"/>
+    <bean id = "inputStepTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.InputStepTableModel" singleton ="true"/>
+    <bean id = "inputTagTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.TagTableModel" singleton ="true"/>
+    <bean id = "outputTagTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.TagTableModel" singleton ="true"/>
+    <bean id = "validationTagTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.TagTableModel" singleton ="true"/>
+    <bean id = "validationTemplateTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.TagTableModel" singleton ="true"/>
+    <bean id = "topicManagerTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.TopicManagerTableModel" singleton ="true"/>
+    <bean id = "repeatingGroupTagTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.RepeatingGroupTableModel" singleton ="true"/>
+    <bean id = "messageTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.MessageTableModel" singleton ="false"/>
+    <bean id = "outputValidationModel" class = "com.citigroup.liquifi.autopilot.gui.model.OutputValidationModel" singleton ="true"/>
+    <bean id = "securityTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.SecurityTableModel" singleton ="true">
+    	<constructor-arg value ="SecurityClass, Symbol"/>
+    </bean>
+
+    <bean id = "systemTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.PropertyTableModel" singleton ="true">
+		<constructor-arg value ="Property, Value"/>
+    </bean>
+    <bean id = "commonTagTableModel" class = "com.citigroup.liquifi.autopilot.gui.model.CommonTagTableModel" singleton ="true"/>    
+    
+    <!--  Helper Beans -->
+    <bean id = "testcaseHelper" class = "com.citigroup.liquifi.autopilot.helper.TestCaseHelper" singleton ="true"/>
+    <bean id = "xmlFactory" class = "com.citigroup.liquifi.autopilot.message.XStreamXMLFactory" singleton ="true"/>
+    <bean id = "fixFactory" class = "com.citigroup.liquifi.autopilot.message.FIXFactory" singleton = "true"/>
+    <bean id = "idGenerator" class = "com.citigroup.liquifi.util.UniqueIdGenerator" singleton ="true"/>
+    <bean id = "placeHolder" class = "com.citigroup.liquifi.autopilot.util.PlaceHolders" singleton = "true">
+		<constructor-arg><ref bean="idGenerator"/></constructor-arg>
+    </bean>  
+    
+    <bean id = "propertyConfigurer"  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    	<property name="locations">
+    		<list>
+    			<value>classpath:AutoPilotConfig.properties</value>
+    			<value>classpath:${env}/${env}.properties</value>
+    		</list>
+    	</property>
+    </bean>
+    
+    <import resource="config.xml"/>
+    
+    <bean id="clock" class="com.citigroup.liquifi.clock.SystemTimePassThroughClock" lazy-init="true" />
+    
+</beans>

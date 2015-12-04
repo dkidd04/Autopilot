@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AutoPilotValidationResult>
+ <Property Name="TestCaseID" Value="TC-001" />
+ <Property Name="Symbol" Value="DECC" />
+ <Property Name="ValidationResultStatus" Value="true" />
+ <Property Name="ValidationResultMsg" Value="" />
+ <Property Name="FailedInputStep" Value="0" />
+ <Property Name="FailedOutputMsgID" Value="0" />
+ <ActualInputMsgList>
+  <InputStep Step="1" Msg="&lt;AdminOrderRequest&gt;&lt;Symbol&gt;DELL&lt;/Symbol&gt;&lt;OrderIDs &gt;&lt;/OrderIDs &gt;&lt;UserID&gt;AutoPilot&lt;/UserID&gt;&lt;AdminRequestID&gt;5&lt;/AdminRequestID&gt;&lt;/AdminOrderRequest&gt;" Topic="AEE.ADMIN.INBOUND.P3" Msgtype="XML" />
+  <InputStep Step="2" Msg="8=FIX.4.411042=159=044=9.035=D34=5284=111=APCLORDID-b89761b238=200.021=310083=AEGIS10015=LAVA1=FLIP12349212=110080=20081007-22:44:00.55110005=640=252=20081007-22:44:00.55154=160=20081007-22:44:00.551100=LAVA528=A10=00055=DECC49=GATE50=WIND" Topic="AEE.ORDER.INBOUND.P3" Msgtype="FixMsg" />
+  <InputStep Step="3" Msg="8=FIX.4.459=0115=X113=W57=AEE356=X17=035=818=139=020=0150=0109=CITI_ALP55038=U60=20081007-22:44:00.566143=X49=X11088=;29=41=SBSH30=NASD-1=0826278hbi0#032=0.010021=LAVA31=0.0-3=X52=20081007-22:44:00.56611=082819324e4#037=082819324e438=200.040=244=9.054=155=DECC10=00049=GATE50=WIND" Topic="AEE.ORDER.INBOUND.P3" Msgtype="FixMsg" />
+  <InputStep Step="4" Msg="8=FIX.4.435=F779=20081007-22:44:00.645-33=11=APCLORDID-3382d39a10014=20081007-22:44:00.64510080=20081007-22:44:00.645-2=-1=41=APCLORDID-b89761b252=20081007-22:44:00.64560=20081007-22:44:00.64575=200809181=FLIP123438=200.040=244=9.049=GATE50=WIND54=155=DECC59=0100=LAVA528=A10005=610015=LAVA10083=AEGIS10=000" Topic="AEE.ORDER.INBOUND.P3" Msgtype="FixMsg" />
+  <InputStep Step="5" Msg="8=FIX.4.4143=X35=817=05034=X39=429=420=0150=4-2=X30=X-1=X-3=X52=20081007-22:44:00.66060=20081007-22:44:00.6761=FLIP123411=082819324s037=082819324e438=200.040=241=sp0828193240844=9.054=155=DECC59=0100=LAVA528=A10=00049=GATE50=WIND" Topic="AEE.ORDER.INBOUND.P3" Msgtype="FixMsg" />
+  <InputStep Step="6" Msg="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;AdminOrderRequest&gt;
+ &lt;Symbol&gt;Test&lt;/Symbol&gt;
+ &lt;OrderIDs /&gt;
+ &lt;UserID&gt;AutoPilot&lt;/UserID&gt;
+ &lt;AdminRequestID&gt;7&lt;/AdminRequestID&gt;
+ &lt;Properties&gt;
+  &lt;Property Name=&quot;Pause&quot; Value=&quot;1&quot; Type=&quot;java.lang.Boolean&quot; /&gt;
+ &lt;/Properties&gt;
+&lt;/AdminOrderRequest&gt;
+" Topic="AEE.ORDER.INBOUND.P3" Msgtype="CONTROL" />
+ </ActualInputMsgList>
+ <OriginalInboundMsgList>
+  <OutputStep Step="1" />
+  <OutputStep Step="2">
+   <OutputMsg Msg="8=FIX.4.49=23035=849=AEE56=GATE50=AEE357=WIND52=20081008-02:44:00.421122=20081008-02:44:00.42139=054=16=0.011=APCLORDID-b89761b214=0.017=LIQ082819323mc150=032=0.0151=200.037=082819323mc55=DECC60=20081008-02:44:00.42138=200.010=000" Topic="AEEToWind" MsgID="0" />
+   <OutputMsg Msg="8=FIX.4.49=32135=D49=GATE56=XSvc50=AEE360=20081008-02:44:00.42254=1-15=;LP:2;-1=082819324e4#01=FLIP123411=082819324e4#037=082819324e438=200.011042=140=244=9.09212=055=DECC59=0100=LAVA11053=082819323mc528=A10005=610015=LAVA10030=NASD10042=A10075=0132=10.0133=12.0134=11.0135=13.010083=QAEE10085=CITI_ALU110=000" Topic="AEEToXSVCLAVACust" MsgID="0" />
+  </OutputStep>
+  <OutputStep Step="3" />
+  <OutputStep Step="4">
+   <OutputMsg Msg="8=FIX.4.49=24635=F49=GATE56=XSvc50=AEE340=260=20081008-02:44:00.52210075=054=1-2=082819324e4#0-1=082819324e4#21=FLIP123411=082819324s037=082819324e438=200.0528=A44=9.055=DECC59=0100=LAVA41=sp0828193240810015=LAVA10083=QAEE10085=CITI_ALU110=000" Topic="AEEToXSVCLAVACust" MsgID="0" />
+  </OutputStep>
+  <OutputStep Step="5">
+   <OutputMsg Msg="8=FIX.4.49=25335=849=AEE56=GATE50=AEE357=WIND52=20081008-02:44:00.542122=20081008-02:44:00.54239=454=111=APCLORDID-3382d39a14=0.017=LIQ082819323mc150=432=0.0151=200.037=082819323mc41=APCLORDID-b89761b255=DECC60=20081008-02:44:00.54238=200.044=9.010=000" Topic="AEEToWind" MsgID="0" />
+  </OutputStep>
+  <OutputStep Step="6" />
+ </OriginalInboundMsgList>
+ <ExpectedOutputStepList>
+  <OutputStep Step="1" />
+  <OutputStep Step="2">
+   <OutputMsg Msg="8=FIX.4.4150=0151=@ISSET58=@ISNOTSET35=839=!=111=APCLORDID-b89761b210=000" Topic="AEEToWind" MsgID="1" />
+   <OutputMsg Msg="8=FIX.4.435=D10=000" Topic="AEEToXSVCLAVACust" MsgID="2" />
+  </OutputStep>
+  <OutputStep Step="3" />
+  <OutputStep Step="4">
+   <OutputMsg Msg="8=FIX.4.435=F10=000" Topic="AEEToXSVCLAVACust" MsgID="1" />
+  </OutputStep>
+  <OutputStep Step="5" />
+  <OutputStep Step="6" />
+ </ExpectedOutputStepList>
+ <ActualOutputStepList>
+  <OutputStep Step="1" />
+  <OutputStep Step="2">
+   <OutputMsg Msg="8=FIX.4.49=23035=849=AEE56=GATE50=AEE357=WIND52=20081008-02:44:00.421122=20081008-02:44:00.42139=054=16=0.011=APCLORDID-b89761b214=0.017=LIQ082819323mc150=032=0.0151=200.037=082819323mc55=DECC60=20081008-02:44:00.42138=200.010=000" Topic="AEEToWind" MsgID="1" />
+   <OutputMsg Msg="8=FIX.4.49=32135=D49=GATE56=XSvc50=AEE360=20081008-02:44:00.42254=1-15=;LP:2;-1=082819324e4#01=FLIP123411=082819324e4#037=082819324e438=200.011042=140=244=9.09212=055=DECC59=0100=LAVA11053=082819323mc528=A10005=610015=LAVA10030=NASD10042=A10075=0132=10.0133=12.0134=11.0135=13.010083=QAEE10085=CITI_ALU110=000" Topic="AEEToXSVCLAVACust" MsgID="2" />
+  </OutputStep>
+  <OutputStep Step="3" />
+  <OutputStep Step="4">
+   <OutputMsg Msg="8=FIX.4.49=24635=F49=GATE56=XSvc50=AEE340=260=20081008-02:44:00.52210075=054=1-2=082819324e4#0-1=082819324e4#21=FLIP123411=082819324s037=082819324e438=200.0528=A44=9.055=DECC59=0100=LAVA41=sp0828193240810015=LAVA10083=QAEE10085=CITI_ALU110=000" Topic="AEEToXSVCLAVACust" MsgID="1" />
+  </OutputStep>
+  <OutputStep Step="5" />
+  <OutputStep Step="6" />
+ </ActualOutputStepList>
+</AutoPilotValidationResult>

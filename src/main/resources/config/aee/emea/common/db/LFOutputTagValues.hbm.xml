@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.citigroup.liquifi.entities.LFOutputTag" table="LFOutputTagValues">  
+        <composite-id>
+    	    <key-property name="testID" column = "TestID"/>
+        	<key-property name="actionSequence" column = "ActionSequence"/>
+        	<key-property name="outputMsgID" column = "OutputMsgID"/>
+        	<key-property name="tagID" column = "TagID"/>
+    	</composite-id>
+        
+        <property name="tagValue" column = "ExpectedTagValue"/>
+    </class>
+</hibernate-mapping>

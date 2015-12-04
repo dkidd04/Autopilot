@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id ="autoPilotBenchmarkConfig" class = "com.citigroup.liquifi.autopilot.helper.AutoPilotBenchmarkConfiguration">
+		
+		<property name="benchmarkCriteria" value = " where Active = 'Y' AND AppName = 'TOTALTOUCH' AND TestID = 2456026630277 "/>
+		<property name="warmupCriteria" value = " where Active = 'Y' AND AppName = 'TOTALTOUCH' AND TestID = 2456616525613 "/>
+		<property name="initBookCriteria" value = " where Active = 'Y' AND AppName = 'TOTALTOUCH' AND TestID = 2456629552905 "/>
+		<property name="securityClass" value ="1" />
+		<property name="benchmarkSymbolList" value = "5" />
+		<property name="warmUpMessages" value = "100" />
+		<property name="warmUpPause" value ="500" />
+		<property name="messageRate" value ="500" />
+	</bean>
+</beans>

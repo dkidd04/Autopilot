@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.citigroup.liquifi.entities">
+  <class name="com.citigroup.liquifi.entities.LFLabel" table = "LFLabel">
+  	<id name ="labelID" type = "java.lang.String" column ="LabelID">
+  	</id>
+    <property name="appName" column="AppName"/>
+    <property name="label" column="Label"/>
+    <property name="region" column="Region"/>
+  	<set name="testcases" table="LFLabelToTestcase" lazy="true" >
+    	<key column="LabelID"/>
+        <many-to-many column="TestID" class="com.citigroup.liquifi.entities.LFTestCase"/>
+  	</set>
+  </class>
+</hibernate-mapping>

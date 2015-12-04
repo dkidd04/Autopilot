@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="brokerFactory" class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory">
+		<property name="initiatorBrokerMapping">
+			<map>
+				<entry key="AutoPilot.To.TotalTouch.Order">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev.Url}" />
+						<property name="user" value="${Dev.User}" />
+						<property name="password" value="${Dev.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="0-9" value="DEV.HK.SRC.TO.TT.P1" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.TotalTouch.Admin">
+					<bean class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev.Url}" />
+						<property name="user" value="${Dev.User}" />
+						<property name="password" value="${Dev.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="0-9" value="DEV.HK.ADM.TO.TT.P1" />
+							</map>
+						</property>
+						<!-- <property name="replyAcceptor" value="TotalTouch.To.AutoPilot" /> -->
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.TotalTouch.Config">
+					<bean class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev.Url}" />
+						<property name="user" value="${Dev.User}" />
+						<property name="password" value="${Dev.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="0-9" value="DEV.HK.CFG.TO.TT.P1" />
+							</map>
+						</property>
+						<!-- <property name="replyAcceptor" value="TotalTouch.To.AutoPilot" /> -->
+					</bean>
+				</entry>
+			</map>
+		</property>
+
+		<property name="acceptorBrokerMapping">
+			<map>
+				<entry key="TotalTouch.To.Autopilot.Client">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev.Url}" />
+						<property name="user" value="${Dev.User}" />
+						<property name="password" value="${Dev.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="0-9" value="DEV.HK.TT.TO.AEGIS.P1" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.Autopilot.Venue">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev.Url}" />
+						<property name="user" value="${Dev.User}" />
+						<property name="password" value="${Dev.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="0-9" value="DEV.HK.TT.TO.DEST.P1" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.Autopilot.IOI">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev.Url}" />
+						<property name="user" value="${Dev.User}" />
+						<property name="password" value="${Dev.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="0-9" value="DEV.HK.TT.TO.IOI.P1" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.Autopilot">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev.Url}" />
+						<property name="user" value="${Dev.User}" />
+						<property name="password" value="${Dev.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="0-9" value="DEV.HK.AEE.TO.AUTOPILOT1" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+		
+		<!-- used if 49 is set, but 50 isn't -->
+		<property name="senderSubIDMapping">
+			<map>
+				<entry key ="COMET">
+					<map>
+						<entry key="A-Z" value="CASH_COES_INSTANCE15"/>
+					</map>
+				</entry>
+				<entry key ="QFF">
+					<map>
+						<entry key="A-Z" value="QFFIOIX2"/>
+					</map>
+				</entry>
+ 			</map>
+		</property>
+
+		<!-- DEAD CONFIG -->
+		<property name='senderCompID' value="NA" /> 
+		<property name='senderSubID' value="NA" />
+	</bean>
+
+	<bean id="socketFactory" class="com.citigroup.liquifi.autopilot.messaging.AutoPilotSocketConnectionFactory">
+		<property name="socketList">
+			<list>
+				<bean
+					class="com.citigroup.liquifi.autopilot.messaging.SocketConnectionInfo">
+					<property name="host" value="eqliqap1d.eur.nsroot.net" />
+					<property name="port" value="18000" />
+					<property name="socketID" value="TOBtoAutoPilot" />
+				</bean>
+			</list>
+		</property>
+
+		<property name="sockets">
+			<list>
+				<bean class="com.citigroup.liquifi.autopilot.socket.PMMSocket">
+					<property name="host" value="localhost" />
+					<property name="port" value="18102" />
+					<property name="outbound" value="LiqFiToATDSocket" />
+					<property name="inbound" value="AutoPilotToLiqFiATDSocket" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

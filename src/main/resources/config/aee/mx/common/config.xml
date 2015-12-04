@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id ="autoPilotConfig" class = "com.citigroup.liquifi.autopilot.helper.AutoPilotConfiguration">
+		<!-- Defines default step for each test case -->
+		<property name="defaultInputStep">
+			<list>
+				<bean class = "com.citigroup.liquifi.entities.LFTestInputSteps">
+					<property name= "actionSequence" value="1"/>
+					<property name= "template" value ="A_DELETE_BOOK"/>
+					<property name= "msgType" value ="XML"/>
+					<property name= "useOutputMsg" value ="N"/>
+					<property name= "topicID" value ="AutoPilot.To.RPI.Admin"/>
+				</bean>
+			</list>
+		</property>
+
+		<!-- defines default symbol to be use by each security class and per instance-->
+		<property name="defaultSymbolMap">
+			<map>
+				<entry key = "1" value = "[1=MXP225611567|2=MXP680051218]" />
+				<entry key = "2" value = "[1=MXP225611567|2=MXP680051218]" />
+				<entry key = "3" value = "[1=MXP225611567|2=MXP680051218]" />
+				<entry key = "4" value = "[1=MXP225611567|2=MXP680051218]" />
+				<entry key = "5" value = "[1=MXP225611567|2=MXP680051218]" />
+			</map>	
+		</property>
+		
+		<property name="debug" value = "false"/>
+		<property name="validateTimeout" value = "5000"/>
+		<property name="serverModeTestCaseQuery" value = " where Active = 'Y' and  TestID ='2454807800324' "/>
+		<property name="defaultSecurityClass" value ="1" />
+		<property name="orderTestcases" value ="name" />
+		<property name="highlightedTags" value = "35;150;32;44;38;14;151;" />
+		<property name="completenessCheck" value = "true" />
+		<property name ="queryCriteria" value = "TestID,Category,Name,Description,AppName,Region,ReleaseNum,JiraNum" />
+		<property name="overwriteSendCompSubIDBasedOnConfig" value = "false"/> <!-- do not forceably overwrite -->
+	</bean>
+</beans>

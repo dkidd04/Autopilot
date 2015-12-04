@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AutoPilotCommonEnv>
+	<ApplictionList>
+		<Property Name="TOTALTOUCH" AppID="35318"/>
+		<Property Name="AEE" AppID="35318"/>
+		<Property Name="CX" AppID="35318"/>
+		<Property Name="RATES" AppID="35318"/>
+		<Property Name="TTIOI" AppID="35318"/>
+		<Property Name="TTETF" AppID="35318"/>
+	</ApplictionList>
+	<RegionList>
+		<Property Name="US"/>
+		<Property Name="EMEA"/>
+		<Property Name="HK"/>
+		<Property Name="JPN"/>
+		<Property Name="MX"/>
+	</RegionList>
+	<EnvList>
+		<Property Name="DEV"/>
+		<Property Name="CI"/>
+		<Property Name="PACE"/>
+		<Property Name="QA"/>
+		<Property Name="Lab"/>
+	</EnvList>
+</AutoPilotCommonEnv>

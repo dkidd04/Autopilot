@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.citigroup.liquifi.entities.LFTestInputSteps" table="LFTestInputSteps">
+    	<composite-id>
+    	    <key-property name="testID" column = "TestID"/>
+        	<key-property name="actionSequence" column = "ActionSequence"/>
+    	</composite-id>
+    	
+        <property name="template" column = "Template"/>
+        <property name="message" column = "Message"/>
+        <property name="msgType" column = "MsgType"/>
+        <property name="useOutputMsg" column = "UseOutputMsg"/>
+        <property name="outputMsgID" column = "OutputMsgID"/>
+        <property name="topicID" column = "TopicID"/>
+        <property name="commonTags" column ="CommonTags" />
+        <property name="comments" column = "Comments" />
+		<property name="childrenOutputSteps" column = "ChildrenOutputSteps" />
+        
+        <bag name = "inputTagsValueList" inverse = "true"  lazy="false" cascade="save-update,all-delete-orphan">
+        	<key>
+        		<column name = "TestID"/>
+        		<column name = "ActionSequence"/>
+        	</key>
+        	<one-to-many class = "com.citigroup.liquifi.entities.LFTag"/>
+        </bag>
+        
+         <bag name = "outputStepList" inverse = "true" lazy="false" cascade="save-update,all-delete-orphan">
+        	<key>
+        		<column name = "TestID"/>
+        		<column name = "ActionSequence"/>
+        	</key>
+        	<one-to-many class = "com.citigroup.liquifi.entities.LFOutputMsg"/>
+        </bag>     
+        
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,164 @@
+CREATE TABLE LFActions ( 
+	ActionName   	varchar(50) NOT NULL,
+	ActionDetails	varchar(255) NOT NULL,
+	MsgTemplate  	varchar(1500) NULL 
+	);
+CREATE TABLE LFAppName ( 
+	AppName	varchar(50) NOT NULL 
+	);
+CREATE TABLE LFBrokerInfo ( 
+	BrokerName     	varchar(20) NOT NULL,
+	BrokerURL      	varchar(255) NOT NULL,
+	EncryptedUserID	varchar(255) NOT NULL,
+	EncryptedPass  	varchar(255) NOT NULL,
+	Active         	char(1) NOT NULL,
+	Comments       	varchar(255) NOT NULL 
+	);
+CREATE TABLE LFCategory ( 
+	Category	varchar(50) NOT NULL 
+	);
+CREATE TABLE LFCommonOverwriteTag ( 
+	AppName                   	varchar(20) NOT NULL,
+	CommonOverwriteTagListName	varchar(255) NOT NULL,
+	TagID                     	varchar(10) NOT NULL DEFAULT ((0)),
+	TagValue                  	varchar(255) NOT NULL,
+	IsFunction                	char(1) NULL,
+	IsSmartTagEntry           	char(1) NULL 
+	);
+CREATE TABLE LFInputTagValues ( 
+	TestID        	varchar(20) NOT NULL,
+	ActionSequence	int NOT NULL,
+	InputTagValue 	varchar(255) NOT NULL,
+	IsFunction    	char(1) NULL,
+	TagID         	varchar(30) NOT NULL DEFAULT ((0)) 
+	);
+CREATE TABLE LFLabel ( 
+	Label  	varchar(50) NOT NULL,
+	AppName	varchar(50) NOT NULL,
+	Region 	varchar(50) NOT NULL,
+	LabelID	varchar(20) NOT NULL 
+	);
+CREATE TABLE LFLabelToTestcase ( 
+	TestID 	varchar(20) NOT NULL,
+	LabelID	varchar(20) NOT NULL 
+	);
+CREATE TABLE LFOutputMsg ( 
+	OutputMsgID        	int NOT NULL,
+	TestID             	varchar(20) NOT NULL,
+	ActionSequence     	int NOT NULL,
+	Template           	varchar(255) NULL,
+	OutputMsg          	varchar(1500) NULL,
+	TopicID            	varchar(255) NOT NULL,
+	CustValidationClass	varchar(1500) NULL,
+	CommonTags         	varchar(255) NULL,
+	ChildrenOutputSteps	varchar(50) NULL,
+	ParentRefStep      	varchar(10) NULL,
+	ParentPlaceHolder  	varchar(20) NULL 
+	);
+CREATE TABLE LFOutputTagValues ( 
+	TestID          	varchar(20) NOT NULL,
+	ActionSequence  	int NOT NULL,
+	OutputMsgID     	int NOT NULL,
+	TagID           	varchar(50) NOT NULL,
+	ExpectedTagValue	varchar(255) NOT NULL 
+	);
+CREATE TABLE LFTemplate ( 
+	AppName                   	varchar(20) NOT NULL,
+	TemplateName              	varchar(255) NOT NULL,
+	MsgType                   	varchar(255) NOT NULL,
+	MsgTemplate               	text NOT NULL,
+	Description               	varchar(255) NOT NULL,
+	IsInput                   	char(1) NULL,
+	CommonOverwriteTagListName	varchar(255) NULL 
+	);
+CREATE TABLE LFTestCase ( 
+	TestID        	varchar(20) NOT NULL,
+	Category      	varchar(50) NOT NULL,
+	Description   	varchar(255) NOT NULL,
+	AppName       	varchar(50) NOT NULL DEFAULT ('US'),
+	Region        	varchar(50) NOT NULL DEFAULT ('US'),
+	ReleaseNum    	varchar(50) NOT NULL DEFAULT ('2.2'),
+	Active        	char(1) NOT NULL DEFAULT ('y'),
+	SecurityClass 	int NOT NULL,
+	Name          	varchar(50) NULL,
+	LastModifiedBy	varchar(20) NULL 
+	);
+CREATE TABLE LFTestInputSteps ( 
+	TestID             	varchar(20) NOT NULL,
+	ActionSequence     	int NOT NULL,
+	Template           	varchar(255) NULL,
+	Message            	text NULL,
+	MsgType            	varchar(20) NULL,
+	UseOutputMsg       	char(1) NULL,
+	OutputMsgID        	varchar(10) NULL,
+	TopicID            	varchar(50) NULL,
+	CommonTags         	varchar(255) NULL,
+	Comments           	text NULL,
+	ChildrenOutputSteps	varchar(50) NULL 
+	);
+CREATE TABLE LFTestOutcome ( 
+	TestID                	varchar(20) NOT NULL,
+	LastActivityUserID    	varchar(50) NOT NULL DEFAULT (user_name()),
+	ValidationTimestamp   	datetime NOT NULL DEFAULT (getdate()),
+	Symbol                	varchar(20) NOT NULL,
+	ValidationResultStatus	varchar(20) NOT NULL,
+	ValidationObjectDetail	text NOT NULL,
+	ValidationResultMsg   	text NOT NULL,
+	FailedInputStep       	int NOT NULL,
+	FailedOutputMsgID     	int NOT NULL,
+	Comments              	varchar(255) NOT NULL,
+	TestingBroker         	varchar(255) NOT NULL 
+	);
+CREATE TABLE LFTopic ( 
+	BrokerName 	varchar(20) NOT NULL,
+	TopicName  	varchar(255) NOT NULL,
+	Description	varchar(50) NOT NULL,
+	Active     	char(1) NOT NULL,
+	TopicID    	varchar(100) NOT NULL 
+	);
+
+ALTER TABLE LFActions
+	ADD CONSTRAINT LFActions_Action_12612475482
+	PRIMARY KEY (ActionName);
+ALTER TABLE LFBrokerInfo
+	ADD CONSTRAINT LFBrokerIn_Broker_12932476622
+	PRIMARY KEY (BrokerName);
+ALTER TABLE LFCommonOverwriteTag
+	ADD CONSTRAINT LFCommonOv_1468155852
+	PRIMARY KEY (AppName, CommonOverwriteTagListName, TagID);
+ALTER TABLE LFInputTagValues
+	ADD CONSTRAINT LFInputTag_1697676622
+	PRIMARY KEY (ActionSequence, TagID, TestID);
+ALTER TABLE LFLabel
+	ADD CONSTRAINT pk
+	PRIMARY KEY (LabelID);
+ALTER TABLE LFOutputMsg
+	ADD CONSTRAINT LFOutputMs_Output_14372481752
+	PRIMARY KEY (ActionSequence, OutputMsgID, TestID);
+ALTER TABLE LFOutputTagValues
+	ADD CONSTRAINT PRIMARY_KEY
+	PRIMARY KEY (ActionSequence, OutputMsgID, TagID, TestID);
+ALTER TABLE LFTemplate
+	ADD CONSTRAINT LFInputTem_737673201
+	PRIMARY KEY (TemplateName);
+ALTER TABLE LFTestCase
+	ADD CONSTRAINT LFAutomate_TestID_11492471492
+	PRIMARY KEY (TestID);
+ALTER TABLE LFTestInputSteps
+	ADD CONSTRAINT lftis_pk
+	PRIMARY KEY (ActionSequence, TestID);
+ALTER TABLE LFTopic
+	ADD CONSTRAINT LFTopic_PrimaryKey
+	PRIMARY KEY (TopicID);
+ALTER TABLE LFLabelToTestcase
+	ADD CONSTRAINT fk
+	FOREIGN KEY(LabelID)
+	REFERENCES dbo.LFLabel(LabelID)
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION ;
+ALTER TABLE LFTopic
+	ADD CONSTRAINT LFTopic_1405248061
+	FOREIGN KEY(BrokerName)
+	REFERENCES dbo.LFBrokerInfo(BrokerName)
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION ;

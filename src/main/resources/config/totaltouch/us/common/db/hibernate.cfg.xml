@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+<!--        <property name="hibernate.connection.driver_class">com.sybase.jdbc3.jdbc.SybDriver</property>-->
+<!--        <property name="hibernate.connection.password">aeeprod2011</property>-->
+<!--        <property name="hibernate.connection.url">jdbc:sybase:Tds:169.193.68.138:4081/US_ACCOUNTS_2</property>-->
+<!--        <property name="hibernate.connection.username">aeeprod</property>-->
+<!--       	<property name="hibernate.connection.autocommit">true</property>-->
+<!--        <property name="hibernate.dialect">org.hibernate.dialect.SybaseDialect</property>-->
+
+    	<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="hibernate.connection.password">abc123</property>
+        <property name="hibernate.connection.url">jdbc:sqlserver://EQTLAB02.nam.nsroot.net:2431;databaseName=LIQUIFI_AUTOPILOT</property>
+        <property name="hibernate.connection.username">aeeprod</property>
+        <property name="hibernate.connection.autocommit">true</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+    	
+    	<mapping resource = "LFBrokerInfo.hbm.xml"/>
+    	<mapping resource = "LFTemplate.hbm.xml"/>
+    	<mapping resource = "LFTopic.hbm.xml"/>
+    	<mapping resource = "LFTestInputSteps.hbm.xml"/>
+    	<mapping resource = "LFInputTagValues.hbm.xml"/>
+    	<mapping resource = "LFOutputMsg.hbm.xml"/>
+    	<mapping resource = "LFOutputTagValues.hbm.xml"/>
+    	<mapping resource = "LFTestCase.hbm.xml"/>
+    	<mapping resource = "LFAppName.hbm.xml"/>
+    	<mapping resource = "LFCategory.hbm.xml"/>
+		<mapping resource = "LFTestOutcome.hbm.xml"/>
+		<mapping resource = "LFCommonOverwriteTag.hbm.xml"/>
+		<mapping resource = "LFLabel.hbm.xml"/>
+		<mapping resource = "LFStepLinkEntry.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>

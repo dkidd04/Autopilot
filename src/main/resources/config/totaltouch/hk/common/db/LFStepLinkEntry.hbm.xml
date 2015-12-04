@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.citigroup.liquifi.entities">
+  <class name="com.citigroup.liquifi.entities.LFStepLinkEntry" table = "LFStepLinkEntry">
+  		<composite-id>
+    	    <key-property name="testID" column = "TestID"/>
+        	<key-property name="linkedInputStepNum" column = "LinkedInputStepNum"/>
+        	<key-property name="outputMsgID" column = "OutputMsgID"/>
+        	<key-property name="apVar" column = "APVAR"/>
+    	</composite-id>
+    	<property name="actionSequence" column="ActionSequence"/>
+  </class>
+</hibernate-mapping>

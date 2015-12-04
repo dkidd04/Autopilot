@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id ="brokerFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory">
+		<property name="initiatorBrokerMapping">
+			<map>
+				<entry key ="AutoPilotToLiqFi">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-B" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="C" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="D" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="E" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="F" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="G-H" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="I-J" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="K-L" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="M" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="N-O" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="P-Q" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="R" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="S" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="T" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="U-W" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+								<entry key="X-Z" value="DEV.US.AUTOPILOT.TO.TTIOI"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+				<entry key ="AutoPilotToLiqFiAdmin">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-B" value="CX.ADMIN.INBOUND.P1"/>
+								<entry key="C" value="CX.ADMIN.INBOUND.P2"/>
+								<entry key="D" value="CX.ADMIN.INBOUND.P3"/>
+								<entry key="E" value="CX.ADMIN.INBOUND.P4"/>
+								<entry key="F" value="CX.ADMIN.INBOUND.P5"/>
+								<entry key="G-H" value="CX.ADMIN.INBOUND.P6"/>
+								<entry key="I-J" value="CX.ADMIN.INBOUND.P7"/>
+								<entry key="K-L" value="CX.ADMIN.INBOUND.P8"/>
+								<entry key="M" value="CX.ADMIN.INBOUND.P9"/>
+								<entry key="N-O" value="CX.ADMIN.INBOUND.P10"/>
+								<entry key="P-Q" value="CX.ADMIN.INBOUND.P11"/>
+								<entry key="R" value="CX.ADMIN.INBOUND.P12"/>
+								<entry key="S" value="CX.ADMIN.INBOUND.P13"/>
+								<entry key="T" value="CX.ADMIN.INBOUND.P14"/>
+								<entry key="U-W" value="CX.ADMIN.INBOUND.P15"/>
+								<entry key="X-Z" value="CX.ADMIN.INBOUND.P16"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+ 			</map>
+		</property>
+
+		<property name="acceptorBrokerMapping">
+			<map>
+				<entry key ="LiqFiToAutoPilot">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.INBOUNDBROKER.URL}"/>
+						<property name="user" value="${TOPIC.INBOUNDBROKER.USER}"/>
+						<property name="password" value="${TOPIC.INBOUNDBROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="${AUTOPILOT.INBOUND.TOPIC}"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="LiqFiToEXCH">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${XSVC.BROKER.URL}"/>
+						<property name="user" value="${XSVC.BROKER.USER}"/>
+						<property name="password" value="${XSVC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="${XSVC.INBOUND.TOPIC}${instance}"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+ 			</map>
+		</property>
+		<property name='senderCompID' value="${SENDERCOMPID}"></property>
+		<property name='senderSubID' value="${SENDERCOMPID}${instance}"></property>		
+	</bean>
+	
+	<bean id ="socketFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotSocketConnectionFactory">
+		<property name="socketList">
+			<list> 
+				<bean class = "com.citigroup.liquifi.autopilot.messaging.SocketConnectionInfo">
+					<property name="host" value="eqliqap1d.eur.nsroot.net"/>
+					<property name="port" value="18000"/>
+					<property name="socketID" value="TOBtoAutoPilot"/>
+				</bean>
+			</list>
+		</property>
+
+		<property name="sockets">
+			<list> 
+				<bean class = "com.citigroup.liquifi.autopilot.socket.PMMSocket">
+					<property name="host" value="localhost"/>
+					<property name="port" value="18102"/>
+					<property name="outbound" value="LiqFiToATDSocket"/>
+					<property name="inbound" value="AutoPilotToLiqFiATDSocket"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

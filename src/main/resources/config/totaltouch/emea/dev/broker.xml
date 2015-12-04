@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id ="brokerFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory">
+		<property name="initiatorBrokerMapping">
+			<map>
+				<entry key ="AutoPilotToSmartDCA">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${SMARTDCA_TOPIC.BROKER.URL}"/>
+						<property name="user" value="${SMARTDCA_TOPIC.BROKER.USER}"/>
+						<property name="password" value="${SMARTDCA_TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="TOTALTOUCH.ORDER.INBOUND.P1"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+ 				<entry key="AutoPilot.To.TotalTouch.Order">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TT_TOPIC.BROKER.URL}" />
+						<property name="user" value="${TT_TOPIC.BROKER.USER}" />
+						<property name="password" value="${TT_TOPIC.BROKER.PASSWORD}" />
+						<property name="defaultTopic" value="true" />
+						<property name="setup">
+							<map>
+								<entry key=".-B" value="TT.IOIORDER.INBOUND.P1" />
+								<entry key="C-D" value="TT.IOIORDER.INBOUND.P2" />
+								<entry key="E-G" value="TT.IOIORDER.INBOUND.P3" />
+								<entry key="H-K" value="TT.IOIORDER.INBOUND.P4" />
+								<entry key="L-N" value="TT.IOIORDER.INBOUND.P5" />
+								<entry key="O-R" value="TT.IOIORDER.INBOUND.P6" />
+								<entry key="S-T" value="TT.IOIORDER.INBOUND.P7" />
+								<entry key="U-Z" value="TT.IOIORDER.INBOUND.P8" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+ 				<entry key="AutoPilot.To.TotalTouch.Admin">
+					<bean class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TT_TOPIC.BROKER.URL}" />
+						<property name="user" value="${TT_TOPIC.BROKER.USER}" />
+						<property name="password" value="${TT_TOPIC.BROKER.PASSWORD}" />
+						<property name="setup">
+							<map>
+								<entry key=".-B" value="TT.IOI.ADMIN.INBOUND.P1" />
+								<entry key="C-D" value="TT.IOI.ADMIN.INBOUND.P2" />
+								<entry key="E-G" value="TT.IOI.ADMIN.INBOUND.P3" />
+								<entry key="H-K" value="TT.IOI.ADMIN.INBOUND.P4" />
+								<entry key="L-N" value="TT.IOI.ADMIN.INBOUND.P5" />
+								<entry key="O-R" value="TT.IOI.ADMIN.INBOUND.P6" />
+								<entry key="S-T" value="TT.IOI.ADMIN.INBOUND.P7" />
+								<entry key="U-Z" value="TT.IOI.ADMIN.INBOUND.P8" />
+							</map>
+						</property>
+						<property name="replyAcceptor" value="TotalTouch.To.AutoPilot" />
+					</bean>
+				</entry>
+				
+ 			</map>	
+		</property>
+
+		<property name="acceptorBrokerMapping">
+			<map>
+				<entry key="TotalTouch.To.AutoPilot">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TT_TOPIC.BROKER.URL}" />
+						<property name="user" value="${TT_TOPIC.BROKER.USER}" />
+						<property name="password" value="${TT_TOPIC.BROKER.PASSWORD}" />
+						<property name="setup"> 
+							<map>
+								<entry key=".-Z" value="TT.IOI.TO.QFF.P1" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TotalTouch.To.GIOI"> 
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TT_TOPIC.BROKER.URL}" />
+						<property name="user" value="${TT_TOPIC.BROKER.USER}" />
+						<property name="password" value="${TT_TOPIC.BROKER.PASSWORD}" />
+						<property name="setup">
+							<map>						
+								<entry key=".-Z" value="TTIOI.IOI.INBOUND.P1" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+
+				<entry key="TotalTouch.To.QFF">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TT_TOPIC.BROKER.URL}" />
+						<property name="user" value="${TT_TOPIC.BROKER.USER}" />
+						<property name="password" value="${TT_TOPIC.BROKER.PASSWORD}" />
+						<property name="setup">
+							<map>
+								<entry key=".-Z" value="TT.IOI.TO.QFF.P1" />
+							</map>
+						</property>
+					</bean>
+				</entry>	
+ 			</map>
+		</property>		
+	</bean>
+	
+	<bean id ="socketFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotSocketConnectionFactory">
+		<property name="socketList">
+			<list> 
+				<bean class = "com.citigroup.liquifi.autopilot.messaging.SocketConnectionInfo">
+					<property name="host" value="169.186.226.77"/>
+					<property name="port" value="18000"/>
+					<property name="socketID" value="TOBtoAutoPilot"/>
+				</bean>
+			</list>
+		</property>
+
+		<property name="sockets">
+			<list> 
+			<!--
+				<bean class = "com.citigroup.liquifi.autopilot.socket.PMMSocket">
+					<property name="host" value="localhost"/>
+					<property name="port" value="18102"/>
+					<property name="outbound" value="LiqFiToATDSocket"/>
+					<property name="inbound" value="AutoPilotToLiqFiATDSocket"/>
+				</bean>
+			-->
+			</list>
+		</property>
+	</bean>
+
+</beans>

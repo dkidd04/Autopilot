@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="brokerFactory" class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory">
+		<!-- AutoPilot to RPI -->
+		<property name="initiatorBrokerMapping">
+			<map>
+				<entry key="AutoPilot.To.RPI.OrderLibro"> 
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Libro.Url}" />
+						<property name="user" value="${Libro.User}" />
+						<property name="password" value="${Libro.Password}" />
+						<property name="brokerType" value="${Libro.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="T.OH.TO.CM.LIBRO" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.RPI.OrderMesa">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Mesa.Url}" />
+						<property name="user" value="${Mesa.User}" />
+						<property name="password" value="${Mesa.Password}" />
+						<property name="brokerType" value="${Mesa.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="T.OH.TO.CM.MESA" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.RPI.OrderDMA">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${DMA.Url}" />
+						<property name="user" value="${DMA.User}" />
+						<property name="password" value="${DMA.Password}" />
+						<property name="brokerType" value="${DMA.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="T.OH.TO.CM.DMA" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.RPI.OrderOMS">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${OMS.Url}" />
+						<property name="user" value="${OMS.User}" />
+						<property name="password" value="${OMS.Password}" />
+						<property name="brokerType" value="${OMS.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="T.OMS.CM.APPETITE.ORDER.INPUT" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.RPI.OrderCS">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${CS.Url}" />
+						<property name="user" value="${CS.User}" />
+						<property name="password" value="${CS.Password}" />
+						<property name="brokerType" value="${CS.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="AEE.ORDER.INBOUND.P2" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.RPI.Admin">
+					<bean class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Admin.Url}" />
+						<property name="user" value="${Admin.User}" />
+						<property name="password" value="${Admin.Password}" />
+						<property name="brokerType" value="${Admin.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="AEE.ADMIN.INBOUND.P2" />
+							</map>
+						</property>
+						<property name="replyAcceptor" value="RPI.To.AutoPilot" />
+					</bean>
+				</entry> 
+				<entry key="AutoPilot.To.RPI.Config">
+					<bean class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Config.Url}" />
+						<property name="user" value="${Config.User}" />
+						<property name="password" value="${Config.Password}" />
+						<property name="brokerType" value="${Config.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="AEE.CONFIG.INBOUND.P2" />
+							</map>
+						</property>
+						<property name="replyAcceptor" value="RPI.To.AutoPilot" />
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.RPI.MarketDataQuote">
+					<bean class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${MarketData.Url}" />
+						<property name="user" value="${MarketData.User}" />
+						<property name="password" value="${MarketData.Password}" />
+						<property name="brokerType" value="${MarketData.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="ACCIVAL.MX.BMV.POSTURAS_CAPITALES" />
+								<entry key="L-Z" value="ACCIVAL.MX.BMV.POSTURAS_CAPITALES" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.RPI.MarketDataTrade">
+					<bean class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${MarketData.Url}" />
+						<property name="user" value="${MarketData.User}" />
+						<property name="password" value="${MarketData.Password}" />
+						<property name="brokerType" value="${MarketData.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="ACCIVAL.MX.BMV.PRECIO_MONITOR" />
+								<entry key="L-Z" value="ACCIVAL.MX.BMV.PRECIO_MONITOR" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+
+		<property name="acceptorBrokerMapping">
+			<map>
+				<entry key="RPI.To.OMS">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${OMS.Url}" />
+						<property name="user" value="${OMS.User}" />
+						<property name="password" value="${OMS.Password}" />
+						<property name="brokerType" value="${OMS.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="T.CM.OMS.APPETITE.ORDER.OUTPUT" />
+								<entry key="L-Z" value="T.CM.OMS.APPETITE.ORDER.OUTPUT" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="RPI.To.CS">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${CS.Url}" />
+						<property name="user" value="${CS.User}" />
+						<property name="password" value="${CS.Password}" />
+						<property name="brokerType" value="${CS.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="T.CM.TO.CS" />
+								<entry key="L-Z" value="T.CM.TO.CS" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				
+				<entry key="RPI.To.Allocation.Mesa">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Mesa.Url}" />
+						<property name="user" value="${Mesa.User}" />
+						<property name="password" value="${Mesa.Password}" />
+						<property name="brokerType" value="${Mesa.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="T.CM.TO.CMB.DB.MESA" />
+								<entry key="L-Z" value="T.CM.TO.CMB.DB.MESA" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="RPI.To.BMV.Mesa">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Mesa.Url}" />
+						<property name="user" value="${Mesa.User}" />
+						<property name="password" value="${Mesa.Password}" />
+						<property name="brokerType" value="${Mesa.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="T.CM.TO.CMB.MESA" />
+								<entry key="L-Z" value="T.CM.TO.CMB.MESA" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="RPI.To.OrderHandler.Mesa">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Mesa.Url}" />
+						<property name="user" value="${Mesa.User}" />
+						<property name="password" value="${Mesa.Password}" />
+						<property name="brokerType" value="${Mesa.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="T.CM.TO.OH.MESA" />
+								<entry key="L-Z" value="T.CM.TO.OH.MESA" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+
+				<entry key="RPI.To.Allocation.Libro">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Libro.Url}" />
+						<property name="user" value="${Libro.User}" />
+						<property name="password" value="${Libro.Password}" />
+						<property name="brokerType" value="${Libro.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="T.CM.TO.CMB.DB.LIBRO" />
+								<entry key="L-Z" value="T.CM.TO.CMB.DB.LIBRO" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="RPI.To.BMV.Libro">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Libro.Url}" />
+						<property name="user" value="${Libro.User}" />
+						<property name="password" value="${Libro.Password}" />
+						<property name="brokerType" value="${Libro.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="T.CM.TO.CMB.LIBRO" />
+								<entry key="L-Z" value="T.CM.TO.CMB.LIBRO" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="RPI.To.OrderHandler.Libro">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Libro.Url}" />
+						<property name="user" value="${Libro.User}" />
+						<property name="password" value="${Libro.Password}" />
+						<property name="brokerType" value="${Libro.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="T.CM.TO.OH.LIBRO" />
+								<entry key="L-Z" value="T.CM.TO.OH.LIBRO" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				
+				<entry key="RPI.To.Allocation.DMA">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${DMA.Url}" />
+						<property name="user" value="${DMA.User}" />
+						<property name="password" value="${DMA.Password}" />
+						<property name="brokerType" value="${DMA.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="T.CM.TO.CMB.DB.DMA" />
+								<entry key="L-Z" value="T.CM.TO.CMB.DB.DMA" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="RPI.To.BMV.DMA">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${DMA.Url}" />
+						<property name="user" value="${DMA.User}" />
+						<property name="password" value="${DMA.Password}" />
+						<property name="brokerType" value="${DMA.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="T.CM.TO.CMB.DMA" />
+								<entry key="L-Z" value="T.CM.TO.CMB.DMA" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="RPI.To.OrderHandler.DMA">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${DMA.Url}" />
+						<property name="user" value="${DMA.User}" />
+						<property name="password" value="${DMA.Password}" />
+						<property name="brokerType" value="${DMA.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-K" value="T.CM.TO.OH.DMA" />
+								<entry key="L-Z" value="T.CM.TO.OH.DMA" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				
+				<entry key="RPI.To.RIO">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev.Url}" />
+						<property name="user" value="${Dev.User}" />
+						<property name="password" value="${Dev.Password}" />
+						<property name="brokerType" value="${Dev.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="MX.LQFI.DIST.P1" />
+								<!-- 
+								<entry key="L-Z" value="MX.LQFI.DIST.P2" />
+								 -->
+							</map>
+						</property>
+					</bean>
+				</entry>
+				
+				<entry key="RPI.To.AutoPilot">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${Dev.Url}" />
+						<property name="user" value="${Dev.User}" />
+						<property name="password" value="${Dev.Password}" />
+						<property name="brokerType" value="${Dev.BrokerType}" />
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="RPI.TO.ADMINGUI" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				
+			</map>
+		</property>
+		
+		<!-- used if 49 is set, but 50 isn't -->
+		<property name="senderSubIDMapping">
+			<map>
+				<entry key ="COMET">
+					<map>
+						<entry key="A-Z" value="CASH_COES_INSTANCE15"/>
+					</map>
+				</entry>
+				<entry key ="QFF">
+					<map>
+						<entry key="A-Z" value="QFFIOIX2"/>
+					</map>
+				</entry>
+ 			</map>
+		</property>
+
+		<!-- DEAD CONFIG -->
+		<property name='senderCompID' value="NA" /> 
+		<property name='senderSubID' value="NA" />
+	</bean>
+
+	<bean id="socketFactory" class="com.citigroup.liquifi.autopilot.messaging.AutoPilotSocketConnectionFactory">
+		<property name="socketList">
+			<list>
+				<bean
+					class="com.citigroup.liquifi.autopilot.messaging.SocketConnectionInfo">
+					<property name="host" value="eqliqap1d.eur.nsroot.net" />
+					<property name="port" value="18000" />
+					<property name="socketID" value="TOBtoAutoPilot" />
+				</bean>
+			</list>
+		</property>
+
+		<property name="sockets">
+			<list>
+				<bean class="com.citigroup.liquifi.autopilot.socket.PMMSocket">
+					<property name="host" value="localhost" />
+					<property name="port" value="18102" />
+					<property name="outbound" value="LiqFiToATDSocket" />
+					<property name="inbound" value="AutoPilotToLiqFiATDSocket" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

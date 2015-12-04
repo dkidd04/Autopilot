@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="brokerFactory" class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory">
+		<property name="initiatorBrokerMapping">
+			<map>
+				<entry key="AutoPilot.To.TTETF">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${AEE.Url}" />
+						<property name="user" value="${AEE.User}" />
+						<property name="password" value="${AEE.Password}" />
+						<property name="defaultTopic" value="true" />
+						<property name="setup">
+							<map>
+								<entry key="A-O" value="TTETF.INBOUND.P1" />
+								<entry key="P-Z" value="TTETF.INBOUND.P2" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="AutoPilot.To.TTETF.Admin">
+					<bean class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${AEE.Url}" />
+						<property name="user" value="${AEE.User}" />
+						<property name="password" value="${AEE.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="A-O" value="TTETF.ADMIN.INBOUND.P1" />
+								<entry key="P-Z" value="TTETF.ADMIN.INBOUND.P2" />
+							</map>
+						</property>
+						<property name="replyAcceptor" value="TTETF.To.AutoPilot" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+
+		<property name="acceptorBrokerMapping">
+			<map>
+				<entry key="TTETF.To.CitiSmart">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${AEE.Url}" />
+						<property name="user" value="${AEE.User}" />
+						<property name="password" value="${AEE.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="A-O" value="DEV.US.TTETF.TO.DUMMY.CSA.1" />
+								<entry key="P-Z" value="DEV.US.TTETF.TO.DUMMY.CSA.2" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TTETF.To.RIO">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${AEE.Url}" />
+						<property name="user" value="${AEE.User}" />
+						<property name="password" value="${AEE.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="A-O" value="DEV.US.TTETF.TO.DUMMY.RIO.1" />
+								<entry key="P-Z" value="DEV.US.TTETF.TO.DUMMY.RIO.2" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TTETF.To.DPM">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${AEE.Url}" />
+						<property name="user" value="${AEE.User}" />
+						<property name="password" value="${AEE.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="A-O" value="DEV.US.TTETF.TO.DUMMY.DPM.1" />
+								<entry key="P-Z" value="DEV.US.TTETF.TO.DUMMY.DPM.2" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TTETF.To.AutoPilot">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${AEE.Url}" />
+						<property name="user" value="${AEE.User}" />
+						<property name="password" value="${AEE.Password}" />
+						<property name="setup">
+							<map>
+								<entry key="A-O" value="DEV.US.TTETF.TO.AUTOPILOT.1" />
+								<entry key="P-Z" value="DEV.US.TTETF.TO.AUTOPILOT.2" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

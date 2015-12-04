@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id ="brokerFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory">
+		<property name="initiatorBrokerMapping">
+			<map>
+				<entry key ="AutoPilotToLiqFi">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="EU.LIQUIFI.PACE.INST1.ORDER"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+				<entry key ="AutoPilotToLiqFiAdmin">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKERADMIN.URL}"/>
+						<property name="user" value="${TOPIC.BROKERADMIN.USER}"/>
+						<property name="password" value="${TOPIC.BROKERADMIN.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="EU.LIQUIFI.PACE.ADMINGUITOCORE.P1"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+ 			</map>	
+		</property>
+
+		<!-- used if 49 is set, but 50 isn't -->
+		<property name="senderSubIDMapping">
+			<map>
+				<entry key ="CS">
+					<map>
+						<entry key="A-G" value="CS_C1S1"/>
+						<entry key="H-M" value="CS_C2S1"/>
+						<entry key="N-U" value="CS_C3S1"/>
+						<entry key="V-Z" value="CS_C4S1"/>
+					</map>
+				</entry>
+				<entry key ="QFF">
+					<map>
+						<entry key="A-Z" value="QFFC_UKDEV_C1P"/>
+					</map>
+				</entry>
+				<entry key ="ATD">
+					<map>
+						<entry key="A-Z" value="ATD_1"/>
+					</map>
+				</entry>
+				<entry key ="EDTS">
+					<map>
+						<entry key="A-Z" value="LQFI_EDTS_C1S1"/>
+					</map>
+				</entry>
+ 			</map>
+		</property>
+
+
+		<property name="acceptorBrokerMapping">
+			<map>
+				<entry key ="LiqFiToCS">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-G" value="EU.LIQUIFITOCS.P1"/>
+								<entry key="H-M" value="EU.LIQUIFITOCS.P2"/>
+								<entry key="N-U" value="EU.LIQUIFITOCS.P3"/>
+								<entry key="V-Z" value="EU.LIQUIFITOCS.P4"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="LiqFiToQFF">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="EU.LIQUIFITOCLIENTCONNECTIVITY.P3"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="LiqFiToSOR">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-G" value="EU.LIQUIFITOGATE.P1"/>
+								<entry key="H-M" value="EU.LIQUIFITOGATE.P2"/>
+								<entry key="N-U" value="EU.LIQUIFITOGATE.P3"/>
+								<entry key="V-Z" value="EU.LIQUIFITOGATE.P4"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="LiqFiToATD">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="EU.LIQUIFITOPTMS.P1"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="LiqFiToGate">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="EU.LIQUIFITOGATE.P1"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="LiqFiToBOF">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-G" value="EU.LIQUIFITOGATE.P3"/>
+								<entry key="H-Z" value="EU.LIQUIFITOGATE.P4"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+ 			</map>
+		</property>
+
+		<!-- only used if 49 and 50 are missing -->
+		<property name='senderCompID' value='CS'></property>
+		<property name='senderSubID' value='CS_C2S1'></property>		
+	</bean>
+
+	<bean id ="socketFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotSocketConnectionFactory">
+		<property name="socketList">
+			<list> 
+				<bean class = "com.citigroup.liquifi.autopilot.messaging.SocketConnectionInfo">
+					<property name="host" value="169.186.226.77"/>
+					<property name="port" value="18000"/>
+					<property name="socketID" value="TOBtoAutoPilot"/>
+				</bean>
+			</list>
+		</property>
+
+		<property name="sockets">
+			<list> 
+				<bean class = "com.citigroup.liquifi.autopilot.socket.PMMSocket">
+					<property name="host" value="169.186.233.69"/>
+					<property name="port" value="18101"/>
+					<property name="outbound" value="LiqFiToATDSocket"/>
+					<property name="inbound" value="AutoPilotToLiqFiATDSocket"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

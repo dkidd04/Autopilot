@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.citigroup.liquifi.entities">
+
+    <class name="com.citigroup.liquifi.entities.LFCommonOverwriteTag" table="LFCommonOverwriteTag">
+    	<composite-id>
+    	    <key-property name="appName" column = "AppName"/>
+        	<key-property name="commonOverwriteTagListName" column = "CommonOverwriteTagListName"/>
+        	<key-property name="tagID" column = "TagID"/>
+    	</composite-id>
+        <property name="tagValue" column = "TagValue"/>
+		<!-- 
+        <property name="isFunction" column = "isFunction"/>
+		 -->
+
+    </class>
+
+</hibernate-mapping>
