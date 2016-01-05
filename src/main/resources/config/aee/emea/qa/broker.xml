@@ -115,14 +115,23 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-G" value="EU.LIQUIFITOGATE.P1"/>
-								<entry key="H-M" value="EU.LIQUIFITOGATE.P2"/>
-								<entry key="N-U" value="EU.LIQUIFITOGATE.P3"/>
-								<entry key="V-Z" value="EU.LIQUIFITOGATE.P4"/>
+								<entry key="A-Z" value="EU.LIQUIFI.DUMMY.CB2"/>								
 							</map>
 						</property>
  					</bean>
 				</entry>
+				<entry key ="LiqFiToCB2">
+                    <bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+                        <property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+                        <property name="user" value="${TOPIC.BROKER.USER}"/>
+                        <property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+                        <property name="setup">
+                            <map>
+                                <entry key="A-Z" value="EU.LIQUIFI.DUMMY.CB2"/>                             
+                            </map>
+                        </property>
+                    </bean>
+                </entry>
 				<entry key ="LiqFiToATD">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
 						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
