@@ -38,10 +38,10 @@
 						<property name="password" value="${TOPIC.BROKERADMIN.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-G" value="EU.LIQUIFI.ADMINGUITOCORE.P1"/>
-								<entry key="H-M" value="EU.LIQUIFI.ADMINGUITOCORE.P2"/>
+								<entry key="A-Z" value="EU.LIQUIFI.ADMINGUITOCORE.P1"/>
+								<!-- <entry key="H-M" value="EU.LIQUIFI.ADMINGUITOCORE.P2"/>
 								<entry key="N-U" value="EU.LIQUIFI.ADMINGUITOCORE.P3"/>
-								<entry key="V-Z" value="EU.LIQUIFI.ADMINGUITOCORE.P4"/>
+								<entry key="V-Z" value="EU.LIQUIFI.ADMINGUITOCORE.P4"/> -->
 							</map>
 						</property>
  					</bean>
@@ -115,14 +115,23 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-G" value="EU.LIQUIFITOGATE.P1"/>
-								<entry key="H-M" value="EU.LIQUIFITOGATE.P2"/>
-								<entry key="N-U" value="EU.LIQUIFITOGATE.P3"/>
-								<entry key="V-Z" value="EU.LIQUIFITOGATE.P4"/>
+								<entry key="A-Z" value="EU.LIQUIFI.DUMMY.CB2"/>								
 							</map>
 						</property>
  					</bean>
 				</entry>
+				<entry key ="LiqFiToCB2">
+                    <bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+                        <property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+                        <property name="user" value="${TOPIC.BROKER.USER}"/>
+                        <property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+                        <property name="setup">
+                            <map>
+                                <entry key="A-Z" value="EU.LIQUIFI.DUMMY.CB2"/>                             
+                            </map>
+                        </property>
+                    </bean>
+                </entry>
 				<entry key ="LiqFiToATD">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
 						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
@@ -149,13 +158,15 @@
 				</entry>
 				<entry key ="LiqFiToBOF">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
-						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
-						<property name="user" value="${TOPIC.BROKER.USER}"/>
-						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="brokerURL" value="${TOPIC.BOFBROKER.URL}"/>
+						<property name="user" value="${TOPIC.BOFBROKER.USER}"/>
+						<property name="password" value="${TOPIC.BOFBROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-G" value="EU.LIQUIFITOGATE.P3"/>
-								<entry key="H-Z" value="EU.LIQUIFITOGATE.P4"/>
+								<entry key="0-B" value="EU.LIQUIFITOSTP.TRADE.1"/>
+								<entry key="C-F" value="EU.LIQUIFITOSTP.TRADE.2"/>
+								<entry key="G-J" value="EU.LIQUIFITOSTP.TRADE.3"/>
+								<entry key="K-Z" value="EU.LIQUIFITOSTP.TRADE.4"/>
 							</map>
 						</property>
  					</bean>
