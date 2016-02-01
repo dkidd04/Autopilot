@@ -85,5 +85,7 @@
 	<classpathentry kind="lib" path="lib/spring-web.jar"/>
 	<classpathentry kind="lib" path="lib/tibrvj.jar"/>
 	<classpathentry kind="lib" path="lib/tibrvnativesd.jar"/>
+	<classpathentry kind="lib" path="lib/EccpressoFIPS.jar"/>
+	<classpathentry kind="lib" path="lib/EccpressoFIPSJca.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
