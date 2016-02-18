@@ -10,8 +10,8 @@
         <property name="hibernate.connection.username">zeusdev</property>
        	<property name="hibernate.connection.autocommit">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.SybaseDialect</property>
-    	<property name="hibernate.ENCRYPT_PASSWORD">true</property>
-    	<property name="hibernate.DJCE_PROVIDER_CLASS">com.certicom.ecc.jcae.Certicom</property>
+    	<property name="hibernate.connection.ENCRYPT_PASSWORD">true</property>
+    	<property name="hibernate.connection.DJCE_PROVIDER_CLASS">com.certicom.ecc.jcae.Certicom</property>
     	
     	<mapping resource = "LFBrokerInfo.hbm.xml"/>
     	<mapping resource = "LFTemplate.hbm.xml"/>
