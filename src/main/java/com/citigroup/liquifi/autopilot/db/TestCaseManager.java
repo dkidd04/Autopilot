@@ -2,24 +2,21 @@ package com.citigroup.liquifi.autopilot.db;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.ReplicationMode;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.citigroup.liquifi.autopilot.bootstrap.ApplicationContext;
-import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.entities.LFLabel;
 import com.citigroup.liquifi.entities.LFTestCase;
-import com.citigroup.liquifi.util.DBUtil;
 
 public class TestCaseManager {
 	private Session session;
@@ -41,16 +38,12 @@ public class TestCaseManager {
 			session.clear();
 			session.save(testcase);
 			session.flush();
-			// session.refresh(testcase);
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
 			throw e;
 		}
-		// finally{
-		// session.close();
-		// }
 
 	}
 
@@ -71,7 +64,6 @@ public class TestCaseManager {
 
 			throw new Exception(e);
 		} finally {
-			// session.close();
 		}
 	}
 
@@ -87,9 +79,6 @@ public class TestCaseManager {
 				tx.rollback();
 			throw e;
 		}
-		// finally{
-		// session.close();
-		// }
 	}
 
 	public Session getSession() {
@@ -115,23 +104,23 @@ public class TestCaseManager {
 		List<String> tCaseIDList = new ArrayList<String>();
 
 		try {
-		Query q = session.createQuery("FROM LFTestCase " + criteria);
-
+			SQLQuery q = session.createSQLQuery(criteria);
+			q.addEntity(LFTestCase.class);
 			if (q.list().size() > 0) {
 				tcList = q.list();
 
 				for (Object tCase : tcList) {
 					tCaseIDList.add(((LFTestCase) tCase).getTestID());
 				}
-				
+
 				if (tCaseIDList != null && tCaseIDList.size() != 0){
 					return tCaseIDList;
 				}else{
 					return null;
-					}
+				}
 			} else {
 				return null;
-				}
+			}
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -144,13 +133,13 @@ public class TestCaseManager {
 		List<String> tCaseIDList = new ArrayList<String>();
 
 		labelCriteria = labelCriteria.replace("," , "','");
-		
+
 		try {
 			Query q = session.createQuery("FROM LFLabel WHERE label IN ('" +  labelCriteria + "')");
-			
+
 			if (q.list().size() > 0) {
 				labelList = q.list();
-				
+
 				for (Object obj : labelList) {
 
 					for (LFTestCase tCase : ((LFLabel) obj).getTestcases()) {
@@ -164,7 +153,7 @@ public class TestCaseManager {
 				if (tCaseIDList != null && tCaseIDList.size() != 0){
 					return tCaseIDList;
 				}else{
-				return null;
+					return null;
 				}
 			} else {
 				return null;
@@ -309,24 +298,24 @@ public class TestCaseManager {
 		String order = ApplicationContext.getConfig().getOrderTestcases() != null ? ApplicationContext
 				.getConfig().getOrderTestcases() : "testID";
 
-		crit.addOrder(Order.asc(order));
-		List<LFTestCase> resultList = null;
-		try {
-			resultList = crit.list();
-			tx.commit();
-		} catch (Exception others) {
-			others.printStackTrace();
-		} finally {
-			session.flush();
-		}
-		setTestcaseMap(resultList);
-		return resultList;
+				crit.addOrder(Order.asc(order));
+				List<LFTestCase> resultList = null;
+				try {
+					resultList = crit.list();
+					tx.commit();
+				} catch (Exception others) {
+					others.printStackTrace();
+				} finally {
+					session.flush();
+				}
+				setTestcaseMap(resultList);
+				return resultList;
 
-		// tx = session.beginTransaction();
-		// Query q = session.createQuery("from LFTestCase where Category = '" +
-		// category + "'");
-		// tx.commit();
-		// return q.list();
+				// tx = session.beginTransaction();
+				// Query q = session.createQuery("from LFTestCase where Category = '" +
+				// category + "'");
+				// tx.commit();
+				// return q.list();
 
 	}
 
@@ -361,24 +350,24 @@ public class TestCaseManager {
 		String order = ApplicationContext.getConfig().getOrderTestcases() != null ? ApplicationContext
 				.getConfig().getOrderTestcases() : "testID";
 
-		crit.addOrder(Order.asc(order));
-		List<LFTestCase> resultList = null;
-		try {
-			resultList = crit.list();
-			tx.commit();
-		} catch (Exception others) {
-			others.printStackTrace();
-		} finally {
-			session.flush();
-		}
-		setTestcaseMap(resultList);
-		return resultList;
+				crit.addOrder(Order.asc(order));
+				List<LFTestCase> resultList = null;
+				try {
+					resultList = crit.list();
+					tx.commit();
+				} catch (Exception others) {
+					others.printStackTrace();
+				} finally {
+					session.flush();
+				}
+				setTestcaseMap(resultList);
+				return resultList;
 
-		// tx = session.beginTransaction();
-		// Query q = session.createQuery("from LFTestCase where Category = '" +
-		// category + "'");
-		// tx.commit();
-		// return q.list();
+				// tx = session.beginTransaction();
+				// Query q = session.createQuery("from LFTestCase where Category = '" +
+				// category + "'");
+				// tx.commit();
+				// return q.list();
 
 	}
 
@@ -413,24 +402,24 @@ public class TestCaseManager {
 		String order = ApplicationContext.getConfig().getOrderTestcases() != null ? ApplicationContext
 				.getConfig().getOrderTestcases() : "testID";
 
-		crit.addOrder(Order.asc(order));
-		List<LFTestCase> resultList = null;
-		try {
-			resultList = crit.list();
-			tx.commit();
-		} catch (Exception others) {
-			others.printStackTrace();
-		} finally {
-			session.flush();
-		}
-		setTestcaseMap(resultList);
-		return resultList;
+				crit.addOrder(Order.asc(order));
+				List<LFTestCase> resultList = null;
+				try {
+					resultList = crit.list();
+					tx.commit();
+				} catch (Exception others) {
+					others.printStackTrace();
+				} finally {
+					session.flush();
+				}
+				setTestcaseMap(resultList);
+				return resultList;
 
-		// tx = session.beginTransaction();
-		// Query q = session.createQuery("from LFTestCase where Category = '" +
-		// category + "'");
-		// tx.commit();
-		// return q.list();
+				// tx = session.beginTransaction();
+				// Query q = session.createQuery("from LFTestCase where Category = '" +
+				// category + "'");
+				// tx.commit();
+				// return q.list();
 
 	}
 
@@ -464,23 +453,23 @@ public class TestCaseManager {
 		String order = ApplicationContext.getConfig().getOrderTestcases() != null ? ApplicationContext
 				.getConfig().getOrderTestcases() : "testID";
 
-		crit.addOrder(Order.asc(order));
-		List<LFTestCase> resultList = null;
-		try {
-			resultList = crit.list();
-			tx.commit();
-		} catch (Exception others) {
-			others.printStackTrace();
-		} finally {
-			session.flush();
-		}
-		setTestcaseMap(resultList);
-		return resultList;
+				crit.addOrder(Order.asc(order));
+				List<LFTestCase> resultList = null;
+				try {
+					resultList = crit.list();
+					tx.commit();
+				} catch (Exception others) {
+					others.printStackTrace();
+				} finally {
+					session.flush();
+				}
+				setTestcaseMap(resultList);
+				return resultList;
 
-		// tx = session.beginTransaction();
-		// Query q = session.createQuery("from LFTestCase");
-		// tx.commit();
-		// return q.list();
+				// tx = session.beginTransaction();
+				// Query q = session.createQuery("from LFTestCase");
+				// tx.commit();
+				// return q.list();
 	}
 
 	public void loadCategoryFromDB() {
