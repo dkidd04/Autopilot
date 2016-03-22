@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	
+	<bean id ="autoPilotConfig" class = "com.citigroup.liquifi.autopilot.helper.AutoPilotConfiguration">
+		<!-- Defines default step for each test case -->
+		<property name="defaultInputStep">
+			<list>
+				<bean class = "com.citigroup.liquifi.entities.LFTestInputSteps">
+					<property name= "actionSequence" value="1"/>
+					<property name= "template" value ="CX_ADMIN_DELETE_BOOK"/>
+					<property name= "msgType" value ="XML"/>
+					<property name= "useOutputMsg" value ="N"/>
+					<property name= "topicID" value ="AutoPilotToLiqFiAdmin"/>
+				</bean>
+				<bean class = "com.citigroup.liquifi.entities.LFTestInputSteps">
+					<property name= "actionSequence" value="2"/>
+					<property name= "template" value ="CX_MARKETDATA"/>
+					<property name= "msgType" value ="XML"/>
+					<property name= "useOutputMsg" value ="N"/>
+					<property name= "topicID" value ="AutoPilotToLiqFiAdmin"/>
+				</bean>
+				<bean class = "com.citigroup.liquifi.entities.LFTestInputSteps">
+					<property name= "actionSequence" value="3"/>
+					<property name= "template" value ="PAUSE"/>
+					<property name= "msgType" value ="CONTROL"/>
+					<property name= "useOutputMsg" value ="N"/>
+					<property name= "topicID" value ="AutoPilotToLiqFiAdmin"/>
+				</bean>
+			</list>
+		</property>
+
+		<!-- Defines default symbol to be use by each security class-->
+		<property name="defaultSymbolMap">
+			<map>
+				<entry key = "1" value = "UU"/>
+				<entry key = "2" value = "UU"/>
+				<entry key = "3" value = "UU"/>
+				<entry key = "4" value = "UU"/>
+			</map>
+		</property>
+		
+		<property name ="debug" value = "false"/>
+		<property name ="validateTimeout" value = "6000"/>
+		<property name ="serverModeTestCaseQuery" value = "${TestCase_QueryString}"/>
+		<property name ="enablePopup" value = "true"/>
+		<property name ="queryCriteria" value = "TestID,Category,Name,Description,AppName,Region,ReleaseNum,JiraNum" />
+	</bean>
+
+
+	<bean id ="brokerFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory">
+		<property name="acceptorBrokerList">
+			<list>
+				<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+					<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+					<property name="user" value="${TOPIC.BROKER.USER}"/>
+					<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+					<property name="destination" value="${AUTOPILOT.INBOUND.TOPIC}"/>
+					<property name="topicID" value="LiqFiToAutoPilot"/>
+ 				</bean>
+
+				<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+					<property name="brokerURL" value="${XSVC.BROKER.URL}"/>
+					<property name="user" value="${XSVC.BROKER.USER}"/>
+					<property name="password" value="${XSVC.BROKER.PASSWORD}"/>
+					<property name="destination" value="${XSVC.INBOUND.TOPIC}"/>
+					<property name="topicID" value="LiqFiToEXCH"/>
+ 				</bean>
+			</list>
+		</property>
+		
+
+		<!-- Define a virtual TopicID for the initiators of AEE.ORDER.INBOUND.PX. The actual destination will be decided only at runtime after
+		the user enters the symbol -->
+		<!--<property name="initiatorBroker">
+				<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+					<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+					<property name="user" value="${TOPIC.BROKER.USER}"/>
+					<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+					<property name="topicID" value="AutoPilotToLiqFi"/>
+ 				</bean>
+		</property>
+		-->
+
+		<!-- Define a virtual TopicID for the initiators of AEE.ADMIN.INBOUND.PX. The actual destination will be decided only at runtime after
+		the user enters the symbol -->
+		<!--<property name="initiatorBrokerAdminGUI">
+				<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+					<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+					<property name="user" value="${TOPIC.BROKER.USER}"/>
+					<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+					<property name="topicID" value="AutoPilotToLiqFiAdminInbound"/>
+ 				</bean>
+		</property>
+		-->
+
+		<property name="initiatorBrokerMap">
+			<map>
+				<!-- Define a virtual TopicID for the initiators of AEE.ORDER.INBOUND.PX. The actual destination will be decided only at runtime after
+		the user enters the symbol -->
+				<entry key ="FixMsg">
+				<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+					<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+					<property name="user" value="${TOPIC.BROKER.USER}"/>
+					<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+					<property name="topicID" value="AutoPilotToLiqFi"/>
+ 				</bean>
+ 				</entry>
+
+				<!-- Define a virtual TopicID for the initiators of AEE.ADMIN.INBOUND.PX. The actual destination will be decided only at runtime after
+		the user enters the symbol -->
+ 				<entry key ="XML">
+				<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+					<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+					<property name="user" value="${TOPIC.BROKER.USER}"/>
+					<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+					<property name="topicID" value="AutoPilotToLiqFiAdminInbound"/>
+ 				</bean>
+ 				</entry>
+ 			</map>	
+		</property>
+
+
+		<!-- Other initiators (besides AEE.ORDER.INBOUND.PX/AEE.ADMIN.INBOUND.PX) are defined in the initiatorBrokerList
+		e.g. AutoPilotToCitiSmart, AutoPilotToLiqFiMifidQuote (used in EMEA) -->
+		<property name="initiatorBrokerList">
+			<list>
+				<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+					<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+					<property name="user" value="${TOPIC.BROKER.USER}"/>
+					<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+					<property name="destination" value="${AutoPilotToLiqFiMifidQuote.Topic}"/>
+					<property name="topicID" value="AutoPilotToLiqFiMifidQuote"/>
+ 				</bean>
+
+				<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+					<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+					<property name="user" value="${TOPIC.BROKER.USER}"/>
+					<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+					<property name="destination" value="${AutoPilotToCitiSmart.Topic}"/>
+					<property name="topicID" value="AutoPilotToCitiSmart"/>
+ 				</bean>
+			</list>
+		</property>
+		
+		<!-- For the liqFi reserved TopicIDs, the lookup is only based on Symbol and MsgType (Fix or XML); otherwise, the lookup
+		will be based on the destination directly -->
+		<property name="liqFiReservedInitiatorTopicIDList">
+			<list>
+				<value>AutoPilotToLiqFi</value>
+				<value>AutoPilotToLiqFiAdminInbound</value>
+				<value>AUTOPILOT_TO_LIQFI_A</value>				
+			</list>
+		</property>
+
+		<property name='senderCompID' value= "${SENDERCOMPID}"></property>
+		<property name='senderSubID' value="${SENDERSUBID}"></property>		
+
+	</bean>
+
+
+
+</beans>
