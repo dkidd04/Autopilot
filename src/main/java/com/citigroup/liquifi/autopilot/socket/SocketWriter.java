@@ -8,12 +8,14 @@ import java.nio.channels.SocketChannel;
 public class SocketWriter {
 
     public static void send(String socketID, String message) {
-        SocketChannel channel = ApplicationContext.getSocketFactory().getSocketConnByID(socketID).getChannel();
-        ByteBuffer buf = ByteBuffer.wrap(message.getBytes());
-        try {
-            channel.write(buf);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    	if (ApplicationContext.getSocketFactory() != null) {
+    		SocketChannel channel = ApplicationContext.getSocketFactory().getSocketConnByID(socketID).getChannel();
+    		ByteBuffer buf = ByteBuffer.wrap(message.getBytes());
+    		try {
+    			channel.write(buf);
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    	}
     }
 }
