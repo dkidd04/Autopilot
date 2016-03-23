@@ -19,10 +19,14 @@
 		<!-- Defines default symbol to be use by each security class-->
 		<property name="defaultSymbolMap">
 			<map>
-				<entry key = "1" value = "UU"/>
-				<entry key = "2" value = "UU"/>
-				<entry key = "3" value = "UU"/>
-				<entry key = "4" value = "UU"/>
+				<entry key = "1" value = "AGES.BR"/>
+				<entry key = "2" value = "CAPP.PA"/>
+				<entry key = "3" value = "DGE.L"/>
+				<entry key = "4" value = "ICAG.MC"/>
+				<entry key = "5" value = "LLOY.L"/>
+				<entry key = "6" value = "OCI.AS"/>
+				<entry key = "7" value = "SMSEUR.DE"/>
+				<entry key = "8" value = "UTDI.DE"/>
 			</map>
 		</property>
 		
