@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>dev.properties</value>
+		</property>
+	</bean>
+
 	<bean id ="brokerFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory">
 		<property name="initiatorBrokerMapping">
 			<map>
@@ -41,7 +47,7 @@
 						<property name="password" value="${TOPIC.INBOUNDBROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="${AUTOPILOT.INBOUND.TOPIC}"/>
+								<entry key="A-Z" value="${AUTOPILOT.OUTOUND.TOPIC}"/>
 							</map>
 						</property>
  					</bean>
@@ -63,9 +69,9 @@
 				<entry key="TTIOI.BBRG_A"> 
 					<bean
 						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">						
-						<property name="brokerURL" value="${XSVC.BROKER.URL}"/>
-						<property name="user" value="${XSVC.BROKER.USER}"/>
-						<property name="password" value="${XSVC.BROKER.PASSWORD}"/>
+						<property name="brokerURL" value="${VENDOR.BROKER.URL}"/>
+						<property name="user" value="${VENDOR.BROKER.USER}"/>
+						<property name="password" value="${VENDOR.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>				
 								<entry key=".-Z" value="NY.IOI.QIOI.BBRG_A"/>
@@ -77,9 +83,9 @@
 				<entry key="TTIOI.AUTX"> 
 					<bean
 						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">						
-						<property name="brokerURL" value="${XSVC.BROKER.URL}"/>
-						<property name="user" value="${XSVC.BROKER.USER}"/>
-						<property name="password" value="${XSVC.BROKER.PASSWORD}"/>
+						<property name="brokerURL" value="${VENDOR.BROKER.URL}"/>
+						<property name="user" value="${VENDOR.BROKER.USER}"/>
+						<property name="password" value="${VENDOR.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>				
 								<entry key=".-Z" value="NY.IOI.QIOI.AUTX"/>
@@ -90,9 +96,9 @@
 				<entry key="TTIOI.FIXC">
 					<bean
 						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
-						<property name="brokerURL" value="${XSVC.BROKER.URL}"/>
-						<property name="user" value="${XSVC.BROKER.USER}"/>
-						<property name="password" value="${XSVC.BROKER.PASSWORD}"/>
+						<property name="brokerURL" value="${VENDOR.BROKER.URL}"/>
+						<property name="user" value="${VENDOR.BROKER.USER}"/>
+						<property name="password" value="${VENDOR.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
 								<entry key=".-Z" value="NY.IOI.QIOI.FIXC"/>
@@ -106,26 +112,5 @@
 		<property name='senderSubID' value="${SENDERCOMPID}${instance}"></property>		
 	</bean>
 	
-	<bean id ="socketFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotSocketConnectionFactory">
-		<property name="socketList">
-			<list> 
-				<bean class = "com.citigroup.liquifi.autopilot.messaging.SocketConnectionInfo">
-					<property name="host" value="eqliqap1d.eur.nsroot.net"/>
-					<property name="port" value="18000"/>
-					<property name="socketID" value="TOBtoAutoPilot"/>
-				</bean>
-			</list>
-		</property>
-
-		<property name="sockets">
-			<list> 
-				<bean class = "com.citigroup.liquifi.autopilot.socket.PMMSocket">
-					<property name="host" value="eqliq1d.eur.nsroot.net"/>
-					<property name="port" value="63035"/>
-					<property name="outbound" value="OEM.TT.REPLICATE.P1"/>
-					<property name="inbound" value="AutoPilotToLiqFiATDSocket"/>
-				</bean>
-			</list>
-		</property>
-	</bean>
+	<bean id ="socketFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotSocketConnectionFactory"/>
 </beans>
