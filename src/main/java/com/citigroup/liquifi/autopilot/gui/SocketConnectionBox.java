@@ -29,8 +29,10 @@ public class SocketConnectionBox extends javax.swing.JDialog {
     public SocketConnectionBox(java.awt.Frame parent) {
         super(parent);
         initComponents();
-        for (SocketConnectionInfo socket : ApplicationContext.getSocketFactory().getSocketList()){
-            socketStatus.put(socket.getSocketID(), false);
+        if (ApplicationContext.getSocketFactory() != null) {
+        	for (SocketConnectionInfo socket : ApplicationContext.getSocketFactory().getSocketList()){
+        		socketStatus.put(socket.getSocketID(), false);
+        	}
         }
     }
 
@@ -164,7 +166,7 @@ public class SocketConnectionBox extends javax.swing.JDialog {
     	ClientNioSocket socket = null;
         String socketID = (String) socketIDComboBox.getSelectedItem();
         boolean connected = socketStatus.get(socketID);
-        if (!connected) {
+        if (!connected && ApplicationContext.getSocketFactory() != null) {
             SocketConnectionInfo socketInfo = ApplicationContext.getSocketFactory().getSocketConnByID(socketID);
             String server = socketInfo.getHost();
             int port = Integer.parseInt(socketInfo.getPort());

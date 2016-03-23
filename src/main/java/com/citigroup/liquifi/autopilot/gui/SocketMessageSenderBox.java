@@ -32,8 +32,10 @@ public class SocketMessageSenderBox extends javax.swing.JDialog {
     public SocketMessageSenderBox(java.awt.Frame parent) {
         super(parent);
         initComponents();
-        for (SocketConnectionInfo socket : ApplicationContext.getSocketFactory().getSocketList()){
-            socketStatus.put(socket.getSocketID(), false);
+        if (ApplicationContext.getSocketFactory() != null) {
+        	for (SocketConnectionInfo socket : ApplicationContext.getSocketFactory().getSocketList()){
+        		socketStatus.put(socket.getSocketID(), false);
+        	}
         }
     }
 

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>dev.properties</value>
+		</property>
+	</bean>
+
+	<bean id ="brokerFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory">
+		<property name="initiatorBrokerMapping">
+			<map>
+				<entry key ="Autopilot.To.TTIOI.Inbound">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="defaultTopic" value="true"/>
+						<property name="setup">
+							<map>
+								<entry key=".-Z" value="TTIOI.IOI.INBOUND.P1" />
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+				<entry key ="AutoPilot.To.TTIOI.Admin">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.ADMIN.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.ADMIN.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.ADMIN.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key=".-Z" value="TTIOI.ADMIN.INBOUND" />
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+ 			</map>
+		</property>
+
+		<property name="acceptorBrokerMapping">
+			<map>
+				<entry key ="AutoPilot.AdminMgr">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.INBOUNDBROKER.URL}"/>
+						<property name="user" value="${TOPIC.INBOUNDBROKER.USER}"/>
+						<property name="password" value="${TOPIC.INBOUNDBROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="${AUTOPILOT.OUTOUND.TOPIC}"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				
+				<entry key="TTIOI.To.QFF">
+					<bean class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup"> 
+							<map>
+								<entry key=".-Z" value="TT.IOI.TO.QFF.P1"/>
+							</map>
+						</property>
+					</bean>
+				</entry>
+								
+				<entry key="TTIOI.BBRG_A"> 
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">						
+						<property name="brokerURL" value="${VENDOR.BROKER.URL}"/>
+						<property name="user" value="${VENDOR.BROKER.USER}"/>
+						<property name="password" value="${VENDOR.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>				
+								<entry key=".-Z" value="NY.IOI.QIOI.BBRG_A"/>
+							</map>
+						</property>
+					</bean>
+				</entry>
+				
+				<entry key="TTIOI.AUTX"> 
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">						
+						<property name="brokerURL" value="${VENDOR.BROKER.URL}"/>
+						<property name="user" value="${VENDOR.BROKER.USER}"/>
+						<property name="password" value="${VENDOR.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>				
+								<entry key=".-Z" value="NY.IOI.QIOI.AUTX"/>
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TTIOI.FIXC">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${VENDOR.BROKER.URL}"/>
+						<property name="user" value="${VENDOR.BROKER.USER}"/>
+						<property name="password" value="${VENDOR.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key=".-Z" value="NY.IOI.QIOI.FIXC"/>
+							</map>
+						</property>
+					</bean>
+				</entry>
+ 			</map>
+		</property>
+		<property name='senderCompID' value="${SENDERCOMPID}"></property>
+		<property name='senderSubID' value="${SENDERCOMPID}${instance}"></property>		
+	</bean>
+	
+</beans>
