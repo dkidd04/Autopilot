@@ -479,9 +479,9 @@ public enum TestCaseController {
 		if (strTopicName == null || (strTopicName.trim().length() < 1)) {
 			logger.warning("cannot find the topic name for topicID:" + strTopicID);
 			
-			
+			//TODO: DR45414 should be reomved once TOB is retired
 			// WARNING this is a terrible hack to make sockets work in EMEA - the socket logic should be rewritten!!!!!!!!
-			if (strTopicID.equals("LiqFiToATDSocket") || strTopicID.equals("AutoPilotToLiqFiATDSocket") || strTopicID.equals("TOBtoAutoPilot")) {
+			if (strTopicID.equals("TOBtoAutoPilot")) {
 				// returning for topicID if topicName is not found. For socket ID
 				strTopicName = strTopicID;
 			}
