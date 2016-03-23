@@ -112,5 +112,4 @@
 		<property name='senderSubID' value="${SENDERCOMPID}${instance}"></property>		
 	</bean>
 	
-	<bean id ="socketFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotSocketConnectionFactory"/>
 </beans>
