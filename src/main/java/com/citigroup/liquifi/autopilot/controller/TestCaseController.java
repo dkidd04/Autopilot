@@ -58,19 +58,6 @@ public enum TestCaseController {
 			// setup notifiers
 			AdminMsgNotifier.INSTANCE.setup(validationObject);
 			OutputMsgNotifier.INSTANCE.setup(validationObject);
-
-			// Start up all acceptors and any sockets used in the testcase (setupSocket only sets up real socket IDs)
-			/*for (LFTestInputSteps inputStep : testcase.getInputStepList()) {
-				for (LFOutputMsg outputStep : inputStep.getOutputStepList()) {
-					if (socketFactory.isSocket(outputStep.getTopicID())) {
-						socketFactory.setupSocket(outputStep.getTopicID());
-					} else {
-						ConnectionManager.INSTANCE.getAcceptor(symbolToUse, outputStep.getTopicID());
-					}
-				}
-
-				socketFactory.setupSocket(inputStep.getTopicID());
-			}*/
 			
 			// start up all acceptors and sockets associated with the symbol
 			for(String autoPilotTopic : ApplicationContext.getBrokerFactory().getAcceptorBrokerMapping().keySet()) {
@@ -479,7 +466,7 @@ public enum TestCaseController {
 		if (strTopicName == null || (strTopicName.trim().length() < 1)) {
 			logger.warning("cannot find the topic name for topicID:" + strTopicID);
 			
-			//TODO: DR45414 should be reomved once TOB is retired
+			//TODO: DR45414 should be removed once TOB is retired
 			// WARNING this is a terrible hack to make sockets work in EMEA - the socket logic should be rewritten!!!!!!!!
 			if (strTopicID.equals("TOBtoAutoPilot")) {
 				// returning for topicID if topicName is not found. For socket ID
