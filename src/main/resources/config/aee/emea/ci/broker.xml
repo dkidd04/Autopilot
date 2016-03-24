@@ -63,11 +63,7 @@
 						<entry key="A-Z" value="QFFC_UKDEV_C1P"/>
 					</map>
 				</entry>
-				<entry key ="ATD">
-					<map>
-						<entry key="A-Z" value="ATD_1"/>
-					</map>
-				</entry>
+				
 				<entry key ="EDTS">
 					<map>
 						<entry key="A-Z" value="LQFI_EDTS_C1S1"/>
@@ -137,18 +133,6 @@
 							<map>
 								<!-- <entry key="A-Z" value="EU.LIQTOCB2.DEV.1"/>-->
 								<entry key="A-Z" value="EU.LIQUIFI.DUMMY.CB2"/>
-							</map>
-						</property>
- 					</bean>
-				</entry>
-				<entry key ="LiqFiToATD">
-					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
-						<property name="brokerURL" value="${LIQ.TOPIC.BROKER.URL}"/>
-						<property name="user" value="${TOPIC.BROKER.USER}"/>
-						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
-						<property name="setup">
-							<map>
-								<entry key="A-Z" value="EU.LIQUIFI.DUMMY.ATD"/>
 							</map>
 						</property>
  					</bean>
@@ -255,28 +239,5 @@
 		<!-- only used if 49 and 50 are missing -->
 		<property name='senderCompID' value='CS'></property>
 		<property name='senderSubID' value='CS_C2S1'></property>		
-	</bean>
-
-	<bean id ="socketFactory" class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotSocketConnectionFactory">
-		<property name="socketList">
-			<list> 
-				<bean class = "com.citigroup.liquifi.autopilot.messaging.SocketConnectionInfo">
-					<property name="host" value="169.186.226.77"/>
-					<property name="port" value="18000"/>
-					<property name="socketID" value="TOBtoAutoPilot"/>
-				</bean>
-			</list>
-		</property>
-
-		<property name="sockets">
-			<list> 
-				<bean class = "com.citigroup.liquifi.autopilot.socket.PMMSocket">
-					<property name="host" value="localhost"/>
-					<property name="port" value="18103"/>
-					<property name="outbound" value="LiqFiToATDSocket"/>
-					<property name="inbound" value="AutoPilotToLiqFiATDSocket"/>
-				</bean>
-			</list>
-		</property>
 	</bean>
 </beans>
