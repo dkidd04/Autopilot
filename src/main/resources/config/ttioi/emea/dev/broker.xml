@@ -109,7 +109,7 @@
  			</map>
 		</property>
 		<property name='senderCompID' value="${SENDERCOMPID}"></property>
-		<property name='senderSubID' value="${SENDERCOMPID}${instance}"></property>		
+		<property name='senderSubID' value="${SENDERCOMPID}"></property>		
 	</bean>
 	
 </beans>
