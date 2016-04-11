@@ -12,14 +12,14 @@ To run Autopilot on your local machine download the latest develop branch from B
 `com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap`
 
 ####VM Arguments
-`-Dcommon=common
--Dregion=emea
--Dapplication=aee
--Dmode=GuiMode 
--Dsun.java2d.noddraw=true
--Dconfig.home=src/main/resources/config
--DTestCase_QueryString="where ACTIVE='true'"
-`
+`-Dcommon=common`
+`-Dregion=emea`
+`-Dapplication=aee`
+`-Dmode=GuiMode`
+`-Dsun.java2d.noddraw=true`
+`-Dconfig.home=src/main/resources/config`
+`-DTestCase_QueryString="where ACTIVE='true'"`
+
 ####Classpath
 ![Classpath](https://teamforge.nam.nsroot.net/sf/wiki/do/viewAttachment/projects.163527_globalcrossing/wiki/EMEAAutopilotTestCases/Autopilot_Liquifi_TotalTouch_1_9.JPG)
 
