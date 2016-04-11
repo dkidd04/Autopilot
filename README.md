@@ -9,20 +9,19 @@ To run Autopilot on your local machine download the latest develop branch from B
 
 ###Create a Run configuration in Eclipse with the following details
 ####Main Class
-'com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap'
+`com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap`
 
 ####VM Arguments
-'-Dcommon=common
+`-Dcommon=common
 -Dregion=emea
 -Dapplication=aee
 -Dmode=GuiMode 
 -Dsun.java2d.noddraw=true
 -Dconfig.home=src/main/resources/config
 -DTestCase_QueryString="where ACTIVE='true'"
-'
+`
 ####Classpath
 ![Classpath](https://teamforge.nam.nsroot.net/sf/wiki/do/viewAttachment/projects.163527_globalcrossing/wiki/EMEAAutopilotTestCases/Autopilot_Liquifi_TotalTouch_1_9.JPG)
-Format: ![Classpath](url)
 
 ##Creating TestCases
 
