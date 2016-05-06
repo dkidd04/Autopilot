@@ -1,8 +1,10 @@
 package com.citigroup.liquifi.autopilot.bootstrap;
 
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
@@ -38,6 +40,7 @@ import com.citigroup.liquifi.clock.Clock;
 import com.citigroup.liquifi.entities.LFOutputTag;
 import com.citigroup.liquifi.entities.LFTag;
 import com.citigroup.liquifi.entities.Tag;
+import com.citigroup.liquifi.util.SymFiiUtil;
 
 public class ApplicationContext {
 	private static XmlBeanFactory factory;
@@ -72,6 +75,7 @@ public class ApplicationContext {
 	private static AutoPilotBrokerInfoFactory brokerFactory;
     private static AutoPilotSocketConnectionFactory socketFactory;
     private static Clock clock;
+    private static SymFiiUtil symFiiUtil;
 	private static CommonTagTableModel commonTagTableModel;
 	
 	public static void init() throws Exception{
@@ -323,5 +327,14 @@ public class ApplicationContext {
     	}
     	return clock;
     }
-	
+
+	public static SymFiiUtil getSymFiiUtil() {
+		if (symFiiUtil == null) {
+			Resource resource = new ClassPathResource("springConfig.xml");
+			BeanFactory factory = new XmlBeanFactory(resource);
+			symFiiUtil = (SymFiiUtil) factory.getBean("symFiiUtil");
+		}
+		return symFiiUtil;
+	}
+
 }

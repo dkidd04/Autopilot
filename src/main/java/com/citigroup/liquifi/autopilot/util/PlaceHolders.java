@@ -337,7 +337,9 @@ public class PlaceHolders {
 					replacementStr = AutoPilotConstants.AUTOPILOT_PREFIX + "UTI-" + ID.generate(10);
 					cache.put(AutoPilotConstants.PLACEHOLDER_UTI, replacementStr);
 				}
-			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_sendingTime)) {
+			}else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_FII)) {
+				replacementStr = ApplicationContext.getSymFiiUtil().getFiiStr(strSymbol);
+			}else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_sendingTime)) {
 				replacementStr = printCurrentTimePlus(0);
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_transactTime)) {
 				replacementStr = printCurrentTimePlus(0);
