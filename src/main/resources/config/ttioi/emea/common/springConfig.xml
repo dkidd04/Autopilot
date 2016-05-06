@@ -5,8 +5,8 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
 http://www.springframework.org/schema/util 
 http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-    <util:properties id="symfiiproperties" location="classpath:/symfii.properties" />
-    <bean id="springUtilProperties" class="com.citigroup.liquifi.util.SpringUtilProperties" scope="singleton">
-        <property name="properties" ref="symfiiproperties" />
+    <util:properties id="symfiiproperty" location="classpath:/symfii.properties" />
+    <bean id="symFiiUtil" class="com.citigroup.liquifi.util.SymFiiUtil" scope="singleton">
+        <property name="properties" ref="symfiiproperty" />
     </bean>
 </beans>
