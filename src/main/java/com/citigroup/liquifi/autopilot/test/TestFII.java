@@ -27,6 +27,11 @@ public class TestFII {
     }
 
 	@Test
+    public void testIndexSymbol() {
+		assertEquals("32062291", symFiiUtil.getFiiStr(".SXOP"));
+    }
+	
+	@Test
     public void testSymbol() {
 		assertEquals("59198795", symFiiUtil.getFiiStr("VOD.L"));
     }
