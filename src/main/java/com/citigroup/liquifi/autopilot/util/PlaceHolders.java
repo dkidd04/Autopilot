@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,11 +30,18 @@ public class PlaceHolders {
 	private Pattern inputPattern = Pattern.compile("@IP\\[([\\d]+)\\]\\.(getTag.*?)\\(([-?\\d, ]+)\\)");
 	private Pattern outputPattern = Pattern.compile("@OP\\[([\\d]+)\\]\\[([\\d]+)\\]\\.(getTag.*?)\\(([-?\\d, ]+)\\)");
 	private Pattern replacePattern = Pattern.compile("@.*?\\.replace\\('(.*?)',.*?'(.*?)'\\)");
-
+	private static Map<String,String> symfiiMap = new HashMap<String,String>();
 	private PlaceHolders(UniqueId ID) {
 		this.ID = ID;
 	}
 
+	public static void addSymFiiMap(String symbol){
+		symfiiMap.put(symbol, ApplicationContext.getProductApiUtil().getFiiStr(symbol));
+		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+		System.out.println("SYMBOL:"+symbol+"  FII :"+symfiiMap.get(symbol));
+		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+	}
+	
 	public String parseAPVarPlaceholdersString(String str, Set<Tag> overwrite) {
 		try {
 			int start = -1;
@@ -338,7 +346,12 @@ public class PlaceHolders {
 					cache.put(AutoPilotConstants.PLACEHOLDER_UTI, replacementStr);
 				}
 			}else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_FII)) {
-				replacementStr = ApplicationContext.getSymFiiUtil().getFiiStr(strSymbol);
+				if(symfiiMap.containsKey(strSymbol))
+					replacementStr = symfiiMap.get(strSymbol);
+				else{	
+					symfiiMap.put(strSymbol, ApplicationContext.getProductApiUtil().getFiiStr(strSymbol));
+					replacementStr = symfiiMap.get(strSymbol);
+				}
 			}else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_sendingTime)) {
 				replacementStr = printCurrentTimePlus(0);
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_transactTime)) {

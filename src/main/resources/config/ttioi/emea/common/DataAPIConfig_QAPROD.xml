@@ -1,0 +1,1301 @@
+<com.citi.get.common.data.dm.DataManagerState>
+  <name>DM_LIQUIFI</name>
+  <cacheStates>
+    <com.citi.get.common.data.cache.table.CompositeTableCacheState>
+      <name>COMPOSITE</name>
+      <typeString>com.citi.productapi.info.intf.IProduct</typeString>
+      <indexStateList>
+        <com.citi.get.common.data.cache.CompositeIndexState>
+          <name>index_smcp</name>
+          <indexColList>
+            <string>SMCP</string>
+          </indexColList>
+          <lookupKey>lookup_smcp</lookupKey>
+          <indexType>UNIQUE</indexType>
+          <isPrimary>true</isPrimary>
+          <isHybrid>false</isHybrid>
+          <compIndexType>COMPOSITE_UNIQUE</compIndexType>
+          <valueColumn>__TYPE_COLUMN_NAME</valueColumn>
+          <cacheStateList>
+            <com.citi.get.common.data.cache.CacheState>
+              <name>EQUITY</name>
+              <typeString>com.citi.productapi.info.impl.Equity</typeString>
+              <indexStateList>
+                <com.citi.get.common.data.cache.IndexState>
+                  <name>index_equity_smcp</name>
+                  <indexColList>
+                    <string>SMCP</string>
+                  </indexColList>
+                  <lookupKey>lookup_equity_smcp</lookupKey>
+                  <indexType>UNIQUE</indexType>
+                  <isPrimary>true</isPrimary>
+                  <isHybrid>false</isHybrid>
+                </com.citi.get.common.data.cache.IndexState>
+              </indexStateList>
+              <lookupStateList/>
+              <initialLookupState class="com.citi.get.common.data.lookup.dna.DNALookupState">
+                <params/>
+                <name>lookup_equity_init</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>execute GetProductByType @product_type=&apos;EQUITY&apos;</query>
+                <config>
+                  <params/>
+                  <name>liquifi_db</name>
+                  <upsertDisable>false</upsertDisable>
+                  <clientId>liquifi</clientId>
+                  <apiVersion>3.0_C0</apiVersion>
+                  <apiHost>localhost</apiHost>
+                  <configFileContent>liquifi</configFileContent>
+                  <fidUsed>liquifi</fidUsed>
+                  <context>liquifi</context>
+                  <processID>liquifi</processID>
+                  <service>QSMCDB_QAPROD</service>
+                  <userName>uat_liquifi_ro</userName>
+                  <pwd>jXjpZ6NpYsXaX/CL98YX7Q==</pwd>
+                  <useInternString>false</useInternString>
+                  <transportId>TibcoEMS_QA</transportId>
+                  <adhocQryTimeOut>20000</adhocQryTimeOut>
+                  <precacheQryTimeOut>1200000</precacheQryTimeOut>
+                  <minSvcNum>5</minSvcNum>
+                  <maxSvcNum>10</maxSvcNum>
+                  <isL1CacheDisabled>false</isL1CacheDisabled>
+                  <retryCount>0</retryCount>
+                  <wholeRetryCount>0</wholeRetryCount>
+                  <l2CacheTimeOut>0</l2CacheTimeOut>
+                  <l2PreCacheTimeOut>0</l2PreCacheTimeOut>
+                </config>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </initialLookupState>
+              <isVector>false</isVector>
+              <initialTableSize>0</initialTableSize>
+            </com.citi.get.common.data.cache.CacheState>
+            <com.citi.get.common.data.cache.CacheState>
+              <name>WARRANT</name>
+              <typeString>com.citi.productapi.info.impl.Warrant</typeString>
+              <indexStateList>
+                <com.citi.get.common.data.cache.IndexState>
+                  <name>index_warrant_smcp</name>
+                  <indexColList>
+                    <string>SMCP</string>
+                  </indexColList>
+                  <lookupKey>lookup_warrant_smcp</lookupKey>
+                  <indexType>UNIQUE</indexType>
+                  <isPrimary>true</isPrimary>
+                  <isHybrid>false</isHybrid>
+                </com.citi.get.common.data.cache.IndexState>
+              </indexStateList>
+              <lookupStateList/>
+              <initialLookupState class="com.citi.get.common.data.lookup.dna.DNALookupState">
+                <params/>
+                <name>lookup_warrant_init</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>execute GetProductByType @product_type=&apos;WARRANT&apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </initialLookupState>
+              <isVector>false</isVector>
+              <initialTableSize>0</initialTableSize>
+            </com.citi.get.common.data.cache.CacheState>
+            <com.citi.get.common.data.cache.CacheState>
+              <name>INDEX</name>
+              <typeString>com.citi.productapi.info.impl.Index</typeString>
+              <indexStateList/>
+              <lookupStateList/>
+              <initialLookupState class="com.citi.get.common.data.lookup.dna.DNALookupState">
+                <params/>
+                <name>lookup_index_init</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>execute GetProductByType @product_type=&apos;INDEX&apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </initialLookupState>
+              <isVector>false</isVector>
+              <initialTableSize>0</initialTableSize>
+            </com.citi.get.common.data.cache.CacheState>
+            <com.citi.get.common.data.cache.CacheState>
+              <name>CORP</name>
+              <typeString>com.citi.productapi.info.impl.Corporate</typeString>
+              <indexStateList>
+                <com.citi.get.common.data.cache.IndexState>
+                  <name>index_corp_smcp</name>
+                  <indexColList>
+                    <string>SMCP</string>
+                  </indexColList>
+                  <lookupKey>lookup_corp_smcp</lookupKey>
+                  <indexType>UNIQUE</indexType>
+                  <isPrimary>true</isPrimary>
+                  <isHybrid>false</isHybrid>
+                </com.citi.get.common.data.cache.IndexState>
+              </indexStateList>
+              <lookupStateList/>
+              <initialLookupState class="com.citi.get.common.data.lookup.dna.DNALookupState">
+                <params/>
+                <name>lookup_corp_init</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>execute GetProductByType @product_type=&apos;CORP&apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </initialLookupState>
+              <isVector>false</isVector>
+              <initialTableSize>0</initialTableSize>
+            </com.citi.get.common.data.cache.CacheState>
+            <com.citi.get.common.data.cache.CacheState>
+              <name>PFD</name>
+              <typeString>com.citi.productapi.info.impl.Preferred</typeString>
+              <indexStateList>
+                <com.citi.get.common.data.cache.IndexState>
+                  <name>index_pfd_smcp</name>
+                  <indexColList>
+                    <string>SMCP</string>
+                  </indexColList>
+                  <lookupKey>lookup_pfd_smcp</lookupKey>
+                  <indexType>UNIQUE</indexType>
+                  <isPrimary>true</isPrimary>
+                  <isHybrid>false</isHybrid>
+                </com.citi.get.common.data.cache.IndexState>
+              </indexStateList>
+              <lookupStateList/>
+              <initialLookupState class="com.citi.get.common.data.lookup.dna.DNALookupState">
+                <params/>
+                <name>lookup_pfd_init</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>execute GetProductByType @product_type=&apos;PFD&apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </initialLookupState>
+              <isVector>false</isVector>
+              <initialTableSize>0</initialTableSize>
+            </com.citi.get.common.data.cache.CacheState>
+            <com.citi.get.common.data.cache.CacheState>
+              <name>CURRENCY</name>
+              <typeString>com.citi.productapi.info.impl.Currency</typeString>
+              <indexStateList>
+                <com.citi.get.common.data.cache.IndexState>
+                  <name>index_curr_smcp</name>
+                  <indexColList>
+                    <string>SMCP</string>
+                  </indexColList>
+                  <lookupKey>lookup_curr_smcp</lookupKey>
+                  <indexType>UNIQUE</indexType>
+                  <isPrimary>true</isPrimary>
+                  <isHybrid>false</isHybrid>
+                </com.citi.get.common.data.cache.IndexState>
+              </indexStateList>
+              <lookupStateList/>
+              <initialLookupState class="com.citi.get.common.data.lookup.dna.DNALookupState">
+                <params/>
+                <name>lookup_curr_init</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>execute GetProductByType @product_type=&apos;CURRENCY&apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </initialLookupState>
+              <isVector>false</isVector>
+              <initialTableSize>0</initialTableSize>
+            </com.citi.get.common.data.cache.CacheState>
+          </cacheStateList>
+          <indexDefaultValueStateList/>
+        </com.citi.get.common.data.cache.CompositeIndexState>
+        <com.citi.get.common.data.cache.CompositeIndexState>
+          <name>index_tckr_rp</name>
+          <indexColList>
+            <string>TCKR</string>
+            <string>IsRegionalPrimary</string>
+          </indexColList>
+          <lookupKey>lookup_tckr</lookupKey>
+          <indexType>UNIQUE</indexType>
+          <isPrimary>false</isPrimary>
+          <isHybrid>false</isHybrid>
+          <compIndexType>COMPOSITE_MULTI_VALUE</compIndexType>
+          <valueColumn>__TYPE_COLUMN_NAME</valueColumn>
+          <cacheStateList>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[2]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[3]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[4]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[5]"/>
+          </cacheStateList>
+          <indexDefaultValueStateList>
+            <com.citi.get.common.data.cache.IndexDefaultValueState>
+              <name>IsRegionalPrimary</name>
+              <value>Y</value>
+            </com.citi.get.common.data.cache.IndexDefaultValueState>
+          </indexDefaultValueStateList>
+        </com.citi.get.common.data.cache.CompositeIndexState>
+        <com.citi.get.common.data.cache.CompositeIndexState>
+          <name>index_fii</name>
+          <indexColList>
+            <string>FII</string>
+          </indexColList>
+          <lookupKey>lookup_fii</lookupKey>
+          <indexType>UNIQUE</indexType>
+          <isPrimary>false</isPrimary>
+          <isHybrid>false</isHybrid>
+          <compIndexType>COMPOSITE_MULTI_VALUE</compIndexType>
+          <valueColumn>__TYPE_COLUMN_NAME</valueColumn>
+          <cacheStateList>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[2]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[3]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[4]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[5]"/>
+          </cacheStateList>
+          <indexDefaultValueStateList/>
+        </com.citi.get.common.data.cache.CompositeIndexState>
+        <com.citi.get.common.data.cache.CompositeIndexState>
+          <name>index_ric</name>
+          <indexColList>
+            <string>RIC</string>
+          </indexColList>
+          <lookupKey>lookup_ric</lookupKey>
+          <indexType>UNIQUE</indexType>
+          <isPrimary>false</isPrimary>
+          <isHybrid>false</isHybrid>
+          <compIndexType>COMPOSITE_UNIQUE</compIndexType>
+          <valueColumn>__TYPE_COLUMN_NAME</valueColumn>
+          <cacheStateList>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[2]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[3]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[4]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[5]"/>
+          </cacheStateList>
+          <indexDefaultValueStateList/>
+        </com.citi.get.common.data.cache.CompositeIndexState>
+        <com.citi.get.common.data.cache.CompositeIndexState>
+          <name>index_isn</name>
+          <indexColList>
+            <string>ISN</string>
+          </indexColList>
+          <lookupKey>lookup_isn</lookupKey>
+          <indexType>UNIQUE</indexType>
+          <isPrimary>false</isPrimary>
+          <isHybrid>false</isHybrid>
+          <compIndexType>COMPOSITE_MULTI_VALUE</compIndexType>
+          <valueColumn>__TYPE_COLUMN_NAME</valueColumn>
+          <cacheStateList>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[2]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[3]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[4]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[5]"/>
+          </cacheStateList>
+          <indexDefaultValueStateList/>
+        </com.citi.get.common.data.cache.CompositeIndexState>
+        <com.citi.get.common.data.cache.CompositeIndexState>
+          <name>index_sdl</name>
+          <indexColList>
+            <string>SDL</string>
+          </indexColList>
+          <lookupKey>lookup_sdl</lookupKey>
+          <indexType>UNIQUE</indexType>
+          <isPrimary>false</isPrimary>
+          <isHybrid>false</isHybrid>
+          <compIndexType>COMPOSITE_MULTI_VALUE</compIndexType>
+          <valueColumn>__TYPE_COLUMN_NAME</valueColumn>
+          <cacheStateList>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[2]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[4]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[5]"/>
+          </cacheStateList>
+          <indexDefaultValueStateList/>
+        </com.citi.get.common.data.cache.CompositeIndexState>
+        <com.citi.get.common.data.cache.CompositeIndexState>
+          <name>index_csp</name>
+          <indexColList>
+            <string>CSP</string>
+          </indexColList>
+          <lookupKey>lookup_csp</lookupKey>
+          <indexType>UNIQUE</indexType>
+          <isPrimary>false</isPrimary>
+          <isHybrid>false</isHybrid>
+          <compIndexType>COMPOSITE_MULTI_VALUE</compIndexType>
+          <valueColumn>__TYPE_COLUMN_NAME</valueColumn>
+          <cacheStateList>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[2]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[4]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[5]"/>
+          </cacheStateList>
+          <indexDefaultValueStateList/>
+        </com.citi.get.common.data.cache.CompositeIndexState>
+        <com.citi.get.common.data.cache.CompositeIndexState>
+          <name>index_tkrs</name>
+          <indexColList>
+            <string>TKRS</string>
+          </indexColList>
+          <lookupKey>lookup_tkrs</lookupKey>
+          <indexType>UNIQUE</indexType>
+          <isPrimary>false</isPrimary>
+          <isHybrid>false</isHybrid>
+          <compIndexType>COMPOSITE_MULTI_VALUE</compIndexType>
+          <valueColumn>__TYPE_COLUMN_NAME</valueColumn>
+          <cacheStateList>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[2]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[4]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[5]"/>
+          </cacheStateList>
+          <indexDefaultValueStateList/>
+        </com.citi.get.common.data.cache.CompositeIndexState>
+        <com.citi.get.common.data.cache.CompositeIndexState>
+          <name>index_smbs</name>
+          <indexColList>
+            <string>SMBS</string>
+          </indexColList>
+          <lookupKey>lookup_smbs</lookupKey>
+          <indexType>UNIQUE</indexType>
+          <isPrimary>false</isPrimary>
+          <isHybrid>false</isHybrid>
+          <compIndexType>COMPOSITE_MULTI_VALUE</compIndexType>
+          <valueColumn>__TYPE_COLUMN_NAME</valueColumn>
+          <cacheStateList>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[4]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[5]"/>
+          </cacheStateList>
+          <indexDefaultValueStateList/>
+        </com.citi.get.common.data.cache.CompositeIndexState>
+        <com.citi.get.common.data.cache.CompositeIndexState>
+          <name>index_reut</name>
+          <indexColList>
+            <string>REUT</string>
+          </indexColList>
+          <lookupKey>lookup_reut</lookupKey>
+          <indexType>UNIQUE</indexType>
+          <isPrimary>false</isPrimary>
+          <isHybrid>false</isHybrid>
+          <compIndexType>COMPOSITE_UNIQUE</compIndexType>
+          <valueColumn>__TYPE_COLUMN_NAME</valueColumn>
+          <cacheStateList>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[2]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[3]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[4]"/>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[5]"/>
+          </cacheStateList>
+          <indexDefaultValueStateList/>
+        </com.citi.get.common.data.cache.CompositeIndexState>
+        <com.citi.get.common.data.cache.CompositeIndexState>
+          <name>index_crcy</name>
+          <indexColList>
+            <string>CRCY</string>
+          </indexColList>
+          <lookupKey>lookup_crcy</lookupKey>
+          <indexType>UNIQUE</indexType>
+          <isPrimary>false</isPrimary>
+          <isHybrid>false</isHybrid>
+          <compIndexType>COMPOSITE_MULTI_VALUE</compIndexType>
+          <valueColumn>__TYPE_COLUMN_NAME</valueColumn>
+          <cacheStateList>
+            <com.citi.get.common.data.cache.CacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[6]"/>
+          </cacheStateList>
+          <indexDefaultValueStateList/>
+        </com.citi.get.common.data.cache.CompositeIndexState>
+      </indexStateList>
+      <lookupStateList>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>lookup_smcp</name>
+          <fallbackLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState">
+            <params/>
+            <name>lookup_smcp_db</name>
+            <upsertDisable>false</upsertDisable>
+            <lookups>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>SMCP</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_dna_db_smcp</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>set nocount on; exec GetProduct @smcp_list=&apos;$SMCP$&apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>FII</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_qps_fii</name>
+                <upsertDisable>false</upsertDisable>
+                <query>set nocount on execute GetQPStoQPSPlus @fii_list=&apos;$FII$&apos;,@ref_type=&apos;REUT&apos;,@ref_list=&apos;$RIC$&apos;</query>
+                <fallbackParam>RIC</fallbackParam>
+                <config>
+                  <params/>
+                  <name>liquifi_qpsdb</name>
+                  <upsertDisable>false</upsertDisable>
+                  <clientId>liquifi</clientId>
+                  <apiVersion>productAPIj-4.2.L0,data_api-4.2.L0,qpsCompatibleAPI-3.0_C0</apiVersion>
+                  <apiHost>localhost</apiHost>
+                  <configFileContent>liquifi</configFileContent>
+                  <fidUsed>liquifi</fidUsed>
+                  <context>l2_qps</context>
+                  <processID>liquifi</processID>
+                  <service>QPSDB</service>
+                  <userName>prodsvc_ro</userName>
+                  <pwd>W5Z3ET8gaqC5D+tJB5bwkA==</pwd>
+                  <useInternString>false</useInternString>
+                  <transportId>TibcoEMS_QA</transportId>
+                  <adhocQryTimeOut>60000</adhocQryTimeOut>
+                  <precacheQryTimeOut>300000</precacheQryTimeOut>
+                  <minSvcNum>5</minSvcNum>
+                  <maxSvcNum>10</maxSvcNum>
+                  <isL1CacheDisabled>false</isL1CacheDisabled>
+                  <retryCount>3</retryCount>
+                  <wholeRetryCount>0</wholeRetryCount>
+                  <l2CacheTimeOut>0</l2CacheTimeOut>
+                  <l2PreCacheTimeOut>0</l2PreCacheTimeOut>
+                </config>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+            </lookups>
+            <type>SEPERATE_RESULT</type>
+            <batchSize>0</batchSize>
+          </fallbackLookupState>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState>
+              <params>
+                <com.citi.get.common.data.lookup.Param>
+                  <name>SMCP</name>
+                </com.citi.get.common.data.lookup.Param>
+              </params>
+              <name>lookup_l2_smcp_others</name>
+              <upsertDisable>false</upsertDisable>
+              <query>lookupCacheService</query>
+              <lookupAlias>lookup_smcp_cache</lookupAlias>
+              <config>
+                <params/>
+                <name>DNA_L2_CASHOTHER</name>
+                <upsertDisable>false</upsertDisable>
+                <clientId>liquifi</clientId>
+                <apiVersion>productAPIj-4.2.L0,data_api-4.2.L0,qpsCompatibleAPI-3.0_C0</apiVersion>
+                <apiHost>localhost</apiHost>
+                <configFileContent>liquifi</configFileContent>
+                <context>liquifi</context>
+                <processID>l2_liquifi</processID>
+                <service>QPSPLUSCASHANDOTHERCACHE_QA,QPSPLUSCASHANDOTHERCACHE_QA_SEC</service>
+                <userName>l2_liquifi</userName>
+                <pwd></pwd>
+                <useInternString>true</useInternString>
+                <transportId>TibcoEMS_QA</transportId>
+                <adhocQryTimeOut>20000</adhocQryTimeOut>
+                <precacheQryTimeOut>1200000</precacheQryTimeOut>
+                <minSvcNum>1</minSvcNum>
+                <maxSvcNum>15</maxSvcNum>
+                <isL1CacheDisabled>false</isL1CacheDisabled>
+                <retryCount>0</retryCount>
+                <wholeRetryCount>0</wholeRetryCount>
+                <l2CacheTimeOut>0</l2CacheTimeOut>
+                <l2PreCacheTimeOut>0</l2PreCacheTimeOut>
+              </config>
+              <isStatement>false</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </com.citi.get.common.data.lookup.dna.DNALookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>100</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>lookup_tckr</name>
+          <fallbackLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState">
+            <params/>
+            <name>lookup_db_tckr</name>
+            <upsertDisable>false</upsertDisable>
+            <lookups>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>TCKR</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_dna_db_tckr</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>set nocount on; exec GetProduct @filter_sql=&apos;select P.SMCP,P.MarketSectorDescription from PRODUCT P WITH(NOLOCK), CITI_XREF CX WITH(NOLOCK), EXCHANGE_LISTING_INFO ELI WITH(NOLOCK) where CX.XrefCode=&apos;&apos;TCKR&apos;&apos; and CX.XrefValue=&apos;&apos;$TCKR$&apos;&apos; and CX.SMCP=ELI.SMCP and ELI.IsRegionalPrimary=&apos;&apos;Y&apos;&apos; and ELI.SMCP=P.SMCP &apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+              <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+            </lookups>
+            <type>BATCH_SEPERATE_RESULT</type>
+            <batchSize>100</batchSize>
+          </fallbackLookupState>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState>
+              <params>
+                <com.citi.get.common.data.lookup.Param>
+                  <name>TCKR</name>
+                </com.citi.get.common.data.lookup.Param>
+                <com.citi.get.common.data.lookup.Param>
+                  <name>IsRegionalPrimary</name>
+                  <defaultValue>Y</defaultValue>
+                </com.citi.get.common.data.lookup.Param>
+              </params>
+              <name>lookup_l2_tckr_others</name>
+              <upsertDisable>false</upsertDisable>
+              <query>lookupCacheService</query>
+              <lookupAlias>lookup_tckr_rp_cache</lookupAlias>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/config"/>
+              <isStatement>false</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </com.citi.get.common.data.lookup.dna.DNALookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>100</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params>
+            <com.citi.get.common.data.lookup.Param>
+              <name>FII</name>
+            </com.citi.get.common.data.lookup.Param>
+          </params>
+          <name>lookup_fii</name>
+          <fallbackLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState">
+            <params/>
+            <name>lookup_db_fii</name>
+            <upsertDisable>false</upsertDisable>
+            <lookups>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>FII</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_dna_db_fii</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>set nocount on; exec GetProduct @filter_sql=&apos;select P.SMCP,P.MarketSectorDescription from PRODUCT P WITH(NOLOCK), CITI_XREF CX WITH(NOLOCK) where CX.XrefCode=&apos;&apos;FII&apos;&apos; and CX.XrefValue=&apos;&apos;$FII$&apos;&apos; and CX.SMCP=P.SMCP  &apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+              <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+            </lookups>
+            <type>BATCH_SEPERATE_RESULT</type>
+            <batchSize>100</batchSize>
+          </fallbackLookupState>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState>
+              <params>
+                <com.citi.get.common.data.lookup.Param>
+                  <name>FII</name>
+                </com.citi.get.common.data.lookup.Param>
+              </params>
+              <name>lookup_l2_fii_others</name>
+              <upsertDisable>false</upsertDisable>
+              <query>lookupCacheService</query>
+              <lookupAlias>lookup_fii_cache</lookupAlias>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/config"/>
+              <isStatement>false</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </com.citi.get.common.data.lookup.dna.DNALookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>100</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>lookup_ric</name>
+          <fallbackLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState">
+            <params/>
+            <name>lookup_db_ric</name>
+            <upsertDisable>false</upsertDisable>
+            <lookups>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>RIC</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_dna_db_ric</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>set nocount on; exec GetProduct @filter_sql=&apos;select P.SMCP,P.MarketSectorDescription from PRODUCT P WITH(NOLOCK), XREF CX WITH(NOLOCK), EXCHANGE_LISTING_INFO ELI WITH(NOLOCK) where CX.XrefCode=&apos;&apos;RIC&apos;&apos; and CX.XrefValue=&apos;&apos;$RIC$&apos;&apos; and CX.SMCP=ELI.SMCP and ELI.IsRegionalPrimary=&apos;&apos;Y&apos;&apos; and ELI.SMCP=P.SMCP &apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+              <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+            </lookups>
+            <type>BATCH_SEPERATE_RESULT</type>
+            <batchSize>100</batchSize>
+          </fallbackLookupState>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState>
+              <params>
+                <com.citi.get.common.data.lookup.Param reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState[4]/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/params/com.citi.get.common.data.lookup.Param"/>
+              </params>
+              <name>lookup_l2_ric_others</name>
+              <upsertDisable>false</upsertDisable>
+              <query>lookupCacheService</query>
+              <lookupAlias>lookup_ric_cache</lookupAlias>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/config"/>
+              <isStatement>false</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </com.citi.get.common.data.lookup.dna.DNALookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>100</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>lookup_isn</name>
+          <fallbackLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState">
+            <params/>
+            <name>lookup_db_isn</name>
+            <upsertDisable>false</upsertDisable>
+            <lookups>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>ISN</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_dna_db_isn</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>set nocount on; exec GetProduct @filter_sql=&apos;select P.SMCP,P.MarketSectorDescription from PRODUCT P WITH(NOLOCK), XREF CX WITH(NOLOCK), EXCHANGE_LISTING_INFO ELI WITH(NOLOCK) where CX.XrefCode=&apos;&apos;ISN&apos;&apos; and CX.XrefValue=&apos;&apos;$ISN$&apos;&apos; and CX.SMCP=ELI.SMCP and ELI.IsRegionalPrimary=&apos;&apos;Y&apos;&apos; and ELI.SMCP=P.SMCP &apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+              <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+            </lookups>
+            <type>BATCH_SEPERATE_RESULT</type>
+            <batchSize>100</batchSize>
+          </fallbackLookupState>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState>
+              <params>
+                <com.citi.get.common.data.lookup.Param reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState[5]/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/params/com.citi.get.common.data.lookup.Param"/>
+              </params>
+              <name>lookup_l2_isn_others</name>
+              <upsertDisable>false</upsertDisable>
+              <query>lookupCacheService</query>
+              <lookupAlias>lookup_isn_cache</lookupAlias>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/config"/>
+              <isStatement>false</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </com.citi.get.common.data.lookup.dna.DNALookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>100</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>lookup_sdl</name>
+          <fallbackLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState">
+            <params/>
+            <name>lookup_db_sdl</name>
+            <upsertDisable>false</upsertDisable>
+            <lookups>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>SDL</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_dna_db_sdl</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>set nocount on; exec GetProduct @filter_sql=&apos;select P.SMCP,P.MarketSectorDescription from PRODUCT P WITH(NOLOCK), XREF CX WITH(NOLOCK), EXCHANGE_LISTING_INFO ELI WITH(NOLOCK) where CX.XrefCode=&apos;&apos;SDL&apos;&apos; and CX.XrefValue=&apos;&apos;$SDL$&apos;&apos; and CX.SMCP=ELI.SMCP and ELI.IsRegionalPrimary=&apos;&apos;Y&apos;&apos; and ELI.SMCP=P.SMCP &apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+              <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+            </lookups>
+            <type>BATCH_SEPERATE_RESULT</type>
+            <batchSize>100</batchSize>
+          </fallbackLookupState>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState>
+              <params>
+                <com.citi.get.common.data.lookup.Param reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState[6]/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/params/com.citi.get.common.data.lookup.Param"/>
+              </params>
+              <name>lookup_l2_sdl_others</name>
+              <upsertDisable>false</upsertDisable>
+              <query>lookupCacheService</query>
+              <lookupAlias>lookup_sdl_cache</lookupAlias>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/config"/>
+              <isStatement>false</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </com.citi.get.common.data.lookup.dna.DNALookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>100</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>lookup_csp</name>
+          <fallbackLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState">
+            <params/>
+            <name>lookup_db_csp</name>
+            <upsertDisable>false</upsertDisable>
+            <lookups>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>CSP</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_dna_db_csp</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>set nocount on; exec GetProduct @filter_sql=&apos;select P.SMCP,P.MarketSectorDescription from PRODUCT P WITH(NOLOCK), XREF CX WITH(NOLOCK), EXCHANGE_LISTING_INFO ELI WITH(NOLOCK) where CX.XrefCode=&apos;&apos;CSP&apos;&apos; and CX.XrefValue=&apos;&apos;$CSP$&apos;&apos; and CX.SMCP=ELI.SMCP and ELI.IsRegionalPrimary=&apos;&apos;Y&apos;&apos; and ELI.SMCP=P.SMCP &apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+              <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+            </lookups>
+            <type>BATCH_SEPERATE_RESULT</type>
+            <batchSize>100</batchSize>
+          </fallbackLookupState>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState>
+              <params>
+                <com.citi.get.common.data.lookup.Param reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState[7]/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/params/com.citi.get.common.data.lookup.Param"/>
+              </params>
+              <name>lookup_l2_csp_others</name>
+              <upsertDisable>false</upsertDisable>
+              <query>lookupCacheService</query>
+              <lookupAlias>lookup_csp_cache</lookupAlias>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/config"/>
+              <isStatement>false</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </com.citi.get.common.data.lookup.dna.DNALookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>100</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>lookup_tkrs</name>
+          <fallbackLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState">
+            <params/>
+            <name>lookup_db_tkrs</name>
+            <upsertDisable>false</upsertDisable>
+            <lookups>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>TKRS</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_dna_db_tkrs</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>set nocount on; exec GetProduct @filter_sql=&apos;select P.SMCP,P.MarketSectorDescription from PRODUCT P WITH(NOLOCK), CITI_XREF CX WITH(NOLOCK), EXCHANGE_LISTING_INFO ELI WITH(NOLOCK) where CX.XrefCode=&apos;&apos;TKRS&apos;&apos; and CX.XrefValue=&apos;&apos;$TKRS$&apos;&apos; and CX.SMCP=ELI.SMCP and ELI.IsRegionalPrimary=&apos;&apos;Y&apos;&apos; and ELI.SMCP=P.SMCP &apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+              <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+            </lookups>
+            <type>BATCH_SEPERATE_RESULT</type>
+            <batchSize>100</batchSize>
+          </fallbackLookupState>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState>
+              <params>
+                <com.citi.get.common.data.lookup.Param reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState[8]/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/params/com.citi.get.common.data.lookup.Param"/>
+              </params>
+              <name>lookup_l2_tkrs_others</name>
+              <upsertDisable>false</upsertDisable>
+              <query>lookupCacheService</query>
+              <lookupAlias>lookup_tkrs_cache</lookupAlias>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/config"/>
+              <isStatement>false</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </com.citi.get.common.data.lookup.dna.DNALookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>100</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>lookup_smbs</name>
+          <fallbackLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState">
+            <params/>
+            <name>lookup_db_smbs</name>
+            <upsertDisable>false</upsertDisable>
+            <lookups>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>SMBS</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_dna_db_smbs</name>
+                <upsertDisable>false</upsertDisable>
+                <instance>Untitled String</instance>
+                <query>set nocount on; exec GetProduct @filter_sql=&apos;select P.SMCP,P.MarketSectorDescription from PRODUCT P WITH(NOLOCK), XREF CX WITH(NOLOCK), EXCHANGE_LISTING_INFO ELI WITH(NOLOCK) where CX.XrefCode=&apos;&apos;SMBS&apos;&apos; and CX.XrefValue=&apos;&apos;$SMBS$&apos;&apos; and CX.SMCP=ELI.SMCP and ELI.IsRegionalPrimary=&apos;&apos;Y&apos;&apos; and ELI.SMCP=P.SMCP &apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+              <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+            </lookups>
+            <type>BATCH_SEPERATE_RESULT</type>
+            <batchSize>100</batchSize>
+          </fallbackLookupState>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState>
+              <params>
+                <com.citi.get.common.data.lookup.Param>
+                  <name>SMBS</name>
+                </com.citi.get.common.data.lookup.Param>
+              </params>
+              <name>lookup_l2_smbs_others</name>
+              <upsertDisable>false</upsertDisable>
+              <query>lookupCacheService</query>
+              <lookupAlias>lookup_smbs_cache</lookupAlias>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/config"/>
+              <isStatement>false</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </com.citi.get.common.data.lookup.dna.DNALookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>100</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>lookup_db_smcp</name>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState"/>
+            <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+          </lookups>
+          <type>SEPERATE_RESULT</type>
+          <batchSize>0</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>lookup_reut</name>
+          <fallbackLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState">
+            <params/>
+            <name>lookup_reut_fallback_db</name>
+            <upsertDisable>false</upsertDisable>
+            <lookups>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>REUT</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_reut_fallback_db</name>
+                <upsertDisable>false</upsertDisable>
+                <query>set nocount on;execute GetProduct @filter_sql=&apos;select distinct VR.SMCP, VR.MarketSectorDescription from V_REUT_HISTORY VR  WITH(NOLOCK) WHERE REUT=&apos;&apos;$REUT$&apos;&apos;&apos;, @hflag=&apos;Y&apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+              <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+            </lookups>
+            <type>SEPERATE_RESULT</type>
+            <batchSize>100</batchSize>
+          </fallbackLookupState>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState>
+              <params>
+                <com.citi.get.common.data.lookup.Param>
+                  <name>REUT</name>
+                </com.citi.get.common.data.lookup.Param>
+              </params>
+              <name>lookup_dna_reut_others</name>
+              <upsertDisable>false</upsertDisable>
+              <query>lookupCacheService</query>
+              <fallbackParam>REUT</fallbackParam>
+              <lookupAlias>lookup_reut_cache</lookupAlias>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/config"/>
+              <isStatement>false</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </com.citi.get.common.data.lookup.dna.DNALookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>0</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>load_comp_cache</name>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+              <params/>
+              <name>lookup_init_equity</name>
+              <upsertDisable>false</upsertDisable>
+              <lookups>
+                <com.citi.get.common.data.lookup.dna.DNALookupState>
+                  <params/>
+                  <name>lookup_dna_db_init_equity</name>
+                  <upsertDisable>false</upsertDisable>
+                  <instance>Untitled String</instance>
+                  <query>set nocount on;execute GetProduct @filter_sql=&apos;select distinct o.SMCP,o.MarketSectorDescription from OCEAN_SMCP_DATA_SOURCESYS o WITH(NOLOCK) inner join PRODUCT p WITH(NOLOCK) on p.SMCP=o.SMCP where p.OperationalIndicator=&apos;&apos;Y&apos;&apos; and (p.IsDummyProduct=&apos;&apos;N&apos;&apos; or p.IsDummyProduct is null) and o.SOURCE_SYS=&apos;&apos;UKLQFI&apos;&apos; and o.MarketSectorDescription not in(&apos;&apos;FUTURE&apos;&apos;,&apos;&apos;OPTION&apos;&apos;) and o.TRADE_DATE &gt; GETDATE()-60&apos;</query>
+                  <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                  <isStatement>true</isStatement>
+                  <isSpCallNoParam>false</isSpCallNoParam>
+                </com.citi.get.common.data.lookup.dna.DNALookupState>
+                <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+              </lookups>
+              <type>BATCH_SEPERATE_RESULT</type>
+              <batchSize>250</batchSize>
+            </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>0</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+        <com.citi.get.common.data.lookup.composite.CompositeLookupState>
+          <params/>
+          <name>lookup_crcy</name>
+          <fallbackLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState">
+            <params/>
+            <name>lookup_crcy_fallback_db</name>
+            <upsertDisable>false</upsertDisable>
+            <lookups>
+              <com.citi.get.common.data.lookup.dna.DNALookupState>
+                <params>
+                  <com.citi.get.common.data.lookup.Param>
+                    <name>CRCY</name>
+                  </com.citi.get.common.data.lookup.Param>
+                </params>
+                <name>lookup_crcy_fallback_db</name>
+                <upsertDisable>false</upsertDisable>
+                <query>set nocount on;execute GetProduct @ref_type=&apos;CRCY&apos;, @ref_list=&apos;$CRCY$&apos;</query>
+                <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+                <isStatement>true</isStatement>
+                <isSpCallNoParam>false</isSpCallNoParam>
+              </com.citi.get.common.data.lookup.dna.DNALookupState>
+              <com.citi.get.common.data.lookup.dna.DNALookupState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]"/>
+            </lookups>
+            <type>SEPERATE_RESULT</type>
+            <batchSize>100</batchSize>
+          </fallbackLookupState>
+          <upsertDisable>false</upsertDisable>
+          <lookups>
+            <com.citi.get.common.data.lookup.dna.DNALookupState>
+              <params>
+                <com.citi.get.common.data.lookup.Param>
+                  <name>CRCY</name>
+                </com.citi.get.common.data.lookup.Param>
+              </params>
+              <name>lookup_l2_crcy_others</name>
+              <upsertDisable>false</upsertDisable>
+              <query>lookupCacheService</query>
+              <lookupAlias>lookup_crcy_cache</lookupAlias>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/config"/>
+              <isStatement>false</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </com.citi.get.common.data.lookup.dna.DNALookupState>
+          </lookups>
+          <type>MULTIPLE_THREAD_RESULT</type>
+          <batchSize>0</batchSize>
+        </com.citi.get.common.data.lookup.composite.CompositeLookupState>
+      </lookupStateList>
+      <initialLookupState class="com.citi.get.common.data.lookup.composite.CompositeLookupState" reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState[12]/lookups/com.citi.get.common.data.lookup.composite.CompositeLookupState"/>
+      <isVector>false</isVector>
+      <initialTableSize>0</initialTableSize>
+      <initlookupStateList/>
+      <valueCacheList>
+        <com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+          <valueString>com.citi.productapi.info.impl.Equity</valueString>
+          <cacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState"/>
+          <outer-class>
+            <indexStateList/>
+            <lookupStateList/>
+            <isVector>false</isVector>
+            <initialTableSize>0</initialTableSize>
+            <initlookupStateList/>
+            <valueCacheList/>
+          </outer-class>
+        </com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+        <com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+          <valueString>com.citi.productapi.info.impl.Restriction</valueString>
+          <cacheState>
+            <name>RESTRICTION</name>
+            <typeString>com.citi.productapi.info.impl.Restriction</typeString>
+            <indexStateList>
+              <com.citi.get.common.data.cache.IndexState>
+                <name>index_restriction_smcp</name>
+                <indexColList>
+                  <string>SMCP</string>
+                  <string>DFLAG</string>
+                </indexColList>
+                <lookupKey>lookup_restriction_smcp</lookupKey>
+                <indexType>MULTI_VALUE</indexType>
+                <isPrimary>false</isPrimary>
+                <isHybrid>false</isHybrid>
+              </com.citi.get.common.data.cache.IndexState>
+              <com.citi.get.common.data.cache.IndexState>
+                <name>index_restriction_record</name>
+                <indexColList>
+                  <string>SMCP</string>
+                  <string>ActionType</string>
+                  <string>Category</string>
+                  <string>EffectiveDate</string>
+                </indexColList>
+                <lookupKey>lookup_restriction_record</lookupKey>
+                <indexType>UNIQUE</indexType>
+                <isPrimary>true</isPrimary>
+                <isHybrid>false</isHybrid>
+              </com.citi.get.common.data.cache.IndexState>
+            </indexStateList>
+            <lookupStateList/>
+            <initialLookupState class="com.citi.get.common.data.lookup.dna.DNALookupState">
+              <params/>
+              <name>lookup_restriction_init</name>
+              <upsertDisable>false</upsertDisable>
+              <instance>Untitled String</instance>
+              <query>execute GetProductByType @product_type=&apos;RESTRICTION&apos;</query>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+              <isStatement>true</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </initialLookupState>
+            <isVector>true</isVector>
+            <foreignKey>SecuritySMCP</foreignKey>
+            <initialTableSize>0</initialTableSize>
+          </cacheState>
+          <outer-class>
+            <indexStateList/>
+            <lookupStateList/>
+            <isVector>false</isVector>
+            <initialTableSize>0</initialTableSize>
+            <initlookupStateList/>
+            <valueCacheList/>
+          </outer-class>
+        </com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+        <com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+          <valueString>com.citi.productapi.info.impl.Warrant</valueString>
+          <cacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[2]"/>
+          <outer-class>
+            <indexStateList/>
+            <lookupStateList/>
+            <isVector>false</isVector>
+            <initialTableSize>0</initialTableSize>
+            <initlookupStateList/>
+            <valueCacheList/>
+          </outer-class>
+        </com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+        <com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+          <valueString>com.citi.productapi.info.impl.QPSLegacy</valueString>
+          <cacheState>
+            <name>QPSLEGACY</name>
+            <typeString>com.citi.productapi.info.impl.QPSLegacy</typeString>
+            <indexStateList>
+              <com.citi.get.common.data.cache.IndexState>
+                <name>index_qpslegacy_smcp</name>
+                <indexColList>
+                  <string>SMCP</string>
+                </indexColList>
+                <lookupKey>lookup_qpslegacy_smcp</lookupKey>
+                <indexType>UNIQUE</indexType>
+                <isPrimary>true</isPrimary>
+                <isHybrid>false</isHybrid>
+              </com.citi.get.common.data.cache.IndexState>
+              <com.citi.get.common.data.cache.IndexState>
+                <name>index_qpslegacy_region_smcp</name>
+                <indexColList>
+                  <string>RegionPrimarySMCP</string>
+                </indexColList>
+                <lookupKey>lookup_qpslegacy_region_smcp</lookupKey>
+                <indexType>MULTI_VALUE</indexType>
+                <isPrimary>false</isPrimary>
+                <isHybrid>false</isHybrid>
+              </com.citi.get.common.data.cache.IndexState>
+            </indexStateList>
+            <lookupStateList/>
+            <initialLookupState class="com.citi.get.common.data.lookup.dna.DNALookupState">
+              <params/>
+              <name>lookup_qpslegacy_init</name>
+              <upsertDisable>false</upsertDisable>
+              <instance>Untitled String</instance>
+              <query>execute GetProductByType @product_type=&apos;QPSLEGACY&apos;</query>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+              <isStatement>true</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </initialLookupState>
+            <isVector>true</isVector>
+            <initialTableSize>0</initialTableSize>
+          </cacheState>
+          <outer-class>
+            <indexStateList/>
+            <lookupStateList/>
+            <isVector>false</isVector>
+            <initialTableSize>0</initialTableSize>
+            <initlookupStateList/>
+            <valueCacheList/>
+          </outer-class>
+        </com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+        <com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+          <valueString>com.citi.productapi.info.impl.QPS</valueString>
+          <cacheState>
+            <name>QPS</name>
+            <typeString>com.citi.productapi.info.impl.QPS</typeString>
+            <indexStateList>
+              <com.citi.get.common.data.cache.IndexState>
+                <name>index_qps_fii</name>
+                <indexColList>
+                  <string>Fii</string>
+                </indexColList>
+                <lookupKey>lookup_qps_fii</lookupKey>
+                <indexType>UNIQUE</indexType>
+                <isPrimary>true</isPrimary>
+                <isHybrid>false</isHybrid>
+              </com.citi.get.common.data.cache.IndexState>
+              <com.citi.get.common.data.cache.IndexState>
+                <name>index_qps_reut</name>
+                <indexColList>
+                  <string>REUT</string>
+                </indexColList>
+                <lookupKey>lookup_qps_reut</lookupKey>
+                <indexType>MULTI_VALUE</indexType>
+                <isPrimary>false</isPrimary>
+                <isHybrid>false</isHybrid>
+              </com.citi.get.common.data.cache.IndexState>
+            </indexStateList>
+            <lookupStateList/>
+            <initialLookupState class="com.citi.get.common.data.lookup.dna.DNALookupState">
+              <params/>
+              <name>lookup_qps_init</name>
+              <upsertDisable>false</upsertDisable>
+              <query>set nocount on execute GetProductByType @product_type=&apos;QPS&apos;</query>
+              <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/fallbackLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState[2]/config"/>
+              <isStatement>true</isStatement>
+              <isSpCallNoParam>false</isSpCallNoParam>
+            </initialLookupState>
+            <isVector>true</isVector>
+            <foreignKey>FII</foreignKey>
+            <keyColumn>Fii</keyColumn>
+            <initialTableSize>0</initialTableSize>
+          </cacheState>
+          <outer-class>
+            <indexStateList/>
+            <lookupStateList/>
+            <isVector>false</isVector>
+            <initialTableSize>0</initialTableSize>
+            <initlookupStateList/>
+            <valueCacheList/>
+          </outer-class>
+        </com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+        <com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+          <valueString>com.citi.productapi.info.impl.Index</valueString>
+          <cacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[3]"/>
+          <outer-class>
+            <indexStateList/>
+            <lookupStateList/>
+            <isVector>false</isVector>
+            <initialTableSize>0</initialTableSize>
+            <initlookupStateList/>
+            <valueCacheList/>
+          </outer-class>
+        </com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+        <com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+          <valueString>com.citi.productapi.info.impl.Corporate</valueString>
+          <cacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[4]"/>
+          <outer-class>
+            <indexStateList/>
+            <lookupStateList/>
+            <isVector>false</isVector>
+            <initialTableSize>0</initialTableSize>
+            <initlookupStateList/>
+            <valueCacheList/>
+          </outer-class>
+        </com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+        <com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+          <valueString>com.citi.productapi.info.impl.Preferred</valueString>
+          <cacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[5]"/>
+          <outer-class>
+            <indexStateList/>
+            <lookupStateList/>
+            <isVector>false</isVector>
+            <initialTableSize>0</initialTableSize>
+            <initlookupStateList/>
+            <valueCacheList/>
+          </outer-class>
+        </com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+        <com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+          <valueString>com.citi.productapi.info.impl.Currency</valueString>
+          <cacheState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState[6]"/>
+          <outer-class>
+            <indexStateList/>
+            <lookupStateList/>
+            <isVector>false</isVector>
+            <initialTableSize>0</initialTableSize>
+            <valueCacheList/>
+          </outer-class>
+        </com.citi.get.common.data.cache.table.CompositeTableCacheState_-ValueCacheEntry>
+      </valueCacheList>
+      <column>MarketSectorDescription</column>
+    </com.citi.get.common.data.cache.table.CompositeTableCacheState>
+  </cacheStates>
+  <updateHanlderStates>
+    <com.citi.get.common.data.updates.q.QUpdateHandlerState>
+      <name>Q_UPDATEHandler</name>
+      <cacheState class="com.citi.get.common.data.cache.table.CompositeTableCacheState" reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState"/>
+      <qConnections>
+        <com.citi.get.common.data.updates.q.QConnectionState>
+          <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/lookupStateList/com.citi.get.common.data.lookup.composite.CompositeLookupState/lookups/com.citi.get.common.data.lookup.dna.DNALookupState/config"/>
+          <subject>QPSPLUS_PRODUCT_SUBSCRIPTION</subject>
+          <filterQuery>ContextFilter</filterQuery>
+          <filterParam>liquifi</filterParam>
+        </com.citi.get.common.data.updates.q.QConnectionState>
+      </qConnections>
+      <className>com.citi.productapi.data.updates.q.QUpdateHandler</className>
+      <primaryIndex class="com.citi.get.common.data.cache.CompositeIndexState" reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState"/>
+    </com.citi.get.common.data.updates.q.QUpdateHandlerState>
+  </updateHanlderStates>
+  <publisherStates/>
+  <startupStates>
+    <com.citi.productapi.data.startup.QPSMappingStartupState>
+      <name>QPS Mapping Startup state</name>
+      <className>com.citi.productapi.data.startup.QPSMappingStartup</className>
+      <loadMappingState>
+        <params/>
+        <name>init_load_mapping</name>
+        <upsertDisable>false</upsertDisable>
+        <instance>QPS Mapping Data Lookup</instance>
+        <query>select CodeType,Code,Value From PRODUCT_CODE_MAPPING where ActiveStatus =&apos;Y&apos; </query>
+        <config reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+        <isStatement>true</isStatement>
+        <isSpCallNoParam>false</isSpCallNoParam>
+      </loadMappingState>
+    </com.citi.productapi.data.startup.QPSMappingStartupState>
+  </startupStates>
+  <clntCfgState reference="/com.citi.get.common.data.dm.DataManagerState/cacheStates/com.citi.get.common.data.cache.table.CompositeTableCacheState/indexStateList/com.citi.get.common.data.cache.CompositeIndexState/cacheStateList/com.citi.get.common.data.cache.CacheState/initialLookupState/config"/>
+  <transportId>TibcoEMS_QA</transportId>
+  <l2cache>false</l2cache>
+  <useQpsReutConversion>false</useQpsReutConversion>
+  <dmServicePort>0</dmServicePort>
+</com.citi.get.common.data.dm.DataManagerState>

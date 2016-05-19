@@ -40,7 +40,7 @@ import com.citigroup.liquifi.clock.Clock;
 import com.citigroup.liquifi.entities.LFOutputTag;
 import com.citigroup.liquifi.entities.LFTag;
 import com.citigroup.liquifi.entities.Tag;
-import com.citigroup.liquifi.util.SymFiiUtil;
+import com.citigroup.liquifi.util.ProductApiUtil;
 
 public class ApplicationContext {
 	private static XmlBeanFactory factory;
@@ -75,7 +75,7 @@ public class ApplicationContext {
 	private static AutoPilotBrokerInfoFactory brokerFactory;
     private static AutoPilotSocketConnectionFactory socketFactory;
     private static Clock clock;
-    private static SymFiiUtil symFiiUtil;
+    private static ProductApiUtil productApiUtil;
 	private static CommonTagTableModel commonTagTableModel;
 	
 	public static void init() throws Exception{
@@ -328,13 +328,13 @@ public class ApplicationContext {
     	return clock;
     }
 
-	public static SymFiiUtil getSymFiiUtil() {
-		if (symFiiUtil == null) {
+	public static ProductApiUtil getProductApiUtil() {
+		if (productApiUtil == null) {
 			Resource resource = new ClassPathResource("springConfig.xml");
 			BeanFactory factory = new XmlBeanFactory(resource);
-			symFiiUtil = (SymFiiUtil) factory.getBean("symFiiUtil");
+			productApiUtil = (ProductApiUtil) factory.getBean("productApiUtil");
 		}
-		return symFiiUtil;
+		return productApiUtil;
 	}
 
 }
