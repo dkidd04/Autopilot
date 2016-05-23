@@ -58,4 +58,13 @@
     
     <bean id="clock" class="com.citigroup.liquifi.clock.SystemTimePassThroughClock" lazy-init="true" />
     
+    <bean id="productApiUtil" class="com.citigroup.liquifi.util.ProductApiUtil"  singleton="true">
+    	<property name="configMap">
+			<map>
+		 		<entry key = "ClientName" value ="ttioi" />
+		 		<entry key = "Region" value ="EMEA" />
+		 		<entry key = "ENV" value ="QAPROD" />
+			</map>
+		</property>
+    </bean>
 </beans>

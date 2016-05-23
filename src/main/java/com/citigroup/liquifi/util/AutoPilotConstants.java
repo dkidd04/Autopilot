@@ -34,6 +34,7 @@ public interface AutoPilotConstants {
 	public static final String PLACEHOLDER_UNSET = "@UNSET";
 	public static final String PLACEHOLDER_NOTEQUALTO = "!=";
 	public static final String PLACEHOLDER_REMOVE = "@REMOVE";
+	public static final String PLACEHOLDER_FII = "@FII";
 	
 	
 	public static final String PLACEHOLDER_OUTPUT = "@OP";
