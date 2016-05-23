@@ -330,8 +330,6 @@ public class ApplicationContext {
 
 	public static ProductApiUtil getProductApiUtil() {
 		if (productApiUtil == null) {
-			Resource resource = new ClassPathResource("springConfig.xml");
-			BeanFactory factory = new XmlBeanFactory(resource);
 			productApiUtil = (ProductApiUtil) factory.getBean("productApiUtil");
 		}
 		return productApiUtil;

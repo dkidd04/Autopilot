@@ -37,9 +37,6 @@ public class PlaceHolders {
 
 	public static void addSymFiiMap(String symbol){
 		symfiiMap.put(symbol, ApplicationContext.getProductApiUtil().getFiiStr(symbol));
-		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-		System.out.println("SYMBOL:"+symbol+"  FII :"+symfiiMap.get(symbol));
-		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 	}
 	
 	public String parseAPVarPlaceholdersString(String str, Set<Tag> overwrite) {
