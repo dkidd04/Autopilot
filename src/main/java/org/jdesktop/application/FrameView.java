@@ -37,8 +37,9 @@ public class FrameView extends View {
      */
     public JFrame getFrame() {
 	if (frame == null) {
-	    String title = getContext().getResourceMap().getString("Application.title");
-	    frame = new JFrame(title);
+		String title = getContext().getResourceMap().getString("Application.title");
+	    String version = getContext().getResourceMap().getString("Application.version");
+	    frame = new JFrame(title+" | "+System.getProperty("application")+ " | "+System.getProperty("region")+ " | "+System.getProperty("env")+ " | "+version);
 	    frame.setName("mainFrame");
 	    frame.setIconImage((Image)getContext().getResourceMap().getObject("Application.icon",Image.class));
 	}
