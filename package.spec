@@ -1,10 +1,7 @@
-%define __os_install_post /usr/lib/rpm/brp-compress 
-%{nil}
-
 Summary: Liquifi Autopilot
-Name: LiqFiAuto
-Version: 1.9
-Release: 1
+Name: _NAME_
+Version: _VERSION_
+Release: _RELEASE_
 Group: Development/Libraries
 License: Commercial
 ####################################################################
@@ -17,6 +14,12 @@ BuildRoot: %{_builddir}/
 
 %description
 Liquifi Autopilot business logic regression test process.
+
+%define __jar_repack 0
+%global _binary_filedigest_algorithm 1
+%global _source_filedigest_algorithm 1
+%define _source_payload w0.gzdio
+%define _binary_payload w0.gzdio
 
 # The %prep, %build and %install macros are unused in this project
 %prep
