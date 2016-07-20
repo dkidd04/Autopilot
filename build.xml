@@ -1,6 +1,6 @@
-<project name="AutoPilot-1.9" default="install" basedir=".">
+<project name="AutoPilot" default="install" basedir=".">
 	<property name="label" value="dev-build" />
-	<property file="buildrpm_us.properties" />
+	<property file="buildrpm.properties" />
 	<property name="target" value="${basedir}/target" />
 	<property name="dir.dist" value="${basedir}/dist" />
 	<property name="build.main.classes.dir" value="${target}/main/classes" />
@@ -17,7 +17,7 @@
 	<property name="dir.emma.instr" value="${basedir}/outinstr" />
 	<property name="dir.sonar.processing" value="${basedir}/.sonar" />
 	<property name="dir.src" value="${basedir}/src/main/java" />
-	<property name="jar.name" value="LiqFiAutoPilot.jar" />
+	<property name="jar.name" value="AutoPilot.jar" />
 
 	
 <!-- Start setting paths that will be used for compiling, unit testing, etc.-->
@@ -125,43 +125,6 @@
 		</junit>
 	</target>
 
-
-<!-- Sonar configuration section START -->
-
-	<!-- Sonar task definition -->
-	<taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml" classpathref="lib.class.path" />
-
-	<!-- connection details for the mysql database that Sonar uses -->
-	<property name="sonar.jdbc.url" value="jdbc:mysql://eqliqap1d:3306/sonar?useUnicode=true&amp;characterEncoding=utf8&amp;maxAllowedPacket=1073741824" />
-	<property name="sonar.jdbc.driverClassName" value="com.mysql.jdbc.Driver" />
-	<property name="sonar.jdbc.username" value="sonar" />
-	<property name="sonar.jdbc.password" value="sonar" />
-	
-	<!-- sonar server url (really only needed if its running on a remote host) -->
-	<property name="sonar.host.url" value="http://eqliqap1d:9000" />
-
-	<!-- properties to allow Sonar reuse the Emma code coverage outputs -->
-	<property name="sonar.surefire.reportsPath" value="${dir.unit.test.report}"/>  
-	<property name="sonar.dynamicAnalysis" value="reuseReports"/>
-	<property name="sonar.core.codeCoveragePlugin" value="emma"/> 
-	<property name="sonar.emma.reportPath" value="${dir.emma.coverage}"/>
-
-	<!-- target to initiate the sonar analysis (static code analysis), etc. -->
-	<target name="sonar" depends="test.unit">
-
-                <sonar:sonar key="com.citi:Liquifi-Core" version="3.0" xmlns:sonar="antlib:org.sonar.ant">
-                        <sources location="src/main/java" />
-                        <binaries location="target/main/classes" />
-                        <tests location="src/test/java" />
-                        <libraries refid="lib.class.path"/>
-                </sonar:sonar>
-
-        </target>
-
-<!-- Sonar configuration section END -->
-
-
-
 <!-- unit testing and Emma code coverage section START -->
 
 	<taskdef resource="emma_ant.properties" classpathref="lib.class.path" />
@@ -253,9 +216,9 @@
 			<fileset dir="${basedir}/src/main/resources/config/" includes="**/**" />
 		</copy>
 
-		<copy todir="${dir.install.bin}">
+		<!-- <copy todir="${dir.install.bin}">
                         <fileset dir="${basedir}/bin" includes="*" />
-                </copy>
+                </copy> -->
 
 		<copy todir="${dir.install}/lib">
 			<fileset dir="${dir.dist}" includes="${jar.name}" />

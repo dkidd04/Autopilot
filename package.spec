@@ -13,7 +13,7 @@ BuildRoot: %{_builddir}/
 #Prefix: /opt
 
 %description
-Liquifi Autopilot business logic regression test process.
+Liquifi Autopilot business logic regression test process. %{version} (build %{release})
 
 %define __jar_repack 0
 %global _binary_filedigest_algorithm 1
@@ -21,10 +21,11 @@ Liquifi Autopilot business logic regression test process.
 %define _source_payload w0.gzdio
 %define _binary_payload w0.gzdio
 
-# The %prep, %build and %install macros are unused in this project
 %prep
+/bin/mkdir %{_buildrootdir}/%{name}-%{version}-%{release}.%{_arch}
 %build
 %install
+/bin/cp -r %{_builddir}/* %{_buildrootdir}/%{name}-%{version}-%{release}.%{_arch}/
 
 ####################################################################################
 # Simply list all the files that need to be installed by this RPM
@@ -32,8 +33,7 @@ Liquifi Autopilot business logic regression test process.
 ####################################################################################
 %files
 %defattr(755,@func_user@,@func_group@)
-/opt/@func_group@/LiqFiAuto/%{version}
-
+/opt/liquifi/%{name}/%{version}
 
 ###################################################################################
 # %pre and %post are install scripts that run before and after package installation
@@ -54,19 +54,6 @@ echo preinstall
 
 %post
 echo postinstall
-cd /opt/@func_group@/%{name}/
-
-#Here we are checking to see if we are installing on a prod box to decide if we create a symbolic link to this version.
-installHost=`hostname`
-
-if  [[ "${installHost}" == eqliqap*p ]]; then
-	echo "not setting the currentVersion symbolic link as this IS a prod box."
-else
-	echo "setting the currentVersion symbolic link as this is NOT a prod box."
-	rm currentVersion
-	ln -s %{version} currentVersion
-	chown -h @func_user@:@func_group@ currentVersion
-fi
 
 %preun
 echo preuninstall
@@ -79,4 +66,3 @@ echo postuninstall
 # deleted before uninstall is called
 %uninstall
 echo uninstalling
-
