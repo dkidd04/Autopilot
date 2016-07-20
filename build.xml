@@ -1,4 +1,4 @@
-<project name="AutoPilot-1.9" default="install" basedir=".">
+<project name="AutoPilot" default="install" basedir=".">
 	<property name="label" value="dev-build" />
 	<property file="buildrpm.properties" />
 	<property name="target" value="${basedir}/target" />
