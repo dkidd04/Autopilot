@@ -17,7 +17,7 @@
 	<property name="dir.emma.instr" value="${basedir}/outinstr" />
 	<property name="dir.sonar.processing" value="${basedir}/.sonar" />
 	<property name="dir.src" value="${basedir}/src/main/java" />
-	<property name="jar.name" value="LiqFiAutoPilot.jar" />
+	<property name="jar.name" value="AutoPilot.jar" />
 
 	
 <!-- Start setting paths that will be used for compiling, unit testing, etc.-->
