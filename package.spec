@@ -32,7 +32,7 @@ Liquifi Autopilot business logic regression test process.
 ####################################################################################
 %files
 %defattr(755,@func_user@,@func_group@)
-/opt/@func_group@/LiqFiAuto/%{version}
+/opt/liquifi/AutoPilot/%{version}
 
 
 ###################################################################################
