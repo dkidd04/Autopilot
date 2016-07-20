@@ -1,6 +1,6 @@
 <project name="AutoPilot-1.9" default="install" basedir=".">
 	<property name="label" value="dev-build" />
-	<property file="buildrpm_us.properties" />
+	<property file="buildrpm.properties" />
 	<property name="target" value="${basedir}/target" />
 	<property name="dir.dist" value="${basedir}/dist" />
 	<property name="build.main.classes.dir" value="${target}/main/classes" />
