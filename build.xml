@@ -152,7 +152,6 @@
 			<fileset dir="${basedir}/src/main/resources/config/" includes="**/**" />
 		</copy>
 		<copy todir="${dir.install.bin}">
-            <fileset dir="${basedir}/bin" includes="*" />
             <fileset dir="${basedir}/scripts" includes="*" />
         </copy>
 		<copy todir="${dir.install}/lib">

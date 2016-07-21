@@ -12,23 +12,24 @@ then
         exit 1
 fi
 
-REGION=$1
-APP=$2
-ENVIRONMENT=$3
-TESTS_TO_RUN=$4
+VERSION=$1
+REGION=$2
+APP=$3
+ENVIRONMENT=$4
+TESTS_TO_RUN=$5
 
-if [ $# -lt 4 ]; then
+if [ $# -lt 5 ]; then
         TESTS_TO_RUN="where Active = 'Y' AND AppName = 'LIQUIFI'"
         echo "defaulting the test cases to run"
 fi
 
 if [ $REGION == "emea" ]
 then
-        export JAVA_HOME=/export/opt/jre/1.6.0_31l64
-        AUTO_HOME="/opt/liquifi/LiqFiAuto/currentVersion"
+        export JAVA_HOME=/xenv/java/X/1.6.0_31l64
+        AUTO_HOME="/opt/liquifi/AutoPilot/$VERSION"
 else
         export JAVA_HOME=/usr/java/jdk1.6.0_26
-        AUTO_HOME="/opt/aee/LiqFiAuto/currentVersion"
+        AUTO_HOME="/opt/aee/LiqFiAuto/VERSION"
 fi
 
 export LIB_HOME="$AUTO_HOME/lib"
