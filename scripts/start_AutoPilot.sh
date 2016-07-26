@@ -6,30 +6,30 @@ DATE=`/bin/date +%m%d%y_%H.%M.%S`
 echo "${DATE}: Starting up...."
 if [ $# -lt 3 ]
 then
-        echo "Usage:    start_AutoPilot.sh region application environment (optional)TestCase_Query_String"
-        echo "Sample:   start_AutoPilot.sh emea aee dev \"where Active = 'Y' AND AppName = 'LIQUIFI'\""
-        echo "Exiting..."
-        exit 1
+	echo "Usage:    start_AutoPilot.sh region application environment (optional)TestCase_Query_String"
+	echo "Sample:   start_AutoPilot.sh emea aee dev \"where Active = 'Y' AND AppName = 'LIQUIFI'\""
+	echo "Exiting..."
+	exit 1
 fi
 
-VERSION=$1
-REGION=$2
-APP=$3
-ENVIRONMENT=$4
-TESTS_TO_RUN=$5
+REGION=$1
+APP=$2
+ENVIRONMENT=$3
+TESTS_TO_RUN=$4
+RELEASE_NUMBER=""
 
-if [ $# -lt 5 ]; then
-        TESTS_TO_RUN="where Active = 'Y' AND AppName = 'LIQUIFI'"
-        echo "defaulting the test cases to run"
+if [ $# -lt 4 ]; then
+	TESTS_TO_RUN="where Active = 'Y' AND AppName = 'LIQUIFI'"
+	echo "defaulting the test cases to run"
 fi
 
 if [ $REGION == "emea" ]
 then
-        export JAVA_HOME=/xenv/java/X/1.6.0_31l64
-        AUTO_HOME="/opt/liquifi/AutoPilot/$VERSION"
+	export JAVA_HOME=/xenv/java/X/1.7.0_91l64/
+	AUTO_HOME="/opt/liquifi/AutoPilot/currentVersion"
 else
-        export JAVA_HOME=/usr/java/jdk1.6.0_26
-        AUTO_HOME="/opt/aee/LiqFiAuto/VERSION"
+	export JAVA_HOME=/usr/java/jdk1.6.0_26
+	AUTO_HOME="/opt/aee/AutoPilot/currentVersion"
 fi
 
 export LIB_HOME="$AUTO_HOME/lib"
@@ -63,24 +63,24 @@ APP_OPTS="-Dconfig.home=$CONFIG_HOME \
 
 if [ $APP == "cx" ]
 then
-        APP_OPTS="$APP_OPTS \
+	APP_OPTS="$APP_OPTS \
 -Dinstance=6 \
 -Duse.xstream=true"
 fi
 
 if [ $APP == "rates" ]
 then
-        APP_OPTS="$APP_OPTS \
+	APP_OPTS="$APP_OPTS \
 -Dinstance=3 \
 -Duse.xstream=true"
 fi
 
 if [ $REGION == "emea" ]
 then
-	echo "$JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS -DTestCase_QueryString=\"$TESTS_TO_RUN\" com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG"
+	echo "$JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS -DTestCase_QueryString=\"$TESTS_TO_RUN\" -DRelease_Number=\"$RELEASE_NUMBER\" com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG"
 	TEMPLOGDIR=/opt/loghome/autopilot
 	TEMPLOG=$TEMPLOGDIR/AutopilotLiquifiCore*d.log
-	$JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS -DTestCase_QueryString="$TESTS_TO_RUN" com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG 2>&1
+	$JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS -DTestCase_QueryString="$TESTS_TO_RUN" -DRelease_Number="$RELEASE_NUMBER"  com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG 2>&1
 	AutopilotLiquifiCore_result=`/bin/grep "TESTRESULTLOG|PASSED" $TEMPLOG | /bin/grep -v "FAILED:0"`
 	if [ -z "$AutopilotLiquifiCore_result"  ]; then
 		echo "Completed AutopilotLiquifiCore" `date`
