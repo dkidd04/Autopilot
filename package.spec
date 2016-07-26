@@ -47,7 +47,6 @@ Liquifi Autopilot business logic regression test process. %{version} (build %{re
 
 %pre
 echo preinstall
-rm /opt/@func_user@/%{name}/currentVersion
 
 %post
 echo postinstall
