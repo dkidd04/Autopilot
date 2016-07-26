@@ -34,7 +34,6 @@ Liquifi Autopilot business logic regression test process. %{version} (build %{re
 %files
 %defattr(755,@func_user@,@func_group@)
 /opt/liquifi/%{name}/%{version}
-/opt/loghome/%{name}/
 
 ###################################################################################
 # %pre and %post are install scripts that run before and after package installation
@@ -53,6 +52,8 @@ rm /opt/@func_user@/%{name}/currentVersion
 %post
 echo postinstall
 ln -s /opt/@func_user@/%{name}/%{version} /opt/@func_user@/%{name}/currentVersion
+mkdir -p /opt/loghome/%{name}/
+chown @func_user@:@func_group@ /opt/loghome/%{name}
 
 %preun
 echo preuninstall
