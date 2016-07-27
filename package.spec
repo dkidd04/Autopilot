@@ -50,9 +50,10 @@ echo preinstall
 
 %post
 echo postinstall
-ln -s /opt/@func_user@/%{name}/%{version} /opt/@func_user@/%{name}/currentVersion
-mkdir -p /opt/loghome/%{name}/
-chown @func_user@:@func_group@ /opt/loghome/%{name}
+ln -s /opt/liquifi/%{name}/%{version} /opt/liquifi/%{name}/currentVersion
+mkdir -p /opt/loghome/autopilot/
+chown @func_user@:@func_group@ /opt/loghome/autopilot
+chown @func_user@:@func_group@ /opt/liquifi/%{name}
 
 %preun
 echo preuninstall
