@@ -47,13 +47,13 @@ Liquifi Autopilot business logic regression test process. %{version} (build %{re
 
 %pre
 echo preinstall
-#rm -r  /opt/@func_user@/%{name}/%{version}/
-#rm -r  /opt/@func_user@/%{name}/%{version}/bin/
-#rm -r /opt/@func_user@/%{name}/%{version}/lib/
-#rm -r /opt/@func_user@/%{name}/%{version}/config/
 
 %post
 echo postinstall
+ln -s /opt/liquifi/%{name}/%{version} /opt/liquifi/%{name}/currentVersion
+mkdir -p /opt/loghome/autopilot/
+chown @func_user@:@func_group@ /opt/loghome/autopilot
+chown @func_user@:@func_group@ /opt/liquifi/%{name}
 
 %preun
 echo preuninstall
