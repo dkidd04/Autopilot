@@ -85,7 +85,7 @@ public class AutoPilotConfiguration {
 				symbol = symbol.replaceAll("\\[.*\\]", replacement);
 			}
 			
-			defaultSymbolMap.put(Integer.valueOf(entry.getKey()), symbol);
+			defaultSymbolMap.put(entry.getKey(), symbol);
 		}
 	}
 
