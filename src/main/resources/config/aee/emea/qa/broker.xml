@@ -155,6 +155,18 @@
 						</property>
  					</bean>
 				</entry>
+				<entry key ="LiqFiToCRIO">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${LIQ.TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BOFBROKER.USER}"/>
+						<property name="password" value="${TOPIC.BOFBROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="EU.LIQUIFI.DUMMY.CRIO"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
  			</map>
 		</property>
 
