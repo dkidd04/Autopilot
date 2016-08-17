@@ -212,18 +212,6 @@
 						</property>
  					</bean>
 				</entry>
-				<entry key ="LiqFiToRIO">
-					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
-						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
-						<property name="user" value="${TOPIC.BROKER.USER}"/>
-						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
-						<property name="setup">
-							<map>
-								<entry key="A-Z" value="EU.LIQUIFITORIO.1"/>
-							</map>
-						</property>
- 					</bean>
-				</entry>
 				<entry key ="LiqFiToTOB">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
 						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
