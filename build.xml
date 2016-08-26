@@ -54,7 +54,7 @@
 	   --------------------------------------------------------	
 	   Build Notes:
 	   A) Use the version of java that you'll be running with.
-	   B) Set JAVA_HOME (e.g. JAVA_HOME=/xenv/java/X/1.8.0_91/)
+	   B) Set JAVA_HOME (e.g. JAVA_HOME=/xenv/java/X/1.8.0_91l64/)
 	   C) Set this version of Java on your $PATH
 	   D) Set ANT_HOME (e.g. ANT_HOME=/xenv/ant/X/1.7.0)
 	   --------------------------------------------------------
