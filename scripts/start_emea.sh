@@ -47,8 +47,8 @@ APP_OPTS="-Dconfig.home=$CONFIG_HOME \
 -DRelease_Number="" \
 -Dapplication=$APP \
 -Dregion=$REGION \
--Denv=$ENVIRONMENT 2
--DtestCaseLabels=$LABELS
+-Denv=$ENVIRONMENT \
+-DtestCaseLabels=$LABELS \
 -Dreleases=$RELEASES "
 
 
