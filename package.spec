@@ -50,7 +50,7 @@ echo preinstall
 
 %post
 echo postinstall
-ln -s /opt/liquifi/%{name}/%{version} /opt/liquifi/%{name}/currentVersion
+ln -s /opt/liquifi/%{name}/%{version}.%{release} /opt/liquifi/%{name}/currentVersion
 mkdir -p /opt/loghome/autopilot/
 chown @func_user@:@func_group@ /opt/loghome/autopilot
 chown @func_user@:@func_group@ /opt/liquifi/%{name}
