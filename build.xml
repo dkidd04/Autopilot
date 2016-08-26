@@ -67,7 +67,7 @@
 		<attribute name="classpath" />
 		<attribute name="debug" default="false" />
 		<sequential>
-			<javac srcdir="@{srcDir}" destdir="@{destDir}" source="1.6" debug="@{debug}">
+			<javac srcdir="@{srcDir}" destdir="@{destDir}" source="1.8" debug="@{debug}">
 				<classpath>
 					<path refid="@{classpath}" />
 				</classpath>
