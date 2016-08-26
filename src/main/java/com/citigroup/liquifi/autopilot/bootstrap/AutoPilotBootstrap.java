@@ -99,7 +99,7 @@ public class AutoPilotBootstrap {
 			releases.forEach(addReleaseToList(tcIDList));
 		}else if ((releases.isEmpty()) && (!labels.isEmpty())){
 			// if only label given 
-			System.out.println("IN HERE");
+			logger.info("IN HERE");
 			labels.forEach(addLabelToList(tcIDList));
 		}else{
 			// both release and label given populate 2 lists and retain common elements  
@@ -113,12 +113,12 @@ public class AutoPilotBootstrap {
 		int intPassed = 0, intFailed = 0;
 		List<String> failedTestcases = new ArrayList<String>();
 		List<String> passedTestcases = new ArrayList<String>();
-		System.out.println("***************************AutoPilot ServerMode Run Started. Total TestCase:"
+		logger.info("***************************AutoPilot ServerMode Run Started. Total TestCase:"
 				+ tcIDList.size());
-		System.out.println("TESTRESULTLOG|AutoPilot ServerMode Run Started. ");
-		System.out.println("TESTRESULTLOG|Total # of TestCases: "
+		logger.info("TESTRESULTLOG|AutoPilot ServerMode Run Started. ");
+		logger.info("TESTRESULTLOG|Total # of TestCases: "
 				+ tcIDList.size());
-		System.out.println("Criteria:: Labels: " + labels.toString()+", Releases: "+releases.toString());
+		logger.info("Criteria:: Labels: " + labels.toString()+", Releases: "+releases.toString());
 		for (String strTcID : tcIDList) {
 			try {
 				/*
@@ -130,11 +130,11 @@ public class AutoPilotBootstrap {
 				if (validationObject.isSuccess()) {
 					intPassed++;
 					passedTestcases.add(strTcID);
-					System.out.println("****************TestCase " + strTcID+ ": PASSED.");
+					logger.info("****************TestCase " + strTcID+ ": PASSED.");
 				}else {
 					intFailed++;
 					failedTestcases.add(strTcID);
-					System.out.println("****************TestCase " + strTcID+ ": FAILED.");
+					logger.info("****************TestCase " + strTcID+ ": FAILED.");
 				}
 
 				Thread.sleep(1000);
@@ -144,13 +144,13 @@ public class AutoPilotBootstrap {
 			}
 		}
 
-		System.out.println("TESTRESULTLOG|AutoPilot ServerMode Run Finished.");
-		System.out.println("TESTRESULTLOG|PASSED:" + intPassed + " FAILED:"
+		logger.info("TESTRESULTLOG|AutoPilot ServerMode Run Finished.");
+		logger.info("TESTRESULTLOG|PASSED:" + intPassed + " FAILED:"
 				+ intFailed);
-		System.out.println("TESTRESULTLOG|List of passed test cases:  ");
-		System.out.println("TESTRESULTLOG|" + passedTestcases.toString());
-		System.out.println("TESTRESULTLOG|List of failed test cases:  ");
-		System.out.println("TESTRESULTLOG|" + failedTestcases.toString());
+		logger.info("TESTRESULTLOG|List of passed test cases:  ");
+		logger.info("TESTRESULTLOG|" + passedTestcases.toString());
+		logger.info("TESTRESULTLOG|List of failed test cases:  ");
+		logger.info("TESTRESULTLOG|" + failedTestcases.toString());
 
 		// cleanUpAutoPilot();
 		shutdownAutoPilot();
