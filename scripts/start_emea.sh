@@ -49,7 +49,7 @@ APP_OPTS="-Dconfig.home=$CONFIG_HOME \
 -Dregion=$REGION \
 -Denv=$ENVIRONMENT 2
 -DtestCaseLabels=$LABELS
--Dreleases=$RELEASES
+-Dreleases=$RELEASES "
 
 
 TEMPLOGDIR=/opt/loghome/autopilot
