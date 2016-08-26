@@ -40,7 +40,7 @@ JVM_OPTS="-Xms2000m \
 -XX:+PrintGCDetails"
 
 APP_OPTS="-Dconfig.home=$CONFIG_HOME \
--Djava.util.logging.config.file=$CONFIG_HOME/$APP/$REGION/common/logging.properties" \
+-Djava.util.logging.config.file=$CONFIG_HOME/$APP/$REGION/common/logging.properties \
 -Dcommon=common \
 -Dmode=Servermode \
 -DTestCase_QueryString="" \
