@@ -16,12 +16,7 @@ REGION=$1
 APP=$2
 ENVIRONMENT=$3
 LABELS=$4
-RELEASES=""
-
-if [ $# -lt 4 ]; then
-	TESTS_TO_RUN="where Active = 'Y' AND AppName = 'LIQUIFI'"
-	echo "defaulting the test cases to run"
-fi
+RELEASES=$5
 
 export JAVA_HOME=/xenv/java/X/1.8.0_91l64
 AUTO_HOME="/opt/liquifi/AutoPilot/currentVersion"
@@ -45,17 +40,21 @@ JVM_OPTS="-Xms2000m \
 -XX:+PrintGCDetails"
 
 APP_OPTS="-Dconfig.home=$CONFIG_HOME \
+-Djava.util.logging.config.file=$CONFIG_HOME/$APP/$REGION/common/logging.properties" \
 -Dcommon=common \
 -Dmode=Servermode \
--Dregion=$REGION \
--Denv=$ENVIRONMENT \
+-DTestCase_QueryString="" \
+-DRelease_Number="" \
 -Dapplication=$APP \
--Djava.util.logging.config.file=$CONFIG_HOME/$APP/$REGION/common/logging.properties"
+-Dregion=$REGION \
+-Denv=$ENVIRONMENT 2
+-DtestCaseLabels=$LABELS
+-Dreleases=$RELEASES
 
-echo "$JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS -DTestCase_QueryString=\"$TESTS_TO_RUN\" -DRelease_Number=\"$RELEASE_NUMBER\" com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG"
+
 TEMPLOGDIR=/opt/loghome/autopilot
 TEMPLOG=$TEMPLOGDIR/AutopilotLiquifiCore*d.log
-$JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS -DTestCase_QueryString="$TESTS_TO_RUN" -DRelease_Number="$RELEASE_NUMBER"  com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG 2>&1
+$JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS  com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG 2>&1
 AutopilotLiquifiCore_result=`/bin/grep "TESTRESULTLOG|PASSED" $TEMPLOG | /bin/grep -v "FAILED:0"`
 	if [ -z "$AutopilotLiquifiCore_result"  ]; then
 		echo "Completed AutopilotLiquifiCore" `date`
