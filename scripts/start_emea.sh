@@ -51,7 +51,7 @@ APP_OPTS="-Dconfig.home=$CONFIG_HOME \
 -DtestCaseLabels=$LABELS \
 -Dreleases=$RELEASES "
 
-
+echo "LIB = " $AUTO_PILOT_CLASSPATH
 TEMPLOGDIR=/opt/loghome/autopilot
 TEMPLOG=$TEMPLOGDIR/AutopilotLiquifiCore$DATE.log
 $JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS  com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG 2>&1
