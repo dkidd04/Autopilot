@@ -55,8 +55,8 @@ rm /opt/liquifi/%{name}/currentVersion
 echo adding ln -s /opt/liquifi/%{name}/%{version}.%{release} /opt/liquifi/%{name}/currentVersion
 ln -s /opt/liquifi/%{name}/%{version}.%{release} /opt/liquifi/%{name}/currentVersion
 mkdir -p /opt/loghome/autopilot/
-chown liquifi:liquifi /opt/loghome/autopilot
-chown liquifi:liquifi /opt/liquifi/%{name}
+chown dr45414:dr45414 /opt/loghome/autopilot
+chown dr45414:dr45414 /opt/liquifi/%{name}
 
 %preun
 echo preuninstall
