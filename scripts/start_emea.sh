@@ -25,22 +25,16 @@ export LIB_HOME="$AUTO_HOME/lib"
 CONFIG_HOME="$AUTO_HOME/etc/config"
 
 AUTO_PILOT_CLASSPATH=${LIB_HOME}:\
-${CONFIG_HOME}/$APP/$REGION:\
-${CONFIG_HOME}/$APP/$REGION/common:\
-${CONFIG_HOME}/$APP/$REGION/common/db:\
 ${LIB_HOME}/*
 
 
 JVM_OPTS="-Xms2000m \
 -Xmx4000m \
--XX:PermSize=256m \
--XX:MaxPermSize=256m \
 -XX:+UseLargePages \
 -verbose:gc \
 -XX:+PrintGCDateStamps \
 -XX:+UseConcMarkSweepGC \
 -XX:MaxGCPauseMillis=1000 \
--XX:+CMSIncrementalMode \
 -XX:+PrintGCDetails"
 
 APP_OPTS="-Dconfig.home=$CONFIG_HOME \
