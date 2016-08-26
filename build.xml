@@ -54,7 +54,7 @@
 	   --------------------------------------------------------	
 	   Build Notes:
 	   A) Use the version of java that you'll be running with.
-	   B) Set JAVA_HOME (e.g. JAVA_HOME=/xenv/java/X/1.8.0_91l64/)
+	   B) Set JAVA_HOME (e.g. JAVA_HOME=/xenv/java/X/1.6.0_31l64)
 	   C) Set this version of Java on your $PATH
 	   D) Set ANT_HOME (e.g. ANT_HOME=/xenv/ant/X/1.7.0)
 	   --------------------------------------------------------
@@ -67,7 +67,7 @@
 		<attribute name="classpath" />
 		<attribute name="debug" default="false" />
 		<sequential>
-			<javac srcdir="@{srcDir}" destdir="@{destDir}" source="1.8" debug="@{debug}">
+			<javac srcdir="@{srcDir}" destdir="@{destDir}" source="1.6" debug="@{debug}">
 				<classpath>
 					<path refid="@{classpath}" />
 				</classpath>
