@@ -36,7 +36,7 @@ Liquifi Autopilot business logic regression test process. %{version} (build %{re
 /opt/liquifi/%{name}/%{version}.%{release}
 
 ###################################################################################
-# %pre and %post are install scripts that run before and after package installation
+# pre and post are install scripts that run before and after package installation
 # respectively. %preun and %postun are uninstall scripts that run before and after
 # package deinstallation respectively. To maintain control over the files installed
 # by the package, any files that would be created by an install script should have
