@@ -10,8 +10,10 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.autopilot.util.SercurityManager;
 import com.citigroup.liquifi.entities.LFTestInputSteps;
+import com.sun.media.jfxmedia.logging.Logger;
 
 public class AutoPilotConfiguration {
 	private List<LFTestInputSteps> defaultInputStep = new ArrayList<LFTestInputSteps>();
@@ -28,7 +30,9 @@ public class AutoPilotConfiguration {
 	private int defaultSecurityClass;
 	private Map<Integer, String> defaultSymbolMap = new HashMap<Integer, String>();
 	private SercurityManager securityManager = null;
-
+	private final static AceLogger logger = AceLogger.getLogger("AutoPilotBootstrap");
+	
+	
 	public List<LFTestInputSteps> getDefaultInputStep() {
 		// Want to send a clone
 		List<LFTestInputSteps> clone = new ArrayList<LFTestInputSteps>();
@@ -69,6 +73,9 @@ public class AutoPilotConfiguration {
 		
 		for(Entry<Integer, String> entry : map.entrySet()) {
 			String symbol = entry.getValue();
+			
+			logger.info("Key = "+entry.getKey());
+			logger.info("Symbol = "+symbol);
 			
 			if(symbol.contains("[")) {
 				Matcher m = pattern.matcher(symbol);

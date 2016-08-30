@@ -86,7 +86,6 @@ class AutoPilotBootstrap {
 			releases.forEach(addReleaseToList(tcIDList));
 		}else if ((releases.isEmpty()) && (!labels.isEmpty())){
 			// if only label given 
-			logger.info("IN HERE");
 			labels.forEach(addLabelToList(tcIDList));
 		}else{
 			// both release and label given populate 2 lists and retain common elements  
