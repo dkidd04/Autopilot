@@ -74,9 +74,6 @@ public class AutoPilotConfiguration {
 		for(Entry<Integer, String> entry : map.entrySet()) {
 			String symbol = entry.getValue();
 			
-			logger.info("Key = "+entry.getKey());
-			logger.info("Symbol = "+symbol);
-			
 			if(symbol.contains("[")) {
 				Matcher m = pattern.matcher(symbol);
 				String replacement = "";
@@ -92,7 +89,7 @@ public class AutoPilotConfiguration {
 				symbol = symbol.replaceAll("\\[.*\\]", replacement);
 			}
 			
-			defaultSymbolMap.put(Integer.valueOf(entry.getKey()), symbol);
+			defaultSymbolMap.put(entry.getKey(), symbol);
 		}
 	}
 
