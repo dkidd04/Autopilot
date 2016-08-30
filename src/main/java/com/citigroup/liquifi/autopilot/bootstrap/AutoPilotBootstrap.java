@@ -69,11 +69,11 @@ public class AutoPilotBootstrap {
 		List<String> releases = new ArrayList<>();
 		String strLabel;
 		String strReleaseNum;
-		if(System.getProperty("testCaseLabels") != null){
+		if(null != System.getProperty("testCaseLabels") || "" != System.getProperty("testCaseLabels")){
 			labels = Arrays.asList(System.getProperty("testCaseLabels").split(","));
 		}
 
-		if(null != System.getProperty("releases")){
+		if(null != System.getProperty("releases") || "" != System.getProperty("releases")){
 			releases = Arrays.asList(System.getProperty("releases").split(","));
 		}
 
