@@ -13,10 +13,10 @@ import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.util.ClassPathLoader;
 import com.citigroup.liquifi.util.DBUtil;
 
-public class AutoPilotBootstrap {
+class AutoPilotBootstrap {
 	private final static AceLogger logger = AceLogger.getLogger("AutoPilotBootstrap");
 
-	public static void initDB() {
+	static void initDB() {
 		logger.info("Loading Template from Database ... ");
 		DBUtil.getInstance().getTem().loadAllTemplateFromDB();
 		ApplicationContext.getFIXFactory().setTemplate(
@@ -70,10 +70,12 @@ public class AutoPilotBootstrap {
 		String strLabel;
 		String strReleaseNum;
 		if(null != System.getProperty("testCaseLabels") || "" != System.getProperty("testCaseLabels")){
+			logger.info("Label String : "+System.getProperty("testCaseLabels"));
 			labels = Arrays.asList(System.getProperty("testCaseLabels").split(","));
 		}
 
 		if(null != System.getProperty("releases") || "" != System.getProperty("releases")){
+			logger.info("Releases String : "+System.getProperty("releases"));
 			releases = Arrays.asList(System.getProperty("releases").split(","));
 		}
 
@@ -215,11 +217,11 @@ public class AutoPilotBootstrap {
 		return strValue;
 	}
 
-	public static void initSpring() throws Exception {
+	static void initSpring() throws Exception {
 		ApplicationContext.init();
 	}
 
-	public static void shutdownAutoPilot() {
+	private static void shutdownAutoPilot() {
 		logger.info("shutdownAutoPilot()");
 		// to be updated
 		try {
@@ -230,7 +232,7 @@ public class AutoPilotBootstrap {
 
 	}
 
-	public static void loadClassPath(String strClassPath) throws Exception {
+	static void loadClassPath(String strClassPath) throws Exception {
 		logger.info("loadClassPath()");
 		try {
 			ClassPathLoader.addToClasspath(strClassPath);
