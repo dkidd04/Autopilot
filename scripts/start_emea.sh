@@ -18,7 +18,7 @@ ENVIRONMENT=$3
 LABELS=$4
 RELEASES=$5
 
-export JAVA_HOME=/xenv/java/X/1.8.0_91l64
+export JAVA_HOME=/xenv/java/X/1.8.0_5l/
 AUTO_HOME="/opt/liquifi/AutoPilot/currentVersion"
 
 export LIB_HOME="$AUTO_HOME/lib"

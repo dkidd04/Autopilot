@@ -43,8 +43,7 @@ public enum TestCaseController {
 				symbolToUse = symbolStr;
 			} else {
 				int intSecurityClass = testcase.getSecurityClass();
-				Map<Integer,String> symbolMap = ApplicationContext.getConfig().getDefaultSymbolMap();
-				symbolToUse = symbolMap.get(String.valueOf(intSecurityClass));
+				symbolToUse = ApplicationContext.getConfig().getDefaultSymbolMap().get(intSecurityClass);
 				
 				if (symbolToUse == null) {
 					throw new Exception("No symbol definned for security class " + intSecurityClass + " - please use different security class or add one to config.xml");

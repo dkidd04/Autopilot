@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +26,7 @@ public class AutoPilotConfiguration {
 	private String highlightedTags;
 	private boolean overwriteSendCompSubIDBasedOnConfig;
 	private int defaultSecurityClass;
-	private Map<Integer, String> defaultSymbolMap = new TreeMap<Integer, String>();
+	private Map<Integer, String> defaultSymbolMap = new HashMap<Integer, String>();
 	private SercurityManager securityManager = null;
 	
 	public List<LFTestInputSteps> getDefaultInputStep() {
