@@ -75,10 +75,10 @@ public class SecurityTableModel extends AbstractTableModel {
 		fireTableRowsDeleted(index, index);
 	}
 	
-	public Map<Integer, String> getDataMap(){
-		Map<Integer, String> securityProp = new HashMap<Integer, String>();
+	public Map<String, String> getDataMap(){
+		Map<String, String> securityProp = new HashMap<String, String>();
 		for (int i = 0; i< data.size(); i++){
-			securityProp.put((Integer)data.get(i)[0], (String)data.get(i)[1]);
+			securityProp.put((String)data.get(i)[0], (String)data.get(i)[1]);
 		}
 		return securityProp;
 	}
