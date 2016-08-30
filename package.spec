@@ -57,7 +57,6 @@ ln -s /opt/liquifi/%{name}/%{version}.%{release} /opt/liquifi/%{name}/currentVer
 mkdir -p /opt/loghome/autopilot/
 chown liquifi:liquifi /opt/loghome/autopilot
 chown liquifi:liquifi /opt/liquifi/%{name}
-chmod 777 /opt/loghome/autopilot
 
 %preun
 echo preuninstall
