@@ -79,19 +79,19 @@ class AutoPilotBootstrap {
 			releases = Arrays.asList(System.getProperty("releases").split(","));
 		}
 
-		if(labels.isEmpty()) {
-			strLabel = checkNullStrValue(ApplicationContext.getConfig().getServerModeTestCaseQuery());
-			if("" != strLabel) {
-				labels.add(strLabel);
-			}
-		}
-
-		if(releases.isEmpty()) {
-			strReleaseNum = checkNullStrValue(ApplicationContext.getConfig().getReleaseNum());
-			if("" != strReleaseNum ){
-				releases.add(strReleaseNum);
-			}
-		}
+//		if(labels.isEmpty()) {
+//			strLabel = checkNullStrValue(ApplicationContext.getConfig().getServerModeTestCaseQuery());
+//			if("" != strLabel) {
+//				labels.add(strLabel);
+//			}
+//		}
+//
+//		if(releases.isEmpty()) {
+//			strReleaseNum = checkNullStrValue(ApplicationContext.getConfig().getReleaseNum());
+//			if("" != strReleaseNum ){
+//				releases.add(strReleaseNum);
+//			}
+//		}
 
 		List<String> tcIDList = new ArrayList<>();
 
