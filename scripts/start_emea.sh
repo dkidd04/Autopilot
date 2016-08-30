@@ -50,7 +50,12 @@ APP_OPTS="-Dconfig.home=$CONFIG_HOME \
 
 TEMPLOGDIR=/opt/loghome/autopilot
 TEMPLOG=$TEMPLOGDIR/AutopilotLiquifiCore$DATE.log
+
+echo "Launching ..."
+echo "Options" $APP_OPTS
 $JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG 2>&1
+echo "Ran collecting results"
+
 AutopilotLiquifiCore_result=`/bin/grep "TESTRESULTLOG|PASSED" $TEMPLOG | /bin/grep -v "FAILED:0"`
 	if [ -z "$AutopilotLiquifiCore_result"  ]; then
 		echo "Completed AutopilotLiquifiCore" `date`
