@@ -30,14 +30,6 @@ ${CONFIG_HOME}/$APP/$REGION/common:\
 ${CONFIG_HOME}/$APP/$REGION/common/db:\
 ${LIB_HOME}/*
 
-JVM_OPTS="-Xms2000m \
--Xmx4000m \
--XX:+UseLargePages \
--verbose:gc \
--XX:+PrintGCDateStamps \
--XX:+UseConcMarkSweepGC \
--XX:MaxGCPauseMillis=1000 \
--XX:+PrintGCDetails"
 
 APP_OPTS="-Dconfig.home=$CONFIG_HOME \
 -Djava.util.logging.config.file=$CONFIG_HOME/$APP/$REGION/common/logging.properties \
