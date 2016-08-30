@@ -67,31 +67,16 @@ class AutoPilotBootstrap {
 		initDB();
 		List<String> labels = new ArrayList<>();
 		List<String> releases = new ArrayList<>();
-		String strLabel;
-		String strReleaseNum;
-		if(null != System.getProperty("testCaseLabels") || "" != System.getProperty("testCaseLabels")){
+
+		if(null != System.getProperty("testCaseLabels") || 0 != System.getProperty("testCaseLabels").trim().length()){
 			logger.info("Label String : "+System.getProperty("testCaseLabels"));
 			labels = Arrays.asList(System.getProperty("testCaseLabels").split(","));
 		}
 
-		if(null != System.getProperty("releases") || "" != System.getProperty("releases")){
+		if(null != System.getProperty("releases") || 0 != System.getProperty("releases").trim().length()){
 			logger.info("Releases String : "+System.getProperty("releases"));
 			releases = Arrays.asList(System.getProperty("releases").split(","));
 		}
-
-//		if(labels.isEmpty()) {
-//			strLabel = checkNullStrValue(ApplicationContext.getConfig().getServerModeTestCaseQuery());
-//			if("" != strLabel) {
-//				labels.add(strLabel);
-//			}
-//		}
-//
-//		if(releases.isEmpty()) {
-//			strReleaseNum = checkNullStrValue(ApplicationContext.getConfig().getReleaseNum());
-//			if("" != strReleaseNum ){
-//				releases.add(strReleaseNum);
-//			}
-//		}
 
 		List<String> tcIDList = new ArrayList<>();
 
