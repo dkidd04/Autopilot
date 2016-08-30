@@ -24,7 +24,11 @@ AUTO_HOME="/opt/liquifi/AutoPilot/currentVersion"
 export LIB_HOME="$AUTO_HOME/lib"
 CONFIG_HOME="$AUTO_HOME/etc/config"
 
-AUTO_PILOT_CLASSPATH=${LIB_HOME}/*
+AUTO_PILOT_CLASSPATH=${LIB_HOME}:\
+${CONFIG_HOME}/$APP/$REGION:\
+${CONFIG_HOME}/$APP/$REGION/common:\
+${CONFIG_HOME}/$APP/$REGION/common/db:\
+${LIB_HOME}/*
 
 
 JVM_OPTS="-Xms2000m \
