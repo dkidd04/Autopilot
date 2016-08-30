@@ -44,7 +44,7 @@ public enum TestCaseController {
 			} else {
 				int intSecurityClass = testcase.getSecurityClass();
 				logger.info("Security Class = "+intSecurityClass);
-				logger.info("Symbol Map | "+ApplicationContext.getConfig().getDefaultSymbolMap());
+				logger.info("Symbol Map | "+ApplicationContext.getConfig().getDefaultSymbolMap().keySet().contains(5));
 				symbolToUse = ApplicationContext.getConfig().getDefaultSymbolMap().get(intSecurityClass);
 				
 				if (symbolToUse == null) {
