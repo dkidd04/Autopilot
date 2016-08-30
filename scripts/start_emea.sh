@@ -24,11 +24,7 @@ AUTO_HOME="/opt/liquifi/AutoPilot/currentVersion"
 export LIB_HOME="$AUTO_HOME/lib"
 CONFIG_HOME="$AUTO_HOME/etc/config"
 
-AUTO_PILOT_CLASSPATH=${LIB_HOME}:\
-${CONFIG_HOME}/$APP/$REGION:\
-${CONFIG_HOME}/$APP/$REGION/common:\
-${CONFIG_HOME}/$APP/$REGION/common/db:\
-${LIB_HOME}/*
+AUTO_PILOT_CLASSPATH=${LIB_HOME}/*
 
 
 JVM_OPTS="-Xms2000m \
@@ -54,7 +50,7 @@ APP_OPTS="-Dconfig.home=$CONFIG_HOME \
 
 TEMPLOGDIR=/opt/loghome/autopilot
 TEMPLOG=$TEMPLOGDIR/AutopilotLiquifiCore$DATE.log
-$JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS  com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG 2>&1
+$JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG 2>&1
 AutopilotLiquifiCore_result=`/bin/grep "TESTRESULTLOG|PASSED" $TEMPLOG | /bin/grep -v "FAILED:0"`
 	if [ -z "$AutopilotLiquifiCore_result"  ]; then
 		echo "Completed AutopilotLiquifiCore" `date`

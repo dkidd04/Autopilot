@@ -17,21 +17,21 @@ public class AutoPilotBootstrap {
 	private final static AceLogger logger = AceLogger.getLogger("AutoPilotBootstrap");
 
 	public static void initDB() {
-		logger.info("Loading Template from Database ... ");
+		System.out.println("Loading Template from Database ... ");
 		DBUtil.getInstance().getTem().loadAllTemplateFromDB();
 		ApplicationContext.getFIXFactory().setTemplate(
 				DBUtil.getInstance().getTem().getAllTemplateMap());
 
-		logger.info("Loading AppName from Database ... ");
+		System.out.println("Loading AppName from Database ... ");
 		DBUtil.getInstance().getTcm().loadAppNameFromDB();
 
-		logger.info("Loading Category from Database ... ");
+		System.out.println("Loading Category from Database ... ");
 		DBUtil.getInstance().getTcm().loadCategoryFromDB();
 
-		logger.info("Loading CommonOverwriteTag from Database ... ");
+		System.out.println("Loading CommonOverwriteTag from Database ... ");
 		DBUtil.getInstance().getCom().loadAllCommonOverwriteTagFromDB();
 
-		logger.info("Loading Label from Database ... ");
+		System.out.println("Loading Label from Database ... ");
 		DBUtil.getInstance().getLbm().loadLabelFromDB();
 	}
 
@@ -41,7 +41,7 @@ public class AutoPilotBootstrap {
 	public static void main(String[] args) {
 		try {
 			String mode = System.getProperty("mode", "Servermode").toLowerCase();
-			logger.info("Launch AutoPilot in "+mode+" ...");
+			System.out.println("Launch AutoPilot in "+mode+" ...");
 			switch(mode){
 			case "guimode":
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -99,7 +99,7 @@ public class AutoPilotBootstrap {
 			releases.forEach(addReleaseToList(tcIDList));
 		}else if ((releases.isEmpty()) && (!labels.isEmpty())){
 			// if only label given 
-			logger.info("IN HERE");
+			System.out.println("IN HERE");
 			labels.forEach(addLabelToList(tcIDList));
 		}else{
 			// both release and label given populate 2 lists and retain common elements  
@@ -113,12 +113,12 @@ public class AutoPilotBootstrap {
 		int intPassed = 0, intFailed = 0;
 		List<String> failedTestcases = new ArrayList<String>();
 		List<String> passedTestcases = new ArrayList<String>();
-		logger.info("***************************AutoPilot ServerMode Run Started. Total TestCase:"
+		System.out.println("***************************AutoPilot ServerMode Run Started. Total TestCase:"
 				+ tcIDList.size());
-		logger.info("TESTRESULTLOG|AutoPilot ServerMode Run Started. ");
-		logger.info("TESTRESULTLOG|Total # of TestCases: "
+		System.out.println("TESTRESULTLOG|AutoPilot ServerMode Run Started. ");
+		System.out.println("TESTRESULTLOG|Total # of TestCases: "
 				+ tcIDList.size());
-		logger.info("Criteria:: Labels: " + labels.toString()+", Releases: "+releases.toString());
+		System.out.println("Criteria:: Labels: " + labels.toString()+", Releases: "+releases.toString());
 		for (String strTcID : tcIDList) {
 			try {
 				/*
@@ -130,11 +130,11 @@ public class AutoPilotBootstrap {
 				if (validationObject.isSuccess()) {
 					intPassed++;
 					passedTestcases.add(strTcID);
-					logger.info("****************TestCase " + strTcID+ ": PASSED.");
+					System.out.println("****************TestCase " + strTcID+ ": PASSED.");
 				}else {
 					intFailed++;
 					failedTestcases.add(strTcID);
-					logger.info("****************TestCase " + strTcID+ ": FAILED.");
+					System.out.println("****************TestCase " + strTcID+ ": FAILED.");
 				}
 
 				Thread.sleep(1000);
@@ -144,13 +144,13 @@ public class AutoPilotBootstrap {
 			}
 		}
 
-		logger.info("TESTRESULTLOG|AutoPilot ServerMode Run Finished.");
-		logger.info("TESTRESULTLOG|PASSED:" + intPassed + " FAILED:"
+		System.out.println("TESTRESULTLOG|AutoPilot ServerMode Run Finished.");
+		System.out.println("TESTRESULTLOG|PASSED:" + intPassed + " FAILED:"
 				+ intFailed);
-		logger.info("TESTRESULTLOG|List of passed test cases:  ");
-		logger.info("TESTRESULTLOG|" + passedTestcases.toString());
-		logger.info("TESTRESULTLOG|List of failed test cases:  ");
-		logger.info("TESTRESULTLOG|" + failedTestcases.toString());
+		System.out.println("TESTRESULTLOG|List of passed test cases:  ");
+		System.out.println("TESTRESULTLOG|" + passedTestcases.toString());
+		System.out.println("TESTRESULTLOG|List of failed test cases:  ");
+		System.out.println("TESTRESULTLOG|" + failedTestcases.toString());
 
 		// cleanUpAutoPilot();
 		shutdownAutoPilot();
@@ -220,7 +220,7 @@ public class AutoPilotBootstrap {
 	}
 
 	public static void shutdownAutoPilot() {
-		logger.info("shutdownAutoPilot()");
+		System.out.println("shutdownAutoPilot()");
 		// to be updated
 		try {
 			System.exit(0);
@@ -231,7 +231,7 @@ public class AutoPilotBootstrap {
 	}
 
 	public static void loadClassPath(String strClassPath) throws Exception {
-		logger.info("loadClassPath()");
+		System.out.println("loadClassPath()");
 		try {
 			ClassPathLoader.addToClasspath(strClassPath);
 		} catch (Exception ex) {
