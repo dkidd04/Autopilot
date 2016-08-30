@@ -52,7 +52,7 @@ TEMPLOGDIR=/opt/loghome/autopilot
 TEMPLOG=$TEMPLOGDIR/AutopilotLiquifiCore$DATE.log
 
 echo "Launching ..."
-echo "Options" $APP_OPTS
+echo "lib" $AUTO_PILOT_CLASSPATH
 $JAVA_HOME/bin/java -classpath $AUTO_PILOT_CLASSPATH $JVM_OPTS $APP_OPTS com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap > $TEMPLOG 2>&1
 echo "Ran collecting results"
 
