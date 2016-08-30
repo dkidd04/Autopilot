@@ -68,12 +68,12 @@ class AutoPilotBootstrap {
 		List<String> labels = new ArrayList<>();
 		List<String> releases = new ArrayList<>();
 
-		if(null != System.getProperty("testCaseLabels") || 0 != System.getProperty("testCaseLabels").trim().length()){
+		if(null != System.getProperty("testCaseLabels") && 0 != System.getProperty("testCaseLabels").trim().length()){
 			logger.info("Label String : "+System.getProperty("testCaseLabels"));
 			labels = Arrays.asList(System.getProperty("testCaseLabels").split(","));
 		}
 
-		if(null != System.getProperty("releases") || 0 != System.getProperty("releases").trim().length()){
+		if(null != System.getProperty("releases") && 0 != System.getProperty("releases").trim().length()){
 			logger.info("Releases String : "+System.getProperty("releases"));
 			releases = Arrays.asList(System.getProperty("releases").split(","));
 		}
