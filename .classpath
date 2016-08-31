@@ -4,11 +4,6 @@
 	<classpathentry kind="src" path="src/main/resources/config"/>
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/ant-1.6.5.jar"/>
-	<classpathentry kind="lib" path="lib/ant-antlr-1.6.5.jar"/>
-	<classpathentry kind="lib" path="lib/ant-junit-1.6.5.jar"/>
-	<classpathentry kind="lib" path="lib/ant-launcher-1.6.5.jar"/>
-	<classpathentry kind="lib" path="lib/ant-swing-1.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/appframework-1.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/asm-attrs.jar"/>
 	<classpathentry kind="lib" path="lib/asm.jar"/>
@@ -45,7 +40,6 @@
 	<classpathentry kind="lib" path="lib/oscache-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/proxool-0.8.3.jar"/>
 	<classpathentry kind="lib" path="lib/quantum.jar"/>
-	<classpathentry kind="lib" path="lib/ref.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.5.8.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-jdk14-1.5.8.jar"/>
 	<classpathentry kind="lib" path="lib/swarmcache-1.0rc2.jar"/>
@@ -93,7 +87,6 @@
 	<classpathentry kind="lib" path="lib/xpp3_min-1.1.4c-1.4.2.jar"/>
 	<classpathentry kind="lib" path="lib/xmlpull-1.1.3.1-1.4.2.jar"/>
 	<classpathentry kind="lib" path="lib/dna-3.2_C0.jar"/>
-	<classpathentry kind="lib" path="lib/antlr-3.1.3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-pool-1.5.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -28,7 +28,7 @@ public class AutoPilotConfiguration {
 	private int defaultSecurityClass;
 	private Map<Integer, String> defaultSymbolMap = new HashMap<Integer, String>();
 	private SercurityManager securityManager = null;
-
+	
 	public List<LFTestInputSteps> getDefaultInputStep() {
 		// Want to send a clone
 		List<LFTestInputSteps> clone = new ArrayList<LFTestInputSteps>();
@@ -62,12 +62,12 @@ public class AutoPilotConfiguration {
 		return defaultSymbolMap;
 	}
 
-	public void setDefaultSymbolMap(Map<Integer, String> map) {
+	public void setDefaultSymbolMap(Map<String, String> map) {
 		defaultSymbolMap.clear();
 		
 		Pattern pattern = Pattern.compile("((\\d+)=(\\w+))");
 		
-		for(Entry<Integer, String> entry : map.entrySet()) {
+		for(Entry<String, String> entry : map.entrySet()) {
 			String symbol = entry.getValue();
 			
 			if(symbol.contains("[")) {
@@ -81,11 +81,10 @@ public class AutoPilotConfiguration {
 						break;
 					}
 				}
-				
 				symbol = symbol.replaceAll("\\[.*\\]", replacement);
 			}
-			
-			defaultSymbolMap.put(Integer.valueOf(entry.getKey()), symbol);
+			int intValue = Integer.parseInt(entry.getKey());
+			defaultSymbolMap.put(intValue, symbol);
 		}
 	}
 

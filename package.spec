@@ -33,10 +33,10 @@ Liquifi Autopilot business logic regression test process. %{version} (build %{re
 ####################################################################################
 %files
 %defattr(755,@func_user@,@func_group@)
-/opt/liquifi/%{name}/%{version}
+/opt/liquifi/%{name}/%{version}.%{release}
 
 ###################################################################################
-# %pre and %post are install scripts that run before and after package installation
+# pre and post are install scripts that run before and after package installation
 # respectively. %preun and %postun are uninstall scripts that run before and after
 # package deinstallation respectively. To maintain control over the files installed
 # by the package, any files that would be created by an install script should have
@@ -50,10 +50,13 @@ echo preinstall
 
 %post
 echo postinstall
-ln -s /opt/liquifi/%{name}/%{version} /opt/liquifi/%{name}/currentVersion
+echo removing /opt/liquifi/%{name}/currentVersion
+rm /opt/liquifi/%{name}/currentVersion
+echo adding ln -s /opt/liquifi/%{name}/%{version}.%{release} /opt/liquifi/%{name}/currentVersion
+ln -s /opt/liquifi/%{name}/%{version}.%{release} /opt/liquifi/%{name}/currentVersion
 mkdir -p /opt/loghome/autopilot/
-chown @func_user@:@func_group@ /opt/loghome/autopilot
-chown @func_user@:@func_group@ /opt/liquifi/%{name}
+chown liquifi:liquifi /opt/loghome/autopilot
+chown liquifi:liquifi /opt/liquifi/%{name}
 
 %preun
 echo preuninstall

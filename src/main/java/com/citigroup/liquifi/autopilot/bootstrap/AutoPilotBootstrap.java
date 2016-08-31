@@ -13,10 +13,10 @@ import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.util.ClassPathLoader;
 import com.citigroup.liquifi.util.DBUtil;
 
-public class AutoPilotBootstrap {
+class AutoPilotBootstrap {
 	private final static AceLogger logger = AceLogger.getLogger("AutoPilotBootstrap");
 
-	public static void initDB() {
+	static void initDB() {
 		logger.info("Loading Template from Database ... ");
 		DBUtil.getInstance().getTem().loadAllTemplateFromDB();
 		ApplicationContext.getFIXFactory().setTemplate(
@@ -67,28 +67,15 @@ public class AutoPilotBootstrap {
 		initDB();
 		List<String> labels = new ArrayList<>();
 		List<String> releases = new ArrayList<>();
-		String strLabel;
-		String strReleaseNum;
-		if(System.getProperty("testCaseLabels") != null){
+
+		if(null != System.getProperty("testCaseLabels") && 0 != System.getProperty("testCaseLabels").trim().length()){
+			logger.info("Label String : "+System.getProperty("testCaseLabels"));
 			labels = Arrays.asList(System.getProperty("testCaseLabels").split(","));
 		}
 
-		if(null != System.getProperty("releases")){
+		if(null != System.getProperty("releases") && 0 != System.getProperty("releases").trim().length()){
+			logger.info("Releases String : "+System.getProperty("releases"));
 			releases = Arrays.asList(System.getProperty("releases").split(","));
-		}
-
-		if(labels.isEmpty()) {
-			strLabel = checkNullStrValue(ApplicationContext.getConfig().getServerModeTestCaseQuery());
-			if("" != strLabel) {
-				labels.add(strLabel);
-			}
-		}
-
-		if(releases.isEmpty()) {
-			strReleaseNum = checkNullStrValue(ApplicationContext.getConfig().getReleaseNum());
-			if("" != strReleaseNum ){
-				releases.add(strReleaseNum);
-			}
 		}
 
 		List<String> tcIDList = new ArrayList<>();
@@ -99,7 +86,6 @@ public class AutoPilotBootstrap {
 			releases.forEach(addReleaseToList(tcIDList));
 		}else if ((releases.isEmpty()) && (!labels.isEmpty())){
 			// if only label given 
-			logger.info("IN HERE");
 			labels.forEach(addLabelToList(tcIDList));
 		}else{
 			// both release and label given populate 2 lists and retain common elements  
@@ -215,11 +201,11 @@ public class AutoPilotBootstrap {
 		return strValue;
 	}
 
-	public static void initSpring() throws Exception {
+	static void initSpring() throws Exception {
 		ApplicationContext.init();
 	}
 
-	public static void shutdownAutoPilot() {
+	private static void shutdownAutoPilot() {
 		logger.info("shutdownAutoPilot()");
 		// to be updated
 		try {
@@ -230,7 +216,7 @@ public class AutoPilotBootstrap {
 
 	}
 
-	public static void loadClassPath(String strClassPath) throws Exception {
+	static void loadClassPath(String strClassPath) throws Exception {
 		logger.info("loadClassPath()");
 		try {
 			ClassPathLoader.addToClasspath(strClassPath);
