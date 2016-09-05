@@ -62,9 +62,7 @@ class AutoPilotBootstrap {
 	}
 
 	private static void launchServerMode() throws Exception {
-		loadClasspath();
-		initSpring();
-		initDB();
+		appInit();
 		List<String> labels = new ArrayList<>();
 		List<String> releases = new ArrayList<>();
 
@@ -151,9 +149,7 @@ class AutoPilotBootstrap {
 	}
 
 	private static void launchBenchmarkMode() throws Exception, InterruptedException {
-		loadClasspath();
-		initSpring();
-		initDB();
+		appInit();
 
 		String benchmarkCriteria = ApplicationContext.getBenchmarkConfig().getBenchmarkCriteria();
 		String warmupCriteria = ApplicationContext.getBenchmarkConfig().getWarmupCriteria();
@@ -181,6 +177,19 @@ class AutoPilotBootstrap {
 		shutdownAutoPilot();
 	}
 
+	/**
+	 * This Is needed to load the app when not launched from the GUI mode to:
+	 * 1. Load ClassPatch
+	 * 2. Initialise Spring
+	 * 3. InitDB Connection
+	 * @throws Exception
+	 */
+	protected static void appInit() throws Exception {
+		loadClasspath();
+		initSpring();
+		initDB();
+	}
+
 	private static void loadClasspath() throws Exception {
 		String strConfighome =  System.getProperty("config.home");
 		String strCommon =  System.getProperty("common");
@@ -193,19 +202,11 @@ class AutoPilotBootstrap {
 		loadClassPath(strClassPathDb);
 	}
 
-	private static String checkNullStrValue(String strValue){
-
-		if (strValue == null || strValue.trim().isEmpty()){
-			strValue = "";
-		}
-		return strValue;
-	}
-
 	static void initSpring() throws Exception {
 		ApplicationContext.init();
 	}
 
-	private static void shutdownAutoPilot() {
+	protected static void shutdownAutoPilot() {
 		logger.info("shutdownAutoPilot()");
 		// to be updated
 		try {

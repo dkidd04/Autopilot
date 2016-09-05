@@ -12,71 +12,68 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.entities.LFLabel;
 import com.citigroup.liquifi.entities.LFOutputMsg;
 import com.citigroup.liquifi.entities.LFOutputTag;
 import com.citigroup.liquifi.entities.LFTag;
-import com.citigroup.liquifi.entities.LFTemplate;
 import com.citigroup.liquifi.entities.LFTestCase;
 import com.citigroup.liquifi.entities.LFTestInputSteps;
 import com.citigroup.liquifi.util.DBUtil;
 import com.citigroup.liquifi.util.Util;
 
-public class AutoPilotDuplicateTestCases {
-	private static AceLogger logger = AceLogger.getLogger("AutoPilotDuplicateTestCases");
-	private static Map<String, LFTemplate> templateMap;
-	private static String fromLabel = "(CAT)EMM Vs EMM";
-	private static String toLabel = "UpscaledVsUpscaled";
-	private static Map<String, String[]> inboundReplacements = new HashMap<>();
-	private static Map<String, String[]> outboundReplacements = new HashMap<>();
+public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
+	private static String fromLabel = "(CAT)WholeSaleVsInstitution";
+	private static String toLabel = "(CAT)WholeSaleVsProp";
+	private static Map<String, String> inboundReplacements = new HashMap<>();
+	private static Map<String, String> outboundReplacements = new HashMap<>();
 	private static int casesLeft=0;
 	private static int stepCount = 0;
 	private static boolean contains = false;
-
+	private static String descriptFrom = "Institution";
+	private static String descriptionTo = "Proprietary";
+	
+	
 	/**
 	 * Main method launching the application.
 	 */
 	public static void main(String[] args) {
+		System.out.println("Launch AutoPilot at Duplication...");
+		System.setProperty("Mode", "duplicate");
+
+		addTagsToReplace();
 		try {
-			//			addTagsToReplace();
-			initDuplicationMode();
-
-			//			duplicate();
-			//			copyFromLabels();
-			//			changeNumbers();
-			//			removeLabel();
-			swapTopics();
-			//			delete();
-			shutdownAutoPilot();
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			AutoPilotBootstrap.appInit();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
+		switch(System.getProperty("Mode","getTestCases").toLowerCase()){
+		case "duplicate":
+			duplicate();
+			break;
+		case "copylabels":
+			copyFromLabels();
+			break;
+		case "changeNumbers":
+			changeNumbers();
+			break;
+		case "removelabel":
+			removeLabel();
+			break;
+		case "swaptopics":
+			swapToAdminTopics();
+			break;
+		default: 
+			getTestCases(fromLabel);
+			break;
+		}
+		shutdownAutoPilot();
+	}
+	
+	private static void addTagsToReplace() {
+		inboundReplacements.put("11042","5");
 	}
 
-	private static void delete() {
-		Set<LFTestCase> testcases = getTestCases(fromLabel);
-		testcases.forEach(testcase -> {
-			System.out.println("DELETING :: "+testcase.getName());
-			try {
-				List<LFLabel> labelsInTestcase = DBUtil.getInstance().getLbm()
-						.getLabelsForTestcase(testcase.getTestID());
-				for (LFLabel lb : labelsInTestcase) {
-					DBUtil.getInstance().getLbm()
-					.removeLabelFromTestcase(lb.getLabel(), testcase.getTestID());
-
-					DBUtil.getInstance().getTcm().deleteTestCase(testcase);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			System.out.println("DELETED :: "+testcase.getName());
-		});
-	}
-
-	private static void swapTopics() {
+	private static void swapToAdminTopics() {
 		Set<LFTestCase> testcases = getTestCases(fromLabel);
 		testcases.forEach(testcase -> {
 			testcase.getInputStepList().forEach(step -> {
@@ -89,10 +86,10 @@ public class AutoPilotDuplicateTestCases {
 						e.printStackTrace();
 					}
 					System.out.println("-------------------------------------");
-				} else {
-					System.out.println("IGNORING :: "+testcase.getName());
-				}
+				} 
 			});
+			casesLeft--;
+			System.out.println("Remaining :: "+casesLeft);
 		});
 	}
 
@@ -130,20 +127,7 @@ public class AutoPilotDuplicateTestCases {
 	}
 
 	private static void copyFromLabels() {
-		List<String> labels = new ArrayList<>(Arrays.asList(new String[]{
-				"DS_AlgoApAggVsApAgg"
-				,"DS_AlgoApAggVsApPassive"
-				,"DS_AlgoFlowPassiveVsFlowAgg"
-				,"DS_AlgoFlowMidVsFlowAgg"
-				,"DS_AlgoFlowAggVsFlowAgg"
-				,"DS_AlgoApAggVsApMid"
-				,"DS_AlgoFlowMidVsFlowMid"
-				,"DS_AlgoFlowAggVsFlowMid"
-				,"DS_AlgoFlowAggVsFlowPassive"
-				,"DS_AlgoFlowPassiveVsFlowPassive"
-				,"DS_AlgoFlowPassiveVsFlowMid"
-				,"DS_AlgoFlowMidVsFlowPassive"
-		}));
+		List<String> labels = new ArrayList<>(Arrays.asList(fromLabel.split(",")));
 
 		Set<LFTestCase> testcases = getTestCases(labels.toArray(new String[labels.size()]));
 		testcases.forEach(testCase -> {
@@ -179,48 +163,44 @@ public class AutoPilotDuplicateTestCases {
 		return tmp;
 	}
 
-	private static void addTagsToReplace() {
-		inboundReplacements.put("7451", new String[]{"M","A"});
-		outboundReplacements.put("31", new String[]{"100","106"});
-	}
-
-	private static void duplicate() throws Exception{
+	private static void duplicate() {
 		Set<LFTestCase> testcases = getTestCases(fromLabel);
 		testcases.forEach(testCase -> {
-			System.out.println("Cloning -> "+testCase.getName());
-			String description = testCase.getDescription();
+				System.out.println("Cloning -> "+testCase.getName());
+				String description = testCase.getDescription();
 
-			LFTestCase clone = testCase.clone(Util.getTestIDSequencer());
-			clone.getInputStepList().stream()
-			.filter(ipStep -> !"XML".equals(ipStep.getMsgType()) && (isOfOrderType(NEW,ipStep) && isSecond()) || isOfOrderType(MODACK,ipStep)).forEach(filtered -> {
-				inboundReplacements.keySet().forEach(key -> {
-					replaceInboundTags(key, inboundReplacements.get(key)[1], filtered);
+				LFTestCase clone = testCase.clone(Util.getTestIDSequencer());
+				clone.getInputStepList().stream()
+				.filter(ipStep -> !"XML".equals(ipStep.getMsgType()) && (isOfOrderType(NEW,ipStep) && isSecond()) || isOfOrderType(MODACK,ipStep)).forEach(filtered -> {
+					inboundReplacements.keySet().forEach(key -> {
+						replaceInboundTags(key, inboundReplacements.get(key), filtered);
+					});
+					outboundReplacements.keySet().forEach(key -> {
+						replaceOutputTags(key, outboundReplacements.get(key), filtered);
+					});
 				});
-				outboundReplacements.keySet().forEach(key -> {
-					replaceOutputTags(key, outboundReplacements.get(key)[1], filtered);
-				});
-			});
-			stepCount = 0;
-			changeNameAndDescription(description, clone, 18);
-			System.out.println("Cloned -> "+clone.getName());
-			saveToDB(clone);
-			casesLeft--;
-			System.out.println("Saved -> "+clone.getName());
-			System.out.println("Cases Remaining = "+casesLeft);
-			System.out.println("-------------------------------------------");
+				stepCount = 0;
+				changeNameAndDescription(description, clone, 18);
+				System.out.println("Cloned -> "+clone.getName());
+				saveToDB(clone);
+				casesLeft--;
+				System.out.println("Saved -> "+clone.getName());
+				System.out.println("Cases Remaining = "+casesLeft);
+				System.out.println("-------------------------------------------");
 		});
 	}
 
 	private static void changeNameAndDescription(String description, LFTestCase clone, int offset) {
 		clone.setLastEditedUser("dr45414");
-		clone.setDescription(description.replace("SELL: Upscaled Mid", "SELL: Upscaled Passive"));
+		clone.setDescription(description.replace(descriptFrom, descriptionTo));
 		changeName(clone, offset);
 	}
 
 	private static void changeName(LFTestCase clone, int offset) {
-		String[] splitName = clone.getName().split("\\|");
-		int testCaseNum = Integer.parseInt(splitName[0].split("C")[1].trim())+offset;
-		clone.setName("TC"+testCaseNum+"|"+splitName[1]);
+		//		String[] splitName = clone.getName().split("\\|");
+		//		int testCaseNum = Integer.parseInt(splitName[0].split("C")[1].trim())+offset;
+		//		clone.setName("TC"+testCaseNum+"|"+splitName[1]);
+		clone.setName(clone.getName().replace("VsInst", "VsProp"));
 	}
 
 	private static void saveToDB(LFTestCase clone) {
@@ -228,7 +208,7 @@ public class AutoPilotDuplicateTestCases {
 		try {
 			DBUtil.getInstance().getLbm().addTestCaseToLabel(toLabel,clone.getTestID());
 		} catch (Exception e) {
-			logger.info("Error saving to DB ");
+			System.out.println("Error saving to DB ");
 		}
 	}
 
@@ -282,7 +262,7 @@ public class AutoPilotDuplicateTestCases {
 			break;
 		}
 		if(ipStep.getTemplate() != null) {
-			return templateMap.get(ipStep.getTemplate()).getMsgTemplate().contains(compareText);
+			return ipStep.getTemplate().contains(compareText);
 		} else {
 			return ipStep.getMessage().contains(compareText);
 		}
@@ -291,39 +271,7 @@ public class AutoPilotDuplicateTestCases {
 
 	private static void replaceExistingTag(String tagToReplace, String newValue,
 			LFTestInputSteps filtered) {
-		filtered.getOverwriteTags().stream()
-		.filter(tag -> tag.getTagID().equals(tagToReplace))
+		filtered.getOverwriteTags().stream().filter(tag -> tag.getTagID().equals(tagToReplace))
 		.forEach(filteredTag -> filteredTag.setTagValue(newValue));
-	}
-
-	private static void shutdownAutoPilot() {
-		logger.info("shutdownAutoPilot()");
-		try {
-			System.exit(0);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
-
-	public static void initDuplicationMode() throws Exception{
-		logger.info("Launch AutoPilot at Servermode...");
-		String strApplication = System.getProperty("application");
-		String strRegion = System.getProperty("region");
-		String strEnv = System.getProperty("env");
-		String strConfighome = System.getProperty("config.home");
-
-		System.setProperty("title", "AutoPilot_"+strApplication+"_"+strRegion+"_"+strEnv);
-
-		String strClassPathRegion = strConfighome + "/" + strApplication+"/" + strRegion;
-		String strClassPathCommon = strClassPathRegion+"/" + "common";
-		String strClassPathDb = strClassPathCommon + "/" + "db";
-
-		AutoPilotBootstrap.loadClassPath(strClassPathRegion);
-		AutoPilotBootstrap.loadClassPath(strClassPathCommon);
-		AutoPilotBootstrap.loadClassPath(strClassPathDb);
-		AutoPilotBootstrap.initSpring();
-//		AutoPilotBootstrap.initDB();
-		ApplicationContext.init();
 	}
 }
