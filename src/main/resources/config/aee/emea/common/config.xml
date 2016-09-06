@@ -18,7 +18,11 @@
 		<!-- Defines default symbol to be use by each security class-->
 		<property name="defaultSymbolMap">
 			<map>
-				<entry key = "5" value = "HOME.L"/>
+				<entry key = "1" value = "HAYS.L"/>
+				<entry key = "2" value = "HAYS.L"/>
+				<entry key = "3" value = "HAYS.L"/>
+				<entry key = "4" value = "HAYS.L"/>
+				<entry key = "5" value = "HAYS.L"/>
 			</map>	
 		</property>
 		
