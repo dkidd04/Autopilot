@@ -20,8 +20,10 @@ import com.citigroup.liquifi.entities.LFTestCase;
 import com.citigroup.liquifi.entities.LFTestInputSteps;
 import com.citigroup.liquifi.util.DBUtil;
 import com.citigroup.liquifi.util.Util;
+import com.sonicsw.blackbird.sys.SysObject;
 
 public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
+	private static String testCaseNameSeperator = "_";
 	private static String fromLabel = "(CAT)WholeSaleVsInstitution";
 	private static String toLabel = "(CAT)WholeSaleVsProp";
 	private static Map<String, String> inboundReplacements = new HashMap<>();
@@ -31,14 +33,14 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 	private static boolean contains = false;
 	private static String descriptFrom = "Institution";
 	private static String descriptionTo = "Proprietary";
-	
-	
+	private static String labelFilter = "CAT";
+
 	/**
 	 * Main method launching the application.
 	 */
 	public static void main(String[] args) {
 		System.out.println("Launch AutoPilot at Duplication...");
-		System.setProperty("Mode", "duplicate");
+		System.setProperty("Mode", "massaltername");
 
 		addTagsToReplace();
 		try {
@@ -46,7 +48,12 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		switch(System.getProperty("Mode","getTestCases").toLowerCase()){
+		chooseMode();
+		shutdownAutoPilot();
+	}
+
+	protected static void chooseMode() {
+		switch(System.getProperty("Mode","null").toLowerCase()){
 		case "duplicate":
 			duplicate();
 			break;
@@ -62,13 +69,37 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 		case "swaptopics":
 			swapToAdminTopics();
 			break;
+		case "massaltername":
+			massAlterName();
+			break;
 		default: 
 			getTestCases(fromLabel);
 			break;
 		}
-		shutdownAutoPilot();
 	}
-	
+
+	private static void massAlterName() {
+		List<String> labels = getFilteredTestCases();
+		labels.forEach(label -> System.out.println(label));
+		Set<LFTestCase> testcases = getTestCases(labels.toArray(new String[labels.size()]));
+		testcases.forEach(testCase -> {
+			System.out.println("BEFORE -> "+testCase.getName());
+			changeName(testCase,0);
+			System.out.println("AFTER -> "+testCase.getName());
+			try {
+				DBUtil.getInstance().updateDB(testCase);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
+
+	private static List<String> getFilteredTestCases() {
+		System.out.println("Getting Labels");
+		return DBUtil.getInstance().getLbm().getLabels().stream()
+				.filter(label -> label.getLabel().contains(labelFilter)).map(filtered -> filtered.getLabel()).collect(Collectors.toList());
+	}
+
 	private static void addTagsToReplace() {
 		inboundReplacements.put("11042","5");
 	}
@@ -166,27 +197,27 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 	private static void duplicate() {
 		Set<LFTestCase> testcases = getTestCases(fromLabel);
 		testcases.forEach(testCase -> {
-				System.out.println("Cloning -> "+testCase.getName());
-				String description = testCase.getDescription();
+			System.out.println("Cloning -> "+testCase.getName());
+			String description = testCase.getDescription();
 
-				LFTestCase clone = testCase.clone(Util.getTestIDSequencer());
-				clone.getInputStepList().stream()
-				.filter(ipStep -> !"XML".equals(ipStep.getMsgType()) && (isOfOrderType(NEW,ipStep) && isSecond()) || isOfOrderType(MODACK,ipStep)).forEach(filtered -> {
-					inboundReplacements.keySet().forEach(key -> {
-						replaceInboundTags(key, inboundReplacements.get(key), filtered);
-					});
-					outboundReplacements.keySet().forEach(key -> {
-						replaceOutputTags(key, outboundReplacements.get(key), filtered);
-					});
+			LFTestCase clone = testCase.clone(Util.getTestIDSequencer());
+			clone.getInputStepList().stream()
+			.filter(ipStep -> !"XML".equals(ipStep.getMsgType()) && (isOfOrderType(NEW,ipStep) && isSecond()) || isOfOrderType(MODACK,ipStep)).forEach(filtered -> {
+				inboundReplacements.keySet().forEach(key -> {
+					replaceInboundTags(key, inboundReplacements.get(key), filtered);
 				});
-				stepCount = 0;
-				changeNameAndDescription(description, clone, 18);
-				System.out.println("Cloned -> "+clone.getName());
-				saveToDB(clone);
-				casesLeft--;
-				System.out.println("Saved -> "+clone.getName());
-				System.out.println("Cases Remaining = "+casesLeft);
-				System.out.println("-------------------------------------------");
+				outboundReplacements.keySet().forEach(key -> {
+					replaceOutputTags(key, outboundReplacements.get(key), filtered);
+				});
+			});
+			stepCount = 0;
+			changeNameAndDescription(description, clone, 18);
+			System.out.println("Cloned -> "+clone.getName());
+			saveToDB(clone);
+			casesLeft--;
+			System.out.println("Saved -> "+clone.getName());
+			System.out.println("Cases Remaining = "+casesLeft);
+			System.out.println("-------------------------------------------");
 		});
 	}
 
@@ -197,9 +228,9 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 	}
 
 	private static void changeName(LFTestCase clone, int offset) {
-		//		String[] splitName = clone.getName().split("\\|");
-		//		int testCaseNum = Integer.parseInt(splitName[0].split("C")[1].trim())+offset;
-		//		clone.setName("TC"+testCaseNum+"|"+splitName[1]);
+		String[] splitName = clone.getName().split(testCaseNameSeperator);
+		int testCaseNum = Integer.parseInt(splitName[0].split("K")[1].trim())+offset;
+		clone.setName("TC"+testCaseNum+"|"+splitName[1]);
 		clone.setName(clone.getName().replace("VsInst", "VsProp"));
 	}
 
