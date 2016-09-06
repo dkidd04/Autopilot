@@ -9,6 +9,7 @@ import java.util.Set;
 
 import com.citigroup.get.quantum.messaging.Initiator;
 import com.citigroup.liquifi.autopilot.bootstrap.ApplicationContext;
+import com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap;
 import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.autopilot.message.FIXMessage;
 import com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory;
@@ -36,9 +37,10 @@ public enum TestCaseController {
 	private AutoPilotBrokerInfoFactory brokerFactory = ApplicationContext.getBrokerFactory();
 
 	public ValidationObject loadState(LFTestCase testcase, String symbolStr) {
+		String symbolToUse = "";
 		try {
 			// If the user does not provide Symbol, get a default value from config
-			String symbolToUse;
+			
 			if (symbolStr != null && symbolStr.trim().length() > 0) {
 				symbolToUse = symbolStr;
 			} else {
@@ -80,7 +82,8 @@ public enum TestCaseController {
 			
 			return validationObject;
 		} catch (Exception ex) {
-			logger.severe("TestCaseID:" + testcase.getTestID() + "|Symbol:" + symbolStr + "|" + AutoPilotConstants.ValidationFailed_CannotLoadTestCase);
+			AutoPilotBootstrap.getFailedTestcases().add(testcase.getTestID()+"NULLED");
+			logger.severe("TestCaseID:" + testcase.getTestID() + "|Symbol:" + symbolToUse + "|" + AutoPilotConstants.ValidationFailed_CannotLoadTestCase);
 			logger.severe(Util.getStackTrace(ex));
 		}
 

@@ -13,9 +13,11 @@ import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.util.ClassPathLoader;
 import com.citigroup.liquifi.util.DBUtil;
 
-class AutoPilotBootstrap {
+public class AutoPilotBootstrap {
 	private final static AceLogger logger = AceLogger.getLogger("AutoPilotBootstrap");
-
+	private static List<String> failedTestcases = new ArrayList<String>();
+	private static List<String> passedTestcases = new ArrayList<String>();
+	
 	static void initDB() {
 		logger.info("Loading Template from Database ... ");
 		DBUtil.getInstance().getTem().loadAllTemplateFromDB();
@@ -95,8 +97,6 @@ class AutoPilotBootstrap {
 		}
 
 		int intPassed = 0, intFailed = 0;
-		List<String> failedTestcases = new ArrayList<String>();
-		List<String> passedTestcases = new ArrayList<String>();
 		long startTime = System.nanoTime();
 		System.out.println("***************************AutoPilot ServerMode Run Started. Total TestCase:"
 				+ tcIDList.size());
@@ -227,6 +227,10 @@ class AutoPilotBootstrap {
 			throw ex;
 		}
 
+	}
+	
+	public static List<String> getFailedTestcases() {
+		return failedTestcases;
 	}
 
 }
