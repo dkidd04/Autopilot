@@ -39,7 +39,7 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 	 * Main method launching the application.
 	 */
 	public static void main(String[] args) {
-		System.out.println("Launch AutoPilot at Duplication...");
+		logger.info("Launch AutoPilot at Duplication...");
 		System.setProperty("Mode", "massaltername");
 
 		addTagsToReplace();
@@ -80,12 +80,12 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 
 	private static void massAlterName() {
 		List<String> labels = getFilteredTestCases();
-		labels.forEach(label -> System.out.println(label));
+		labels.forEach(label -> logger.info(label));
 		Set<LFTestCase> testcases = getTestCases(labels.toArray(new String[labels.size()]));
 		testcases.forEach(testCase -> {
-			System.out.println("BEFORE -> "+testCase.getName());
+			logger.info("BEFORE -> "+testCase.getName());
 			changeName(testCase,0);
-			System.out.println("AFTER -> "+testCase.getName());
+			logger.info("AFTER -> "+testCase.getName());
 			try {
 				DBUtil.getInstance().updateDB(testCase);
 			} catch (Exception e) {
@@ -95,7 +95,7 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 	}
 
 	private static List<String> getFilteredTestCases() {
-		System.out.println("Getting Labels");
+		logger.info("Getting Labels");
 		return DBUtil.getInstance().getLbm().getLabels().stream()
 				.filter(label -> label.getLabel().contains(labelFilter)).map(filtered -> filtered.getLabel()).collect(Collectors.toList());
 	}
@@ -109,18 +109,18 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 		testcases.forEach(testcase -> {
 			testcase.getInputStepList().forEach(step -> {
 				if("XML".equals(step.getMsgType()) && "AutoPilotToLiqFi".equals(step.getTopicID())){
-					System.out.println("Error replacing step for case "+testcase.getName());
+					logger.info("Error replacing step for case "+testcase.getName());
 					step.setTopicID("AutoPilotToLiqFiAdmin");
 					try {
 						DBUtil.getInstance().updateDB(testcase);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					System.out.println("-------------------------------------");
+					logger.info("-------------------------------------");
 				} 
 			});
 			casesLeft--;
-			System.out.println("Remaining :: "+casesLeft);
+			logger.info("Remaining :: "+casesLeft);
 		});
 	}
 
@@ -134,17 +134,17 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 				e.printStackTrace();
 			}
 			casesLeft--;
-			System.out.println("Remaining "+casesLeft);
+			logger.info("Remaining "+casesLeft);
 		});
 	}
 
 	private static void removeLabel() {
 		Set<LFTestCase> testcases = getTestCases(fromLabel);
 		testcases.forEach(testCase -> {
-			System.out.println("TC = "+testCase.getName());
+			logger.info("TC = "+testCase.getName());
 			Set<LFLabel> modifiedLabels = testCase.getLabelSet().stream().filter(label -> !"UpscaledVsUpscaled".equals(label.getLabel())).collect(Collectors.toSet());
 			modifiedLabels.forEach(label -> {
-				System.out.println("LABEL : "+label.getLabel());
+				logger.info("LABEL : "+label.getLabel());
 				try {
 					DBUtil.getInstance().getLbm().removeLabelFromTestcase(label.getLabel(), testCase.getTestID());
 				} catch (Exception e) {
@@ -153,7 +153,7 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 			});
 
 			casesLeft--;
-			System.out.println("Saved, Remaining : "+casesLeft);
+			logger.info("Saved, Remaining : "+casesLeft);
 		});
 	}
 
@@ -170,34 +170,34 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 			}
 
 			if(!contains){
-				System.out.println("Adding"+testCase.getName()+" To Label ...");
+				logger.info("Adding"+testCase.getName()+" To Label ...");
 				try {
 					DBUtil.getInstance().getLbm().addTestCaseToLabel(toLabel,testCase.getTestID()); 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println("Added");
+				logger.info("Added");
 			} else {
-				System.out.println("Ignoring"+testCase.getName()+" To Label ...");
+				logger.info("Ignoring"+testCase.getName()+" To Label ...");
 			}
 		});
 	}
 
 	private static Set<LFTestCase> getTestCases(String ... labels) {
-		System.out.println("Getting TestCases");
+		logger.info("Getting TestCases");
 		Set<LFTestCase> tmp = new HashSet<>();
 		for(String label : labels) {
 			tmp.addAll(DBUtil.getInstance().getTestCasesForLabel(label));
 		}
 		casesLeft = tmp.size();
-		System.out.println("TotalCases = "+tmp.size());
+		logger.info("TotalCases = "+tmp.size());
 		return tmp;
 	}
 
 	private static void duplicate() {
 		Set<LFTestCase> testcases = getTestCases(fromLabel);
 		testcases.forEach(testCase -> {
-			System.out.println("Cloning -> "+testCase.getName());
+			logger.info("Cloning -> "+testCase.getName());
 			String description = testCase.getDescription();
 
 			LFTestCase clone = testCase.clone(Util.getTestIDSequencer());
@@ -212,12 +212,12 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 			});
 			stepCount = 0;
 			changeNameAndDescription(description, clone, 18);
-			System.out.println("Cloned -> "+clone.getName());
+			logger.info("Cloned -> "+clone.getName());
 			saveToDB(clone);
 			casesLeft--;
-			System.out.println("Saved -> "+clone.getName());
-			System.out.println("Cases Remaining = "+casesLeft);
-			System.out.println("-------------------------------------------");
+			logger.info("Saved -> "+clone.getName());
+			logger.info("Cases Remaining = "+casesLeft);
+			logger.info("-------------------------------------------");
 		});
 	}
 
@@ -239,7 +239,7 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 		try {
 			DBUtil.getInstance().getLbm().addTestCaseToLabel(toLabel,clone.getTestID());
 		} catch (Exception e) {
-			System.out.println("Error saving to DB ");
+			logger.info("Error saving to DB ");
 		}
 	}
 
