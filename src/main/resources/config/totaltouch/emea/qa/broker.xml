@@ -59,7 +59,7 @@
 						<property name="password" value="${TT_TOPIC.BROKER.PASSWORD}" />
 						<property name="setup">
 							<map>
-								<entry key=".-Z" value="TT.IOI.TO.QFF.P1" />
+								<entry key=".-Z" value="IOI.TO.ADMINGUI" />
 							</map>
 						</property>
 					</bean>
