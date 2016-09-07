@@ -1,10 +1,7 @@
-%define __os_install_post /usr/lib/rpm/brp-compress 
-%{nil}
-
 Summary: Liquifi Autopilot
-Name: LiqFiAuto
-Version: 1.9
-Release: 1
+Name: _NAME_
+Version: _VERSION_
+Release: _RELEASE_
 Group: Development/Libraries
 License: Commercial
 ####################################################################
@@ -16,12 +13,19 @@ BuildRoot: %{_builddir}/
 #Prefix: /opt
 
 %description
-Liquifi Autopilot business logic regression test process.
+Liquifi Autopilot business logic regression test process. %{version} (build %{release})
 
-# The %prep, %build and %install macros are unused in this project
+%define __jar_repack 0
+%global _binary_filedigest_algorithm 1
+%global _source_filedigest_algorithm 1
+%define _source_payload w0.gzdio
+%define _binary_payload w0.gzdio
+
 %prep
+/bin/mkdir %{_buildrootdir}/%{name}-%{version}-%{release}.%{_arch}
 %build
 %install
+/bin/cp -r %{_builddir}/* %{_buildrootdir}/%{name}-%{version}-%{release}.%{_arch}/
 
 ####################################################################################
 # Simply list all the files that need to be installed by this RPM
@@ -29,11 +33,10 @@ Liquifi Autopilot business logic regression test process.
 ####################################################################################
 %files
 %defattr(755,@func_user@,@func_group@)
-/opt/@func_group@/LiqFiAuto/%{version}
-
+/opt/liquifi/%{name}/%{version}.%{release}
 
 ###################################################################################
-# %pre and %post are install scripts that run before and after package installation
+# pre and post are install scripts that run before and after package installation
 # respectively. %preun and %postun are uninstall scripts that run before and after
 # package deinstallation respectively. To maintain control over the files installed
 # by the package, any files that would be created by an install script should have
@@ -44,26 +47,16 @@ Liquifi Autopilot business logic regression test process.
 
 %pre
 echo preinstall
-#rm -r  /opt/@func_user@/%{name}/%{version}/
-#rm -r  /opt/@func_user@/%{name}/%{version}/bin/
-#rm -r /opt/@func_user@/%{name}/%{version}/lib/
-#rm -r /opt/@func_user@/%{name}/%{version}/config/
 
 %post
 echo postinstall
-cd /opt/@func_group@/%{name}/
-
-#Here we are checking to see if we are installing on a prod box to decide if we create a symbolic link to this version.
-installHost=`hostname`
-
-if  [[ "${installHost}" == eqliqap*p ]]; then
-	echo "not setting the currentVersion symbolic link as this IS a prod box."
-else
-	echo "setting the currentVersion symbolic link as this is NOT a prod box."
-	rm currentVersion
-	ln -s %{version} currentVersion
-	chown -h @func_user@:@func_group@ currentVersion
-fi
+echo removing /opt/liquifi/%{name}/currentVersion
+rm /opt/liquifi/%{name}/currentVersion
+echo adding ln -s /opt/liquifi/%{name}/%{version}.%{release} /opt/liquifi/%{name}/currentVersion
+ln -s /opt/liquifi/%{name}/%{version}.%{release} /opt/liquifi/%{name}/currentVersion
+mkdir -p /opt/loghome/autopilot/
+chown liquifi:liquifi /opt/loghome/autopilot
+chown liquifi:liquifi /opt/liquifi/%{name}
 
 %preun
 echo preuninstall
@@ -76,4 +69,3 @@ echo postuninstall
 # deleted before uninstall is called
 %uninstall
 echo uninstalling
-

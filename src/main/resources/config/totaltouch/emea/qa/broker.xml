@@ -14,10 +14,13 @@
 						<property name="setup">
 							<map>
 								<entry key=".-B" value="TT.IOIORDER.INBOUND.P1" />
-								<entry key="C-N" value="TT.IOIORDER.INBOUND.P2" />
-								<entry key="O-S" value="TT.IOIORDER.INBOUND.P3" />
-								<entry key="T-Z" value="TT.IOIORDER.INBOUND.P4" />
-								
+								<entry key="C-D" value="TT.IOIORDER.INBOUND.Q2" />
+								<entry key="E-G" value="TT.IOIORDER.INBOUND.Q3" />
+								<entry key="H-K" value="TT.IOIORDER.INBOUND.Q4" />
+								<entry key="L-N" value="TT.IOIORDER.INBOUND.Q5" />
+								<entry key="O-R" value="TT.IOIORDER.INBOUND.Q6" />
+								<entry key="S-T" value="TT.IOIORDER.INBOUND.Q7" />
+								<entry key="U-Z" value="TT.IOIORDER.INBOUND.Q8" />
 							</map>
 						</property>
 					</bean>
@@ -30,9 +33,13 @@
 						<property name="setup">
 							<map>
 								<entry key=".-B" value="TT.IOI.ADMIN.INBOUND.P1" />
-								<entry key="C-N" value="TT.IOI.ADMIN.INBOUND.P2" />
-								<entry key="O-S" value="TT.IOI.ADMIN.INBOUND.P3" />
-								<entry key="T-Z" value="TT.IOI.ADMIN.INBOUND.P4" />
+								<entry key="C-D" value="TT.IOI.ADMIN.INBOUND.P2" />
+								<entry key="E-G" value="TT.IOI.ADMIN.INBOUND.P3" />
+								<entry key="H-K" value="TT.IOI.ADMIN.INBOUND.P4" />
+								<entry key="L-N" value="TT.IOI.ADMIN.INBOUND.P5" />
+								<entry key="O-R" value="TT.IOI.ADMIN.INBOUND.P6" />
+								<entry key="S-T" value="TT.IOI.ADMIN.INBOUND.P7" />
+								<entry key="U-Z" value="TT.IOI.ADMIN.INBOUND.P8" />
 							</map>
 						</property>
 						<property name="replyAcceptor" value="TotalTouch.To.AutoPilot" />
@@ -52,11 +59,38 @@
 						<property name="password" value="${TT_TOPIC.BROKER.PASSWORD}" />
 						<property name="setup">
 							<map>
-								<entry key=".-Z" value="TT.IOI.ADMIN.INBOUND.P1" />
+								<entry key=".-Z" value="IOI.TO.ADMINGUI" />
 							</map>
 						</property>
 					</bean>
 				</entry>
+				<entry key="TotalTouch.To.GIOI"> 
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TT_TOPIC.BROKER.URL}" />
+						<property name="user" value="${TT_TOPIC.BROKER.USER}" />
+						<property name="password" value="${TT_TOPIC.BROKER.PASSWORD}" />
+						<property name="setup">
+							<map>						
+								<entry key=".-Z" value="TTIOI.IOI.INBOUND.P1" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+
+				<entry key="TotalTouch.To.QFF">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TT_TOPIC.BROKER.URL}" />
+						<property name="user" value="${TT_TOPIC.BROKER.USER}" />
+						<property name="password" value="${TT_TOPIC.BROKER.PASSWORD}" />
+						<property name="setup">
+							<map>
+								<entry key=".-Z" value="TT.IOI.TO.QFF.P1" />
+							</map>
+						</property>
+					</bean>
+				</entry>	
  			</map>
 		</property>		
 	</bean>
@@ -72,18 +106,6 @@
 			</list>
 		</property>
 
-		<property name="sockets">
-			<list> 
-			<!--
-				<bean class = "com.citigroup.liquifi.autopilot.socket.PMMSocket">
-					<property name="host" value="localhost"/>
-					<property name="port" value="18102"/>
-					<property name="outbound" value="LiqFiToATDSocket"/>
-					<property name="inbound" value="AutoPilotToLiqFiATDSocket"/>
-				</bean>
-			-->
-			</list>
-		</property>
 	</bean>
 
 </beans>

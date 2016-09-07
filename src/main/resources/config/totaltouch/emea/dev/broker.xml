@@ -57,8 +57,7 @@
 						<property name="replyAcceptor" value="TotalTouch.To.AutoPilot" />
 					</bean>
 				</entry>
-				
- 			</map>	
+			</map>	
 		</property>
 
 		<property name="acceptorBrokerMapping">
@@ -71,7 +70,7 @@
 						<property name="password" value="${TT_TOPIC.BROKER.PASSWORD}" />
 						<property name="setup"> 
 							<map>
-								<entry key=".-Z" value="TT.IOI.TO.QFF.P1" />
+								<entry key=".-Z" value="IOI.TO.ADMINGUI" />
 							</map>
 						</property>
 					</bean>
@@ -115,19 +114,6 @@
 					<property name="port" value="18000"/>
 					<property name="socketID" value="TOBtoAutoPilot"/>
 				</bean>
-			</list>
-		</property>
-
-		<property name="sockets">
-			<list> 
-			<!--
-				<bean class = "com.citigroup.liquifi.autopilot.socket.PMMSocket">
-					<property name="host" value="localhost"/>
-					<property name="port" value="18102"/>
-					<property name="outbound" value="LiqFiToATDSocket"/>
-					<property name="inbound" value="AutoPilotToLiqFiATDSocket"/>
-				</bean>
-			-->
 			</list>
 		</property>
 	</bean>

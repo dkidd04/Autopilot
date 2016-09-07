@@ -57,6 +57,7 @@ import com.citigroup.liquifi.autopilot.gui.dndTree.TestCaseTreeNode;
 import com.citigroup.liquifi.autopilot.gui.model.InputStepTableModel;
 import com.citigroup.liquifi.autopilot.gui.model.OutputStepTableModel;
 import com.citigroup.liquifi.autopilot.helper.TestCaseHelper;
+import com.citigroup.liquifi.autopilot.util.PlaceHolders;
 import com.citigroup.liquifi.entities.LFLabel;
 import com.citigroup.liquifi.entities.LFOutputMsg;
 import com.citigroup.liquifi.entities.LFOutputTag;
@@ -1681,6 +1682,7 @@ private void startTestcase(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_st
         if(currentlyRunningTestCaseState == null) {
         	stopCurrentTestCase("Exception throw by the engine! Please consult the log.");
         } else {
+        	PlaceHolders.addSymFiiMap(testCaseSymbolTextBox.getText());
         	testCaseRunStatusTextBox.setText("Test Started. Click \"Next\" button to send first message.");
 	        inputStepTable.getSelectionModel().setSelectionInterval(0, 0);
         }
