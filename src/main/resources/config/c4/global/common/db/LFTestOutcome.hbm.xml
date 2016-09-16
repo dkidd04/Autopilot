@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.citigroup.liquifi.entities.LFTestOutcome" table="LFTestOutcome">  
+
+	    <composite-id>
+    	    <key-property name="testID" column = "TestID"/>
+        	<key-property name="lastActivityUserID" column = "LastActivityUserID"/>
+        	<key-property name="validationTimestamp" column = "ValidationTimestamp"/>
+    	</composite-id>
+
+        <property name="symbol" column = "Symbol"/> 
+        <property name="validationResultStatus" column = "ValidationResultStatus"/> 
+        <property name="validationObjectDetail" column = "ValidationObjectDetail"/>
+        <property name="validationResultMsg" column = "ValidationResultMsg"/>
+        <property name="failedInputStep" column = "FailedInputStep"/>
+		<property name="failedOutputMsgID" column = "FailedOutputMsgID"/>
+		<property name="comments" column = "Comments"/>
+		<property name="testingBroker" column = "TestingBroker"/>
+
+    </class>
+</hibernate-mapping>

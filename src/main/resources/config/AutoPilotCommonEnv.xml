@@ -7,6 +7,7 @@
 		<Property Name="RATES" AppID="35318"/>
 		<Property Name="TTIOI" AppID="35318"/>
 		<Property Name="TTETF" AppID="35318"/>
+		<Property Name="C4" AppID="35318"/>
 	</ApplictionList>
 	<RegionList>
 		<Property Name="US"/>
@@ -14,6 +15,7 @@
 		<Property Name="HK"/>
 		<Property Name="JPN"/>
 		<Property Name="MX"/>
+		<Property Name="GLOBAL"/>
 	</RegionList>
 	<EnvList>
 		<Property Name="DEV"/>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.citigroup.liquifi.entities.LFOutputMsg" table="LFOutputMsg">
+		<composite-id>
+			<key-property name="testID" column = "TestID"/>
+			<key-property name="actionSequence" column = "ActionSequence"/>
+			<key-property name="outputMsgID" column = "OutputMsgID"/>
+		</composite-id>
+        <property name="template" column = "Template"/>
+        <property name="outputMsg" column = "OutputMsg"/>
+        <property name="topicID" column = "TopicID"/>
+        <property name="commonTags" column ="CommonTags" />
+        <property name="parentRefStep" column ="ParentRefStep" />
+        <property name="parentPlaceHolder" column ="ParentPlaceHolder" />
+        <property name="childrenOutputSteps" column ="ChildrenOutputSteps" />
+        <property name="custValidationClass" column = "CustValidationClass"/>
+        
+		<bag name = "outputTagList" inverse = "true" lazy="false" cascade="save-update,all-delete-orphan">
+			<key>
+				<column name = "TestID"/>
+				<column name = "ActionSequence"/>
+				<column name = "OutputMsgID"/>
+			</key>
+			<one-to-many class = "com.citigroup.liquifi.entities.LFOutputTag"/>
+		</bag>
+	</class>
+</hibernate-mapping>

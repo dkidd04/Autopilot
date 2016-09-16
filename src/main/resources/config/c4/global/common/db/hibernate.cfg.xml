@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.sybase.jdbc3.jdbc.SybDriver</property>
+        <property name="hibernate.connection.password">zeusdev</property>
+        <property name="hibernate.connection.url">jdbc:sybase:Tds:eqdb3d.eur.nsroot.net:6100/LIQUIFI_AUTOPILOT</property>
+        <property name="hibernate.connection.username">zeusdev</property>
+       	<property name="hibernate.connection.autocommit">true</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.SybaseDialect</property>
+    	<property name="hibernate.connection.ENCRYPT_PASSWORD">true</property>
+    	<property name="hibernate.connection.DJCE_PROVIDER_CLASS">com.certicom.ecc.jcae.Certicom</property>
+    	
+    	<mapping resource = "LFBrokerInfo.hbm.xml"/>
+    	<mapping resource = "LFTemplate.hbm.xml"/>
+    	<mapping resource = "LFTopic.hbm.xml"/>
+    	<mapping resource = "LFTestInputSteps.hbm.xml"/>
+    	<mapping resource = "LFInputTagValues.hbm.xml"/>
+    	<mapping resource = "LFOutputMsg.hbm.xml"/>
+    	<mapping resource = "LFOutputTagValues.hbm.xml"/>
+    	<mapping resource = "LFTestCase.hbm.xml"/>
+    	<mapping resource = "LFAppName.hbm.xml"/>
+    	<mapping resource = "LFCategory.hbm.xml"/>
+		<mapping resource = "LFTestOutcome.hbm.xml"/>
+		<mapping resource = "LFCommonOverwriteTag.hbm.xml"/>
+		<mapping resource = "LFLabel.hbm.xml"/>
+		<mapping resource = "LFStepLinkEntry.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>
