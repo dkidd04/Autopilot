@@ -1040,7 +1040,7 @@ public class InputTestCasePanel extends javax.swing.JPanel implements TableModel
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
 
-        regionComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "US", "EMEA", "HK", "JPN", "AUS", "MX" }));
+        regionComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "US", "EMEA", "HK", "JPN", "AUS", "MX", "GLOBAL" }));
         regionComboBox.setName("regionComboBox"); // NOI18N
 
         testcaseNameLabel.setFont(resourceMap.getFont("testcaseNameLabel.font")); // NOI18N
