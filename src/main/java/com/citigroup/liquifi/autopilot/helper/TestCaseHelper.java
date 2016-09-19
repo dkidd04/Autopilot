@@ -27,6 +27,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import com.citigroup.liquifi.AutoPilotAppl;
 import com.citigroup.liquifi.autopilot.bootstrap.ApplicationContext;
+import com.citigroup.liquifi.autopilot.controller.TestCaseController;
 import com.citigroup.liquifi.autopilot.gui.AutoPilotApplView;
 import com.citigroup.liquifi.autopilot.gui.InputStepPanel;
 import com.citigroup.liquifi.autopilot.gui.SmartTagDialog;
@@ -64,20 +65,20 @@ public class TestCaseHelper {
 	private LFTestCase testcase = null;
 	private HighlightPainter highlighPainter = new DefaultHighlightPainter(Color.YELLOW);
 	private boolean testCaseChangesAreSaved = true;
-	
-	
+
+
 	public void resetTestCaseChangesSavedStatus(){
 		this.testCaseChangesAreSaved = true;
 	}
-	
+
 	public void setTestCaseChangesSavedStatus(boolean status){
 		this.testCaseChangesAreSaved = status;
 	}
-	
+
 	public boolean isTestCaseChangesSaved(){
 		return this.testCaseChangesAreSaved;
 	}
-	
+
 	public void setTestcase(LFTestCase testcase) {
 		this.testcase = testcase;
 
@@ -110,8 +111,8 @@ public class TestCaseHelper {
 
 		outputTagTableModel.add(tag);
 	}
-	
-	
+
+
 	public void addOutputStepTag(LFOutputTag tag) {
 		// TODO Auto-generated method stub
 		tag.setActionSequence(inputRowPointer+1);
@@ -120,9 +121,9 @@ public class TestCaseHelper {
 
 		outputTagTableModel.add(tag);
 	}
-	
+
 	public void updateRepeatingGroupTag(Tag overwrittenTag, String groupNum, boolean isInputStep) {
-		
+
 		if(isInputStep){
 			boolean tagOverwritten = false;
 			String newTagId = new StringBuilder(overwrittenTag.getTagID()).append("[").append(groupNum).append("]").toString();
@@ -179,30 +180,30 @@ public class TestCaseHelper {
 
 	public void addValidationTag(LFTag tag) {
 		tag.setTestID(testcase.getTestID());
-//		tag.setActionSequence(inputRowPointer+1);
+		//		tag.setActionSequence(inputRowPointer+1);
 		validationTagTableModel.add(tag);
 	}
-	
+
 	public void addNewValidationTemplateTag(LFTag tag){
 		tag.setTestID(testcase.getTestID());
-//		tag.setActionSequence(inputRowPointer+1);
+		//		tag.setActionSequence(inputRowPointer+1);
 		validationTemplateTableModel.add(tag);
 	}
-	
+
 	public void populateRepeatingGroupTag(LFTag tag){
 		this.repeatingGroupTagTableModel.add(tag);
 	}
-	
+
 	public void addInputStepTag() {
 		LFTag tag = new LFTag();
 		tag.setTestID(testcase.getTestID());
 		tag.setActionSequence(inputRowPointer+1);
-		
+
 		inputTagTableModel.add(tag);
 	}
-	
 
-	
+
+
 	public void addInputStepTag(LFTag tag) {
 		tag.setTestID(testcase.getTestID());
 		tag.setActionSequence(inputRowPointer+1);
@@ -218,7 +219,7 @@ public class TestCaseHelper {
 			refreshOutputMessageBox();
 		}
 	}
-	
+
 	public void removeValidationTemplateTag(int step){
 		if(step != -1){
 			validationTemplateTableModel.removeRow(step);
@@ -316,8 +317,8 @@ public class TestCaseHelper {
 		}
 		return stepArr;
 	}
-	
-	
+
+
 	public void removeOutputStep(int step) {
 		if(step != -1) {
 			clearStepLink(inputRowPointer, step);
@@ -330,7 +331,7 @@ public class TestCaseHelper {
 		}
 
 	}
-	
+
 
 
 	public void setInputStepTableRowPointer(int pointer) {
@@ -386,7 +387,7 @@ public class TestCaseHelper {
 			format(outputStepTableModel.getRow(outputRowPointer), doc);
 		}
 	}
-	
+
 	private Pattern varPattern = Pattern.compile("(@APVAR.*?)\\.");
 
 	private void createPlaceHolderTags(Step<? extends Tag> step){
@@ -401,7 +402,7 @@ public class TestCaseHelper {
 				// Tags from step common overwrite tags
 				if(step.getCommonTags() != null) {
 					List<LFCommonOverwriteTag> tags = commonOverwriteTagMap.get(step.getCommonTags());
-					
+
 					for(Tag tag : tags) {
 						Matcher m = varPattern.matcher(tag.getTagValue());
 						while (m.find()) {
@@ -417,7 +418,7 @@ public class TestCaseHelper {
 				// Tags from template common overwrite tags
 				if(template != null && template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.ComboBoxEmptyItem)) {
 					List<LFCommonOverwriteTag> tags = commonOverwriteTagMap.get(template.getCommonOverwriteTagListName());
-					
+
 					for(Tag tag : tags) {
 						Matcher m = varPattern.matcher(tag.getTagValue());
 						while (m.find()) {
@@ -564,6 +565,9 @@ public class TestCaseHelper {
 				try {
 					Transformer transformer = TransformerFactory.newInstance().newTransformer();
 					transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+					if(TestCaseController.OMIT_XML_DECLARATION){
+						transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+					}
 
 					StreamResult result = new StreamResult(new StringWriter());
 					StreamSource source = new StreamSource(new StringReader(msg));
@@ -633,7 +637,7 @@ public class TestCaseHelper {
 				TagStyle overwrite = new TagStyle();
 				overwrite.tagID = over.getTagID();
 				overwrite.tagValue = "[" + over.getTagValue() + "]";
-				
+
 				if("@UNSET".equals(over.getTagValue())) {
 					overwrite.style = styleName+"_unset";
 				} else {
@@ -699,14 +703,14 @@ public class TestCaseHelper {
 		inputStepPanel.populateForm(inputStep, true);
 		((AutoPilotApplView)AutoPilotAppl.getApplication().getMainView()).showInputStepPanel();
 	}
-	
+
 	public void addInputStepSmartTag(int selectedInputStepIdx){
-//		SmartTagPanel smartTagPanel = ApplicationContext.getSmartTagPanel();
-//		
-//		LFTestInputSteps inputStep = inputStepTableModel.getRow(selectedInputStepIdx);
-//		smartTagPanel.populateForm(inputStep, true);
-//		
-//		((AutoPilotApplView)AutoPilotAppl.getApplication().getMainView()).showSmartTagPanel();
+		//		SmartTagPanel smartTagPanel = ApplicationContext.getSmartTagPanel();
+		//		
+		//		LFTestInputSteps inputStep = inputStepTableModel.getRow(selectedInputStepIdx);
+		//		smartTagPanel.populateForm(inputStep, true);
+		//		
+		//		((AutoPilotApplView)AutoPilotAppl.getApplication().getMainView()).showSmartTagPanel();
 
 		JFrame mainFrame = AutoPilotAppl.getApplication().getMainFrame();
 		SmartTagDialog smartTagDialog = new SmartTagDialog (mainFrame, false);
@@ -714,23 +718,23 @@ public class TestCaseHelper {
 		smartTagDialog.populateForm(inputStep);
 		smartTagDialog.setLocationRelativeTo(mainFrame);
 		AutoPilotAppl.getApplication().show(smartTagDialog);
-		
-//		SmartTagPanel smartTagPanel = ApplicationContext.getSmartTagPanel();
-//		LFTestInputSteps inputStep = inputStepTableModel.getRow(selectedInputStepIdx);
-//		smartTagPanel.populateForm(inputStep, true);
-//		new SmartTagView();
+
+		//		SmartTagPanel smartTagPanel = ApplicationContext.getSmartTagPanel();
+		//		LFTestInputSteps inputStep = inputStepTableModel.getRow(selectedInputStepIdx);
+		//		smartTagPanel.populateForm(inputStep, true);
+		//		new SmartTagView();
 	}
-	
+
 	public void addOutputputStepSmartTag(int selectedInputStepIdx, int selectedOutputStepIdx) {
-		
-//		SmartTagPanel smartTagPanel = ApplicationContext.getSmartTagPanel();
-//
-//		//LFTestInputSteps inputStep = inputStepTableModel.getRow(selectedInputStepIdx);
-//		LFOutputMsg outputStep = outputStepTableModel.getRow(selectedOutputStepIdx);
-//		
-//		smartTagPanel.populateForm(outputStep, false);
-//
-//		((AutoPilotApplView)AutoPilotAppl.getApplication().getMainView()).showSmartTagPanel();
+
+		//		SmartTagPanel smartTagPanel = ApplicationContext.getSmartTagPanel();
+		//
+		//		//LFTestInputSteps inputStep = inputStepTableModel.getRow(selectedInputStepIdx);
+		//		LFOutputMsg outputStep = outputStepTableModel.getRow(selectedOutputStepIdx);
+		//		
+		//		smartTagPanel.populateForm(outputStep, false);
+		//
+		//		((AutoPilotApplView)AutoPilotAppl.getApplication().getMainView()).showSmartTagPanel();
 
 		JFrame mainFrame = AutoPilotAppl.getApplication().getMainFrame();
 		SmartTagDialog smartTagDialog = new SmartTagDialog (mainFrame, false);
@@ -738,18 +742,18 @@ public class TestCaseHelper {
 		smartTagDialog.populateForm(outputStep);
 		smartTagDialog.setLocationRelativeTo(mainFrame);
 		AutoPilotAppl.getApplication().show(smartTagDialog);
-	
+
 	}
-	
+
 	public void addStepLink(int inputStep, int outputStep){
-		
+
 		JFrame mainFrame = AutoPilotAppl.getApplication().getMainFrame();
 		StepLinkDialog stepLinkDialog = new StepLinkDialog (mainFrame, false, inputStep, outputStep);
 		stepLinkDialog.populateForm(testcase, false);
 		stepLinkDialog.setLocationRelativeTo(mainFrame);
 		AutoPilotAppl.getApplication().show(stepLinkDialog);
-	
-		
+
+
 	}
 
 	public void addOutputStep(int inputRow, int row) {
@@ -787,15 +791,15 @@ public class TestCaseHelper {
 	public TagTableModel<LFOutputTag> getOutputTagModel() {
 		return outputTagTableModel;
 	}
-	
+
 	public TagTableModel<LFTag> getValidationTagModel(){
 		return validationTagTableModel;
 	}
-	
+
 	public TagTableModel<LFTag> getValidationTemplateTableModel(){
 		return validationTemplateTableModel;
 	}
-	
+
 	public RepeatingGroupTableModel<Tag> getRepeatingGroupTagTableModel(){
 		return repeatingGroupTagTableModel;
 	}
@@ -824,7 +828,7 @@ public class TestCaseHelper {
 				}
 			}
 		}
-		
+
 		// look at each input and output stage above inputRow and refractor IP and OP tags
 		for(int inPointer = inputRow+1; inPointer < inputs.size(); inPointer++) {
 			List<LFTag> inputTags = inputs.get(inPointer).getInputTagsValueList();
@@ -850,9 +854,9 @@ public class TestCaseHelper {
 	private void refractorTag(Tag tag, int inputRow, int outputRow, boolean added) {
 		// IP[y]
 		// OP[y][z]
-		
+
 		// deals with IP[y]
- 		if (outputRow < 0 && tag.getTagValue().startsWith(AutoPilotConstants.PLACEHOLDER_INPUT)) {
+		if (outputRow < 0 && tag.getTagValue().startsWith(AutoPilotConstants.PLACEHOLDER_INPUT)) {
 			int indexStart = tag.getTagValue().indexOf(AutoPilotConstants.SEPERATOR_ARRAY_START);
 			int indexEnd = tag.getTagValue().indexOf(AutoPilotConstants.SEPERATOR_ARRAY_END);
 			int inputStep = Integer.parseInt(tag.getTagValue().substring(indexStart+1, indexEnd));
@@ -871,7 +875,7 @@ public class TestCaseHelper {
 				}
 				tag.setTagValue("@IP["+inputStep+"]"+tag.getTagValue().substring(indexEnd+1));
 			}
-		// deals with OP[y][z]
+			// deals with OP[y][z]
 		} else if(tag.getTagValue().startsWith(AutoPilotConstants.PLACEHOLDER_OUTPUT)) {
 			int indexStart = tag.getTagValue().indexOf(AutoPilotConstants.SEPERATOR_ARRAY_START);
 			int indexEnd = tag.getTagValue().indexOf(AutoPilotConstants.SEPERATOR_ARRAY_END);
@@ -894,7 +898,7 @@ public class TestCaseHelper {
 						}
 					}
 				}
-				
+
 				// only when z changes
 				if(outputRow > -1) {
 					if(inputStep == inputRow) {
@@ -920,5 +924,5 @@ public class TestCaseHelper {
 
 
 
-	
+
 }

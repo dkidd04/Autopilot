@@ -34,6 +34,7 @@ public enum TestCaseController {
 	private Map<String, LFTemplate> templateMap = DBUtil.getInstance().getTem().getAllTemplateMap();
 	private Map<String, List<LFCommonOverwriteTag>> commonOverwriteTagMap = DBUtil.getInstance().getCom().getCommonOverwriteTagMap();
 	private AutoPilotBrokerInfoFactory brokerFactory = ApplicationContext.getBrokerFactory();
+	public static final boolean OMIT_XML_DECLARATION = Boolean.getBoolean("OMIT_XML_DECLARATION");
 
 	public ValidationObject loadState(LFTestCase testcase, String symbolStr) {
 		try {

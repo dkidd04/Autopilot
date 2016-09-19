@@ -140,4 +140,9 @@ public class XStreamXMLFactory implements XMLFactory{
 		return msgStr;
 	}
 
+	@Override
+	public String getField(String msg, String strTagID) {
+		throw new RuntimeException("Not yet implemented!");
+	}
+
 }

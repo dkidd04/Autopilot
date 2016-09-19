@@ -15,7 +15,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.citigroup.get.util.date.DateUtil;
 import com.citigroup.liquifi.autopilot.bootstrap.ApplicationContext;
-import com.citigroup.liquifi.autopilot.controller.Message;
 import com.citigroup.liquifi.autopilot.controller.ValidationObject;
 import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.autopilot.message.FIXMessage;
@@ -27,8 +26,8 @@ import com.citigroup.liquifi.util.UniqueId;
 public class PlaceHolders {
 	private AceLogger logger = AceLogger.getLogger(this.getClass().getSimpleName());
 	private UniqueId ID = null;
-	private Pattern inputPattern = Pattern.compile("@IP\\[([\\d]+)\\]\\.(getTag.*?)\\(([-?\\d, ]+)\\)");
-	private Pattern outputPattern = Pattern.compile("@OP\\[([\\d]+)\\]\\[([\\d]+)\\]\\.(getTag.*?)\\(([-?\\d, ]+)\\)");
+	private Pattern inputPattern = Pattern.compile("@IP\\[([\\d]+)\\]\\.(get.*?)\\(([-?\\w., ]+)\\)");
+	private Pattern outputPattern = Pattern.compile("@OP\\[([\\d]+)\\]\\[([\\d]+)\\]\\.(get.*?)\\(([-?\\w., ]+)\\)");
 	private Pattern replacePattern = Pattern.compile("@.*?\\.replace\\('(.*?)',.*?'(.*?)'\\)");
 	private static Map<String,String> symfiiMap = new HashMap<String,String>();
 	private PlaceHolders(UniqueId ID) {
@@ -38,7 +37,7 @@ public class PlaceHolders {
 	public static void addSymFiiMap(String symbol){
 		symfiiMap.put(symbol, ApplicationContext.getProductApiUtil().getFiiStr(symbol));
 	}
-	
+
 	public String parseAPVarPlaceholdersString(String str, Set<Tag> overwrite) {
 		try {
 			int start = -1;
@@ -77,20 +76,20 @@ public class PlaceHolders {
 
 		return str;
 	}
-	
-	
+
+
 	public String parseRepeatingGroup(String strFixMessage){
-		
+
 		List<String> repeatingGroupList = new ArrayList<String>();
-		
+
 		FIXMessage fixMsgToReturn = null;
-		
+
 		FIXMessage fixMsgToParse = new FIXMessage(strFixMessage);
 		fixMsgToReturn = new FIXMessage();
-		
+
 		LinkedHashMap<String, String> tagMapTemp = fixMsgToParse.getTagMap();
 		Iterator<String> it = tagMapTemp.keySet().iterator();
-		
+
 		while (it.hasNext()) {
 			String key = it.next();
 			String val = tagMapTemp.get(key);
@@ -101,13 +100,13 @@ public class PlaceHolders {
 				fixMsgToReturn.setValue(key, val);
 			}
 		}
-		
+
 		String result = fixMsgToReturn.toString();
 		for(String repeatingGroupStr : repeatingGroupList){
 			int i = fixMsgToReturn.toString().lastIndexOf("10=000");
 			result = result.substring(0, i) + repeatingGroupStr + AutoPilotConstants.FIX_SEPERATOR + result.substring(i);
 		}
-		
+
 		return result;
 	}
 
@@ -128,7 +127,7 @@ public class PlaceHolders {
 			 */
 			while (it.hasNext()) {
 				try {
-					
+
 					String key = it.next();
 					String val = tagMapTemp.get(key);
 
@@ -138,7 +137,7 @@ public class PlaceHolders {
 					if(val != null) {
 						fixMsgToReturn.setValue(key, val);
 					}
-					
+
 					// res += key + "=" + tagMap.get(key) + FIXMessage.SEPERATOR;
 
 				} catch (Exception ex) {
@@ -179,7 +178,7 @@ public class PlaceHolders {
 		return fixMsgToReturn.toString();
 	}
 
-	
+
 	/**
 	 * 
 	 * @param tagMapTemp
@@ -188,43 +187,43 @@ public class PlaceHolders {
 	 * @param val
 	 */
 	private String parseAPVarPlaceholderValue(final LinkedHashMap<String, String> tagMapTemp, FIXMessage fixMsgToReturn, final String key, String val) {
-		
-		
+
+
 		if (val.startsWith(AutoPilotConstants.PLACEHOLDER_APVAR)) {
-		
+
 			StringBuilder b = new StringBuilder();
-			
+
 			String [] parts = val.split("\\+");
-			
+
 			for(String part : parts) {
-				
+
 				part = part.replaceAll("\"", "");
 				part = part.trim();				
-				
+
 				String v = parseAPVarPlaceholderSingleValue(tagMapTemp, fixMsgToReturn, key, part);
-				
+
 				if(v != null) {
-					
+
 					b.append( v );
 					b.append( "+" );
 				}
-				
+
 			}
-			
-			
+
+
 			if(b.length() > 0 && b.charAt( b.length() -1 ) == '+') {
 				b.setLength( b.length() - 1 );
 			}
-			
+
 			String s = b.toString();  
-			
+
 			return s;
-			
+
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * @param tagMapTemp
@@ -234,42 +233,42 @@ public class PlaceHolders {
 	 * @return
 	 */
 	private String parseAPVarPlaceholderSingleValue(final LinkedHashMap<String, String> tagMapTemp, FIXMessage fixMsgToReturn, final String key, String val) {
-		
+
 		String strAPVarKey = "";
 		String strAPVarVal = "";		
-		
-		
+
+
 		if (val.startsWith(AutoPilotConstants.PLACEHOLDER_APVAR)) {
-			
+
 			if (ApplicationContext.getConfig().isDebug()) {
 				logger.info("Found APVarible: " + val);
 			}
-			
+
 			if (val.contains(AutoPilotConstants.SEPERATOR_APVAR)) {
 				strAPVarKey = val.substring(0, val.indexOf(AutoPilotConstants.SEPERATOR_APVAR));
-				
+
 			} else {
 				strAPVarKey = val;
 			}
 
 			strAPVarVal = tagMapTemp.get(strAPVarKey);
-			
+
 			if ((strAPVarVal == null) || strAPVarVal.trim().length() < 1) {
 				logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_CannotParseAPVariable + " strAPVarKey:" + strAPVarKey + " strAPVarVal:" + strAPVarVal);
 				return null;
 			} 
-			
+
 			val = val.replace(strAPVarKey, strAPVarVal);
-			
+
 			if (ApplicationContext.getConfig().isDebug()) {
 				logger.info("Parsed APVariable. strAPVarKey:" + strAPVarKey + " strAPVarVal:" + strAPVarVal);
 			}
-			
+
 		}
-		
+
 		return val;
 	}	
-	
+
 	/**
 	 * 
 	 * @param strFixMessage
@@ -325,13 +324,13 @@ public class PlaceHolders {
 				// replacementStr = AutoPilotConstants.AUTOPILOT_PREFIX + ID.generate(10);
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_SYMBOL)) {
 				Matcher m2 = replacePattern.matcher(strPlaceholderpattern);
-				
+
 				if(m2.find()) {
 					String what = m2.group(1);
 					String with = m2.group(2);
-					
+
 					replacementStr = strPlaceholderpattern.replace(strPlaceholderpattern, strSymbol.replace(what, with));
-					
+
 				} else {
 					replacementStr = strPlaceholderpattern.replace(AutoPilotConstants.PLACEHOLDER_SYMBOL, strSymbol);
 				}
@@ -405,66 +404,35 @@ public class PlaceHolders {
 				String fixTag = strFixMessage.substring(fixTagStart, placeholderStart - 1);
 				strFixMessage = strFixMessage.replace(AutoPilotConstants.FIX_SEPERATOR + fixTag + "=" + strPlaceholderpattern, "");
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_OUTPUT)) {
-				
+
 				replacementStr = parsePlaceHolderOutput(strFixMessage, intCurrentInputStep, strPlaceholderpattern, rOutputLocal);
-				
+
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_INPUT)) {
 
-				// @IP[8].getTags(55,76) => three matches: 8, getTags, 55,76
+				// @IP[{8}].{getTags}({55,76}) => three matches: 
+				// 1: 8, 2: getTags, 3: 55,76
+				// @IP[{8}].{getXMLFieldText}({clordId}) => three matches: 
+				// 1: 8, 2: getXMLFieldText, 3: clordId
 				Matcher m2 = inputPattern.matcher(strPlaceholderpattern);
 
 				if (m2.find() && m2.groupCount() == 3) {
 					int intInputStep = Integer.valueOf(m2.group(1));
-					String getType = m2.group(2);
-					String strTagID = m2.group(3);
 
 					if (intCurrentInputStep < intInputStep) {
 						logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputstepCannotBeReferencedYet + ". CurrentInputStep/InputStepReferenced:" + intCurrentInputStep + "/" + intInputStep);
 						continue;
 					}
 
-					Message tempMsg = rOutputLocal.getInboundStep(intInputStep);
 					String strActualInputMsg = rOutputLocal.getInboundStep(intInputStep).message;
-
-					if (getType.equals("getTag")) {
-						replacementStr = ApplicationContext.getFIXFactory().getTagValue(strActualInputMsg, strTagID);
-					} else if (getType.equals("getTags") || getType.equals("getTagList")) {
-						String[] strTagIDArray = strTagID.split(AutoPilotConstants.SEPERATOR_TAGLIST);
-						StringBuffer sBuffReplaceLocal = new StringBuffer("");
-						String strTagIDLocal = "";
-						String strTagValueLocal = "";
-
-						boolean shouldAppendSeperator = false;
-						for (int arrayIndex = 0; arrayIndex < strTagIDArray.length; arrayIndex++) {
-							strTagIDLocal = strTagIDArray[arrayIndex];
-							strTagValueLocal = ApplicationContext.getFIXFactory().getTagValue(strActualInputMsg, strTagIDLocal);
-
-							/*
-							 * if strTagIDLocal is already in the message, do not overwrite using reference message
-							 */
-							String strCheckExistingTag = ApplicationContext.getFIXFactory().getTagValue(strFixMessage, strTagIDLocal);
-							if (strCheckExistingTag != null && strCheckExistingTag.trim().length() != 0) {
-								logger.info("The tag is already in the message, do not overwrite using reference message. Tag:" + strTagIDLocal);
-								continue;
-							}
-
-							if (strTagValueLocal != null && strTagValueLocal.length() > 0) {
-								// remove the FIX_SEPERATOR '' in the end of replaced string
-								if (shouldAppendSeperator)
-									sBuffReplaceLocal.append(AutoPilotConstants.FIX_SEPERATOR);
-
-								sBuffReplaceLocal.append(strTagIDLocal);
-								sBuffReplaceLocal.append("=");
-								sBuffReplaceLocal.append(strTagValueLocal);
-								shouldAppendSeperator = true;
-							} else {
-								logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseRuntime_CannoFindSpecifiedTagInReferedMsg + " Tag:" + strTagIDLocal);
-								continue;
-							}
-						}
-
-						replacementStr = sBuffReplaceLocal.toString();
+					
+					String getType = m2.group(2);
+					String strTagID = m2.group(3);
+					if(isFixMessageFunction(getType) ){
+						replacementStr = handleFixMessageFunctions(strFixMessage, strActualInputMsg, getType, strTagID);
+					} else {
+						replacementStr = handleNonFixMessageFunctions(strActualInputMsg, getType, strTagID);
 					}
+
 				}else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_REPEATING_GROUP)){
 					// do nothing, will be handled later
 				}else {
@@ -498,7 +466,10 @@ public class PlaceHolders {
 
 		return strFixMessage;
 	}
-	
+
+	private boolean isFixMessageFunction(String getType) {
+		return getType.matches("getTag.?");
+	}
 
 	/**
 	 * 
@@ -510,30 +481,30 @@ public class PlaceHolders {
 	 * @throws Exception
 	 */
 	private String parsePlaceHolderOutput (final String strFixMessage, final int intCurrentInputStep, final String strPlaceholderpattern, final ValidationObject rOutputLocal) throws Exception {
-		
-		
+
+
 		String [] parts = strPlaceholderpattern.split("\\+");
 
 		StringBuilder b = new StringBuilder();
 
 		for(String part : parts) {
-			
+
 			part = part.replaceAll("\"", "");
 			part = part.trim();
-			
+
 			String s = parsePlaceHolderOutputA(strFixMessage, intCurrentInputStep, part, rOutputLocal);
-			
+
 			if(s != null) {
 				b.append( s );
 			}
-			
+
 		}
-		
+
 		return b.toString();
-		
+
 	}
 
-		
+
 	/**
 	 * 
 	 * @param strFixMessage
@@ -544,21 +515,21 @@ public class PlaceHolders {
 	 * @throws Exception
 	 */
 	private String parsePlaceHolderOutputA (final String strFixMessage, final int intCurrentInputStep, final String strPlaceholderpattern, final ValidationObject rOutputLocal) throws Exception {		
-		
-		String replacementStr = null;
-		
-		// @OP[2][8].getTags(55,76) => four matches: 2, 8, getTags, 55,76
+
+
+		// @OP[{8}][{3}].{getTags}({55,76}) => four matches: 
+		// 1: 8, 2: 3, 3: getTags, 4: 55,76
+		// @OP[{8}][{3}].{getXMLFieldText}({clordId}) => four matches: 
+		// 1: 8, 2: 3, 3: getXMLFieldText, 4: clordId
 		Matcher m2 = outputPattern.matcher(strPlaceholderpattern);
 
 		if (m2.find() == false || m2.groupCount() != 4) {
 			logger.warning("unable to parse placeholder ("+strPlaceholderpattern+")");
 			return strPlaceholderpattern;
 		}
-		
+
 		int intInputStep = Integer.valueOf(m2.group(1));
 		int intOutputMsgID = Integer.valueOf(m2.group(2));
-		String getType = m2.group(3);
-		String strTagID = m2.group(4);
 
 		if (intCurrentInputStep < intInputStep) {
 			logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputstepCannotBeReferencedYet + ". CurrentInputStep/InputStepReferenced:" + intCurrentInputStep + "/" + intInputStep);
@@ -570,28 +541,43 @@ public class PlaceHolders {
 		if(strResultedOutputMsg == null) {
 			throw new Exception("linkage is wrong ("+strPlaceholderpattern+")");
 		}
-		
-		if (getType.equals("getTag")) {
-			replacementStr = ApplicationContext.getFIXFactory().getTagValue(strResultedOutputMsg, strTagID);
-			
-		} else if (getType.equals("getTags") || getType.equals("getTagList")) {
-			replacementStr = ApplicationContext.getFIXFactory().getTagValue(strResultedOutputMsg, strTagID);
-			String[] strTagIDArray = strTagID.split(AutoPilotConstants.SEPERATOR_TAGLIST);
+
+		String getType = m2.group(3);
+		String strTagID = m2.group(4);
+		if(isFixMessageFunction(getType)){
+			return handleFixMessageFunctions(strFixMessage, strResultedOutputMsg, getType, strTagID); 
+		} else {
+			return handleNonFixMessageFunctions(strResultedOutputMsg, getType, strTagID);
+		}
+	}
+
+	private String handleNonFixMessageFunctions(String referenceMessage, String functionName, String tag) {
+		if (functionName.equals("getXMLFieldText")){
+			return ApplicationContext.getXmlFactory().getField(referenceMessage, tag);
+		}
+		return null;
+	}
+
+	private String handleFixMessageFunctions(final String currentFixMessage, String referenceMessage, String functionName, String tag) {
+		if (functionName.equals("getTag")) {
+			return ApplicationContext.getFIXFactory().getTagValue(referenceMessage, tag);
+		} else if (functionName.equals("getTags") || functionName.equals("getTagList")) {
+			String[] strTagIDArray = tag.split(AutoPilotConstants.SEPERATOR_TAGLIST);
 			StringBuffer sBuffReplaceLocal = new StringBuffer("");
 			String strTagIDLocal = "";
 			String strTagValueLocal = "";
 
 			boolean shouldAppendSeperator = false;
-			
+
 			for (int arrayIndex = 0; arrayIndex < strTagIDArray.length; arrayIndex++) {
 
 				strTagIDLocal = strTagIDArray[arrayIndex];
-				strTagValueLocal = ApplicationContext.getFIXFactory().getTagValue(strResultedOutputMsg, strTagIDLocal);
+				strTagValueLocal = ApplicationContext.getFIXFactory().getTagValue(referenceMessage, strTagIDLocal);
 
 				/*
 				 * if strTagIDLocal is already in the message, do not overwrite using reference message
 				 */
-				String strCheckExistingTag = ApplicationContext.getFIXFactory().getTagValue(strFixMessage, strTagIDLocal);
+				String strCheckExistingTag = ApplicationContext.getFIXFactory().getTagValue(currentFixMessage, strTagIDLocal);
 				if (strCheckExistingTag != null && strCheckExistingTag.trim().length() != 0) {
 					logger.info("The tag is already in the message, do not overwrite using reference message. Tag:" + strTagIDLocal);
 					continue;
@@ -612,23 +598,19 @@ public class PlaceHolders {
 				}
 			}
 
-			replacementStr = sBuffReplaceLocal.toString();
-			
-			
+			return sBuffReplaceLocal.toString();
 		}
-		
-		return replacementStr;
-	
-	}//
-	
-	
+		return null;
+	}
+
+
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd:HH:mm:ss.SSS");
 	private String printCurrentTimePlus(int plus) {
 		synchronized(sdf) {
 			return sdf.format(DateUtil.convertToGMTDate(ApplicationContext.getClock().currentTimeMillis() + plus));
 		}
 	}
-	
+
 	private SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss.SSS");
 	private String printCurrentTime2Plus(int plus) {
 		synchronized(sdf2) {
