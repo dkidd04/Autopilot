@@ -35,7 +35,7 @@
 						<property name="password" value="${ARBOL.TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="DEV.EMEA.ARBOL.C4.OES.C4XO_UKDEV_C4C1P_3"/>
+								<entry key="A-Z" value="DEV.EMEA.ARBOL.C4.OES.C4XO_UKDEV_CI_1"/>
 							</map>
 						</property>
  					</bean>
