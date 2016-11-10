@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AutoPilotCommonEnv>
+	<ApplictionList>
+		<Property Name="C4" AppID="148325"/>
+	</ApplictionList>
+	<RegionList>
+		<Property Name="GLOBAL"/>
+	</RegionList>
+	<EnvList>
+		<Property Name="DEV"/>
+		<Property Name="CI"/>
+		<Property Name="PACE"/>
+		<Property Name="QA"/>
+		<Property Name="Lab"/>
+	</EnvList>
+</AutoPilotCommonEnv>

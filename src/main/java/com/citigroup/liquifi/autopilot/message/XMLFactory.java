@@ -13,4 +13,6 @@ public interface XMLFactory {
 	public String overwriteAdminOrderRequest2XMLMessage(String msgStr, Set<Tag> specTags) throws Exception;
 	
 	public String extractCommands(String msgStr, List<Command> commands) throws Exception;
+
+	public String getField(String msg, String strTagID);
 }

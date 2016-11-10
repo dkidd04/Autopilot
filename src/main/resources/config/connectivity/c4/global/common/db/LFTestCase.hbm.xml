@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.citigroup.liquifi.entities">
+    <class name="com.citigroup.liquifi.entities.LFTestCase" table="LFTestCase">
+        <id name="testID" column="TestID">
+        </id>        
+        
+        <property name="category" column="Category"/>
+        <property name="description" column="Description"/>
+        <property name="appName" column="AppName"/>
+        <property name="name" column="Name"/>
+        <property name="region" column="Region"/>
+        <property name="releaseNum" column="ReleaseNum"/>
+        <property name="active" column="Active"/>
+        <property name="securityClass" column ="SecurityClass"/>
+        <property name="jiraNum" column = "JiraNum" />
+        <property name="lastEditedUser" column = "LastEditedUser" />
+        
+        <bag name = "inputStepList" inverse = "true" lazy="true" cascade="save-update,all-delete-orphan">
+        	<key>
+        		<column name = "TestID" not-null ="true"/>
+        	</key>
+        	
+        	<one-to-many class = "com.citigroup.liquifi.entities.LFTestInputSteps"/>
+        </bag>
+        
+        <set name="labelSet" table="LFLabelToTestcase" lazy="true" inverse="true">
+    		<key column="TestID" not-null ="true"/>
+        	<many-to-many column="LabelID" class="com.citigroup.liquifi.entities.LFLabel"/>
+  		</set>
+    </class>
+</hibernate-mapping>
