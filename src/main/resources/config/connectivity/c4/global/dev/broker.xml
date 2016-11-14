@@ -11,7 +11,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="sd96287.DEVDEST.IN"/>
+								<entry key="A-Z" value="Autopilot.C4.Client"/>
 							</map>
 						</property>
  					</bean>
@@ -23,7 +23,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="sd37699.DEV.EXCH2.TO.C4"/>
+								<entry key="A-Z" value="Autopilot.C4.ACTIONS"/>
 							</map>
 						</property>
  					</bean>
@@ -87,7 +87,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="sd96287.DEVDEST.OUT"/>
+								<entry key="A-Z" value="C4.Autopilot.Client"/>
 							</map>
 						</property>
  					</bean>
@@ -99,7 +99,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="sd37699.DEV.C4.TO.EXCH2"/>
+								<entry key="A-Z" value="C4.Autopilot.ALERTS"/>
 							</map>
 						</property>
  					</bean>
@@ -111,7 +111,7 @@
 						<property name="password" value="${ARBOL.TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="EMEA.C4.DIST.3"/>
+								<entry key="A-Z" value="C4.Autopilot.DIST"/>
 							</map>
 						</property>
  					</bean>
