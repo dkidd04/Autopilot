@@ -14,8 +14,7 @@ public class AceLogger {
  
 	private static Level loggingLevel = null;
 	private Logger logger = null;
-	private static Map<String, AceLogger> loggerMap = 
-		                                         new HashMap<String,AceLogger>();
+	private static Map<String, AceLogger> loggerMap = new HashMap<>();
 	
 	
 	private AceLogger(String className) {		 
