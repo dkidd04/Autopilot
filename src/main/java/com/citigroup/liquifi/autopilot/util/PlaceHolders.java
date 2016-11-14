@@ -468,7 +468,7 @@ public class PlaceHolders {
 	}
 
 	private boolean isFixMessageFunction(String getType) {
-		return getType.matches("getTag.?");
+		return getType.matches("getTag(s|List)?");
 	}
 
 	/**
