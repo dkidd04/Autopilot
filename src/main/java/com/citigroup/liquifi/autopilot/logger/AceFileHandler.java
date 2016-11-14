@@ -14,46 +14,26 @@ import com.citigroup.liquifi.util.Util;
  */
 public class AceFileHandler extends QFileHandler {
 
-	public AceFileHandler() throws IOException, SecurityException {
+	public AceFileHandler() throws IOException{
 		super();
-		
 	}
 
 	public File generate(String pattern, int generation, int unique)
 			throws IOException {
-		
-		
+
+
 		File file = super.generate(pattern, generation, unique);
 		LogManager manager = LogManager.getLogManager();
 		String prefix = manager.getProperty(getClass().getName() + ".logfileprefix");
-		
-		
-/*
-		
-		String hostNameProp = System.getProperty("hostname");//manager.getProperty(getClass().getName() + ".hostname");
-		
-		
-		if (hostNameProp == null)
-			hostNameProp = "";
-			*/
-		
 		String enrichedFileName = enrichPath(file.getParent());
-		
-		String suffix = file.getAbsoluteFile().getName(); //enrichedFileName.substring(prefix.length(), enrichedFileName.length());
-		
+		String suffix = file.getAbsoluteFile().getName();
 		String logFileName = prefix + "_" + suffix;
-		
-		
 		file  = new File( enrichedFileName + System.getProperty("file.separator") + logFileName);
-		
-			
-		
-		
 		return file;
 
 	} 
 	public String enrichPath(String path){
 		return Util.enrichPath(path);
-	
+
 	}
 }
