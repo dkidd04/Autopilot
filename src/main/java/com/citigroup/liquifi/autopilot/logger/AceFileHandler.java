@@ -16,7 +16,6 @@ public class AceFileHandler extends QFileHandler {
 
 	public AceFileHandler() throws IOException{
 		super();
-		System.out.println("Creating AceFileHandler");
 	}
 
 	public File generate(String pattern, int generation, int unique)
