@@ -137,8 +137,7 @@ public class AutoPilotBootstrap {
 		logger.info("TESTRESULTLOG|List of failed test cases:  ");
 		logger.info("TESTRESULTLOG|" + failedTestcases.toString());
 		long endTime = System.nanoTime();
-		logger.info("TOTAL RUN : "+(endTime - startTime));
-		// cleanUpAutoPilot();
+		logger.info("TOTAL RUN(Nano Seconds) : "+(endTime - startTime));
 		shutdownAutoPilot();
 	}
 
