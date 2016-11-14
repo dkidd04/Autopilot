@@ -13,9 +13,11 @@ import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.util.ClassPathLoader;
 import com.citigroup.liquifi.util.DBUtil;
 
-class AutoPilotBootstrap {
-	private final static AceLogger logger = AceLogger.getLogger("AutoPilotBootstrap");
-
+public class AutoPilotBootstrap {
+	protected final static AceLogger logger = AceLogger.getLogger("AutoPilotBootstrap");
+	private static List<String> failedTestcases = new ArrayList<String>();
+	private static List<String> passedTestcases = new ArrayList<String>();
+	
 	static void initDB() {
 		logger.info("Loading Template from Database ... ");
 		DBUtil.getInstance().getTem().loadAllTemplateFromDB();
@@ -62,12 +64,10 @@ class AutoPilotBootstrap {
 	}
 
 	private static void launchServerMode() throws Exception {
-		loadClasspath();
-		initSpring();
-		initDB();
+		appInit();
 		List<String> labels = new ArrayList<>();
 		List<String> releases = new ArrayList<>();
-
+		
 		if(null != System.getProperty("testCaseLabels") && 0 != System.getProperty("testCaseLabels").trim().length()){
 			logger.info("Label String : "+System.getProperty("testCaseLabels"));
 			labels = Arrays.asList(System.getProperty("testCaseLabels").split(","));
@@ -97,8 +97,7 @@ class AutoPilotBootstrap {
 		}
 
 		int intPassed = 0, intFailed = 0;
-		List<String> failedTestcases = new ArrayList<String>();
-		List<String> passedTestcases = new ArrayList<String>();
+		long startTime = System.nanoTime();
 		logger.info("***************************AutoPilot ServerMode Run Started. Total TestCase:"
 				+ tcIDList.size());
 		logger.info("TESTRESULTLOG|AutoPilot ServerMode Run Started. ");
@@ -137,8 +136,8 @@ class AutoPilotBootstrap {
 		logger.info("TESTRESULTLOG|" + passedTestcases.toString());
 		logger.info("TESTRESULTLOG|List of failed test cases:  ");
 		logger.info("TESTRESULTLOG|" + failedTestcases.toString());
-
-		// cleanUpAutoPilot();
+		long endTime = System.nanoTime();
+		logger.info("TOTAL RUN(Nano Seconds) : "+(endTime - startTime));
 		shutdownAutoPilot();
 	}
 
@@ -151,9 +150,7 @@ class AutoPilotBootstrap {
 	}
 
 	private static void launchBenchmarkMode() throws Exception, InterruptedException {
-		loadClasspath();
-		initSpring();
-		initDB();
+		appInit();
 
 		String benchmarkCriteria = ApplicationContext.getBenchmarkConfig().getBenchmarkCriteria();
 		String warmupCriteria = ApplicationContext.getBenchmarkConfig().getWarmupCriteria();
@@ -181,6 +178,19 @@ class AutoPilotBootstrap {
 		shutdownAutoPilot();
 	}
 
+	/**
+	 * This Is needed to load the app when not launched from the GUI mode to:
+	 * 1. Load ClassPatch
+	 * 2. Initialise Spring
+	 * 3. InitDB Connection
+	 * @throws Exception
+	 */
+	protected static void appInit() throws Exception {
+		loadClasspath();
+		initSpring();
+		initDB();
+	}
+
 	private static void loadClasspath() throws Exception {
 		String strConfighome =  System.getProperty("config.home");
 		String strCommon =  System.getProperty("common");
@@ -193,19 +203,11 @@ class AutoPilotBootstrap {
 		loadClassPath(strClassPathDb);
 	}
 
-	private static String checkNullStrValue(String strValue){
-
-		if (strValue == null || strValue.trim().isEmpty()){
-			strValue = "";
-		}
-		return strValue;
-	}
-
 	static void initSpring() throws Exception {
 		ApplicationContext.init();
 	}
 
-	private static void shutdownAutoPilot() {
+	protected static void shutdownAutoPilot() {
 		logger.info("shutdownAutoPilot()");
 		// to be updated
 		try {
@@ -224,6 +226,10 @@ class AutoPilotBootstrap {
 			throw ex;
 		}
 
+	}
+	
+	public static List<String> getFailedTestcases() {
+		return failedTestcases;
 	}
 
 }
