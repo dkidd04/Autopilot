@@ -40,6 +40,30 @@
 						</property>
  					</bean>
  				</entry>
+ 				<entry key ="EUCB2ResponseToC4">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="Autopilot.C4.Destination.EUCB2"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+ 				<entry key ="UKSMARTResponseToC4">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="Autopilot.C4.Destination.UKSMART"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
  			</map>	
 		</property>
 
@@ -112,6 +136,30 @@
 						<property name="setup">
 							<map>
 								<entry key="A-Z" value="C4.Autopilot.DIST"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="C4ToDest-EUCB2">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="C4.Autopilot.Destination.EUCB2"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="C4ToDest-UKSMART">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="C4.Autopilot.Destination.UKSMART"/>
 							</map>
 						</property>
  					</bean>
