@@ -190,9 +190,9 @@
 				</entry>
 				<entry key ="C4-GM-ToArbol">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
-						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
-						<property name="user" value="${TOPIC.BROKER.USER}"/>
-						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="brokerURL" value="${ARBOL.TOPIC.BROKER.URL}"/>
+						<property name="user" value="${ARBOL.TOPIC.BROKER.USER}"/>
+						<property name="password" value="${ARBOL.TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
 								<entry key="A-Z" value="C4.Autopilot.GM"/>
