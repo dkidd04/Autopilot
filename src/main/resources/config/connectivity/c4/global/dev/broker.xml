@@ -28,6 +28,30 @@
 						</property>
  					</bean>
  				</entry>
+ 				<entry key ="QDMAEventMessageToC4">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="Autopilot.C4.EVENT"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+ 				<entry key ="CCMEventMessageToC4">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="Autopilot.C4.CCM.EVENTS"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
  				<entry key ="ArbolOESActionToC4">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
 						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
@@ -60,6 +84,30 @@
 						<property name="setup">
 							<map>
 								<entry key="A-Z" value="Autopilot.C4.Destination.UKSMART"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+ 				<entry key ="CometRerouteResponseToC4">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="Autopilot.C4.Destination.EUCMTTR"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+ 				<entry key ="EUDCAResponseToC4">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="Autopilot.C4.Destination.EUDCA"/>
 							</map>
 						</property>
  					</bean>
@@ -172,6 +220,30 @@
 						<property name="setup">
 							<map>
 								<entry key="A-Z" value="C4.Autopilot.Destination.UKSMART"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="C4ToDest-CometReroute">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="C4.Autopilot.Destination.EUCMTTR"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="C4ToDest-EUDCA">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="C4.Autopilot.Destination.EUDCA"/>
 							</map>
 						</property>
  					</bean>
