@@ -158,9 +158,10 @@ public class AdminXMLFactory implements XMLFactory {
 
 	@Override
 	public String getField(String msg, String strTagID) {
+		String sanitisedMessage = sanitise(msg);
 		Node firstMatchingNode = null;
 		try {
-			Document document = parseXMLMessage(msg);
+			Document document = parseXMLMessage(sanitisedMessage);
 			Element root = document.getDocumentElement();
 			firstMatchingNode = getFieldFromRoot(strTagID, root);
 		} catch (Exception e) {
