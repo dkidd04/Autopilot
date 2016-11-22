@@ -100,7 +100,7 @@ public class LabelManager {
 			if (strApplication.equalsIgnoreCase("AEE")) {
 				strApplication="LIQUIFI";				
 			}
-			crit.add(Restrictions.eq("appName", strApplication ));
+			crit.add(Restrictions.eq("appName", strApplication.toUpperCase() ));
 		}
 		//add the criteria for region
 		String strRegion = System.getProperty("region");
@@ -110,7 +110,7 @@ public class LabelManager {
 		}
 		if (strRegion!=null && strRegion.trim().length()>0) {
 			//todo - update the AppName on db
-			crit.add(Restrictions.eq("region", strRegion ));
+			crit.add(Restrictions.eq("region", strRegion.toUpperCase() ));
 		}
 		
 		@SuppressWarnings("unchecked")
