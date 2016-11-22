@@ -33,16 +33,16 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 	private static boolean contains = false;
 	private static String descriptFrom = "Institution";
 	private static String descriptionTo = "Proprietary";
-	private static String labelFilter = "Give In";
+	private static String labelFilter = "CAT";
 
 	/**
 	 * Main method launching the application.
 	 */
 	public static void main(String[] args) {
 		logger.info("Launch AutoPilot at Duplication...");
-		System.setProperty("Mode", "addProfileToGVN");
+		System.setProperty("Mode", "massaltername");
 
-		//		addTagsToReplace();
+		addTagsToReplace();
 		try {
 			AutoPilotBootstrap.appInit();
 		} catch (Exception e) {
@@ -54,47 +54,28 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 
 	protected static void chooseMode() {
 		switch(System.getProperty("Mode","null").toLowerCase()){
-		case "addprofiletogvn":
-			addProfileSetup();
+		case "duplicate":
+			duplicate();
 			break;
-			//		case "duplicate":
-			//			duplicate();
-			//			break;
-			//		case "copylabels":
-			//			copyFromLabels();
-			//			break;
-			//		case "changeNumbers":
-			//			changeNumbers();
-			//			break;
-			//		case "removelabel":
-			//			removeLabel();
-			//			break;
-			//		case "swaptopics":
-			//			swapToAdminTopics();
-			//			break;
-			//		case "massaltername":
-			//			massAlterName();
-			//			break;
-			//		default: 
-			//			getTestCases(fromLabel);
-			//			break;
+		case "copylabels":
+			copyFromLabels();
+			break;
+		case "changeNumbers":
+			changeNumbers();
+			break;
+		case "removelabel":
+			removeLabel();
+			break;
+		case "swaptopics":
+			swapToAdminTopics();
+			break;
+		case "massaltername":
+			massAlterName();
+			break;
+		default: 
+			getTestCases(fromLabel);
+			break;
 		}
-	}
-
-	private static void addProfileSetup() {
-		List<String> labels = getFilteredTestCases();
-		labels.forEach(label -> logger.info(label));
-		Set<LFTestCase> testcases = getTestCases(labels.toArray(new String[labels.size()]));
-		testcases.forEach(testCase -> {
-			try {
-			logger.info("BEFORE -> "+testCase.getName());
-			addProfileSetup(testCase);
-			logger.info("AFTER -> "+testCase.getName());
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
 	}
 
 	private static void massAlterName() {
@@ -203,7 +184,7 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 	}
 
 	private static Set<LFTestCase> getTestCases(String ... labels) {
-		logger.info("Getting TestCases for labels " + Arrays.toString(labels));
+		logger.info("Getting TestCases");
 		Set<LFTestCase> tmp = new HashSet<>();
 		for(String label : labels) {
 			tmp.addAll(DBUtil.getInstance().getTestCasesForLabel(label));
@@ -251,31 +232,6 @@ public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
 		int testCaseNum = Integer.parseInt(splitName[0].split("K")[1].trim())+offset;
 		clone.setName("TC"+testCaseNum+"|"+splitName[1]);
 		clone.setName(clone.getName().replace("VsInst", "VsProp"));
-	}
-
-	private static void addProfileSetup(LFTestCase testCase){
-		List<LFTestInputSteps> inputStepList = testCase.getInputStepList();
-		if(inputStepList.size()==0 || "PROFILE_SETUP_GVN".equals(inputStepList.get(0).getTemplate())){
-			logger.info("Returning, test case already set up correctly - " + testCase.getName() + " id - "+testCase.getTestID());
-			return;
-		}
-
-		LFTestInputSteps profileInputStep = new LFTestInputSteps();
-		profileInputStep.setTestID(testCase.getTestID());
-		profileInputStep.setTemplate("PROFILE_SETUP_GVN");
-		profileInputStep.setMsgType("XML");
-		profileInputStep.setTopicID("QDMAEventMessageToC4");
-		profileInputStep.setMessage("");
-		profileInputStep.setComments("");
-		profileInputStep.setActionSequence(0);
-		inputStepList.add(0, profileInputStep);
-		for(int i=1;i<inputStepList.size();i++){
-			LFTestInputSteps inputStep = inputStepList.get(i);
-			inputStep.setActionSequence(i);
-		}
-		testCase.setInputStep(inputStepList);
-
-		logger.info("updated test case - " + testCase.getName() + " id - "+testCase.getTestID());
 	}
 
 	private static void saveToDB(LFTestCase clone) {

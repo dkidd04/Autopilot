@@ -145,9 +145,4 @@ public class XStreamXMLFactory implements XMLFactory{
 		throw new RuntimeException("Not yet implemented!");
 	}
 
-	@Override
-	public String overWriteTagsGeneric(String inputMsg, Set<Tag> overwrite) {
-		throw new RuntimeException("Not yet implemented!");
-	}
-
 }

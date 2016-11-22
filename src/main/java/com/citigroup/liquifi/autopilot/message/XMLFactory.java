@@ -15,6 +15,4 @@ public interface XMLFactory {
 	public String extractCommands(String msgStr, List<Command> commands) throws Exception;
 
 	public String getField(String msg, String strTagID);
-
-	public String overWriteTagsGeneric(String inputMsg, Set<Tag> overwrite);
 }
