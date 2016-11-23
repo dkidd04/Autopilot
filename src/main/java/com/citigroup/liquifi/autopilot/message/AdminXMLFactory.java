@@ -18,7 +18,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import com.citigroup.liquifi.autopilot.controller.TestCaseController;
@@ -141,7 +140,7 @@ public class AdminXMLFactory implements XMLFactory {
 		return stringWriter.getBuffer().toString();
 	}
 
-	private static synchronized Document loadXML(Object xml) {
+	private synchronized Document loadXML(Object xml) {
 		Document document = null;
 		try {
 			DOMParser parser = new DOMParser();
@@ -160,44 +159,103 @@ public class AdminXMLFactory implements XMLFactory {
 	@Override
 	public String getField(String msg, String strTagID) {
 		String sanitisedMessage = sanitise(msg);
-		Document document = loadXML(sanitisedMessage);
-		Element xmlMessage = document.getDocumentElement();
-		Node firstMatchingNode = getMatch(xmlMessage, 0, strTagID.split("\\."));
-		if(firstMatchingNode!=null){
-			return firstMatchingNode.getTextContent();
-		} else {
-			return null;
+		Node firstMatchingNode = null;
+		try {
+			Document document = parseXMLMessage(sanitisedMessage);
+			Element root = document.getDocumentElement();
+			firstMatchingNode = getFieldFromRoot(strTagID, root);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return firstMatchingNode!=null ? firstMatchingNode.getTextContent() : null;
 	}
 
-	/**
-	 * Returns first Node matching the input target tree
-	 * @param node
-	 * @param currentDepth
-	 * @param targetNodeTree
-	 * @return
-	 */
-	private Node getMatch(Node node, int currentDepth, String[] targetNodeTree){
-		if(currentDepth >= targetNodeTree.length){
-			return null;
+	private Node getFieldFromRoot(String strTagID, Element xmlMessage) {
+		Node firstMatchingNode;
+		String targetleafName = leaf(strTagID);
+		String tree = parent(strTagID);
+		NodeMatcher nodeFinder = null;
+		if("listValue".equals(targetleafName)){
+			targetleafName = leaf(tree);
+			tree = parent(tree);
+			nodeFinder = new MultiValueElementNodeMatcher();
+		} else {
+			nodeFinder = new SingleElementNodeMatcher();
 		}
-		String targetNodeName = targetNodeTree[currentDepth];
-		NodeList childNodes = node.getChildNodes();
-		for(int i=0; i<childNodes.getLength();i++){
-			Node childNode = childNodes.item(i);
-			if(childNode.getNodeName().equals(targetNodeName)){
-				if(currentDepth == targetNodeTree.length-1){
-					return childNode;
-				} else {
-					return getMatch(childNode, ++currentDepth, targetNodeTree);
-				}
-			}
-		}
-		return null;
+		String[] split = tree.length()>0?tree.split("\\.") : new String[]{};
+		firstMatchingNode = nodeFinder.matchNode(xmlMessage, split, targetleafName);
+		return firstMatchingNode;
 	}
 
 	private String sanitise(String msg) {
 		return msg.replaceAll(String.valueOf('\001'), "^A");
 	}
 
+	@Override
+	public String overWriteTagsGeneric(String inputMsg, Set<Tag> overwriteTags) {
+		Document document = parseXMLMessage(inputMsg);
+		Element root = document.getDocumentElement();
+		for(Tag tag : overwriteTags){
+			String targetNode = tag.getTagID();
+			String targetValue = tag.getTagValue();
+			overWriteTagGeneric(document, root, targetNode, targetValue);
+		}
+		return toXMLString(document);
+	}
+	
+	private void overWriteTagGeneric(Document document, Element root, String targetNode, String targetValue) {
+		String targetleafName = leaf(targetNode);
+		String tree = parent(targetNode);
+		NodeMatcher nodeFinder = null;
+		if("listValue".equals(targetleafName)){
+			targetleafName = leaf(tree);
+			tree = parent(tree);
+			nodeFinder = new MultiValueElementNodeMatcher();
+		} else {
+			nodeFinder = new SingleElementNodeMatcher();
+		}
+		String[] split = tree.length()>0?tree.split("\\.") : new String[]{};
+		Node matchingNode = nodeFinder.matchNode(root, split, targetleafName);
+		if(matchingNode!=null){
+			System.out.println("changing value");
+			matchingNode.setTextContent(targetValue);
+		} else {
+			System.out.println("creating new node");
+			String parentNodeName = leaf(tree);
+			Node node = nodeFinder.createNode(targetleafName, parentNodeName, targetValue, document);
+			nodeFinder.addNodeToTree(root, tree, node, document);
+		}
+	}
+
+	private String toXMLString(Document document) {
+		String output = null;
+		try {
+			TransformerFactory tf = TransformerFactory.newInstance();
+			Transformer transformer = tf.newTransformer();
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			StringWriter writer = new StringWriter();
+			transformer.transform(new DOMSource(document), new StreamResult(writer));
+			output = writer.getBuffer().toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return output;
+	}
+
+	private Document parseXMLMessage(String inputMsg) {
+		String sanitisedMessage = sanitise(inputMsg);
+		return loadXML(sanitisedMessage);
+	}
+
+	private String parent(String target) {
+		if(target.contains(".")){
+			return target.substring(0, target.lastIndexOf('.'));
+		} else return "";
+	}
+
+	private String leaf(String target) {
+		return target.substring(target.lastIndexOf('.')+1);
+	}
+
 }
+

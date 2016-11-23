@@ -149,6 +149,8 @@ public enum TestCaseController {
 										
 					if (inputMsg.contains("<AdminOrderRequest>") || inputMsg.contains("<AdminMessage>")) {
 						inputMsg = ApplicationContext.getXmlFactory().overWriteTags(inputMsg, overwrite);
+					} else if(!inputMsg.contains("<AdminOrderRequest2>")) {
+						inputMsg = ApplicationContext.getXmlFactory().overWriteTagsGeneric(inputMsg, overwrite);
 					}
 					
 					inputMsg = ApplicationContext.getXmlFactory().overwriteAdminOrderRequest2XMLMessage(inputMsg, overwrite);
