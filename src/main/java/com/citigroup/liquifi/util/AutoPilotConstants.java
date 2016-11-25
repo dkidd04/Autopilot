@@ -42,6 +42,7 @@ public interface AutoPilotConstants {
 	public static final String PLACEHOLDER_APVAR = "@APVAR";
 	
 	public static final String PLACEHOLDER_REPEATING_GROUP = "@INJECT";
+	public static final String PLACEHOLDER_ENV = "@ENV";
 
 	
 	public static final String PLACEHOLDER_APLIST = "-9999";

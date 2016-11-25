@@ -29,6 +29,7 @@ public class PlaceHolders {
 	private Pattern inputPattern = Pattern.compile("@IP\\[([\\d]+)\\]\\.(get.*?)\\(([-?\\w., ]+)\\)");
 	private Pattern outputPattern = Pattern.compile("@OP\\[([\\d]+)\\]\\[([\\d]+)\\]\\.(get.*?)\\(([-?\\w., ]+)\\)");
 	private Pattern replacePattern = Pattern.compile("@.*?\\.replace\\('(.*?)',.*?'(.*?)'\\)");
+	private static final String ENV_FUNCTION = AutoPilotConstants.PLACEHOLDER_ENV + ".value(";
 	private static Map<String,String> symfiiMap = new HashMap<String,String>();
 	private PlaceHolders(UniqueId ID) {
 		this.ID = ID;
@@ -439,6 +440,8 @@ public class PlaceHolders {
 					logger.warning("unable to parse placeholder|" + strPlaceholderpattern);
 				}
 
+			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_ENV)){
+				replacementStr = handleEnvPlaceholder(strFixMessage, strPlaceholderpattern);
 			}
 
 			// replace the strToReturn based the pattern found in strToBeParsed and update the strToBeParsed
@@ -465,6 +468,24 @@ public class PlaceHolders {
 		}
 
 		return strFixMessage;
+	}
+
+	private String handleEnvPlaceholder(String strFixMessage, String strPlaceholderpattern) {
+		//retrieve env variable to replace
+		if(!isValidEnvFunction(strPlaceholderpattern)){
+			return null;
+		}
+		
+		String envVariable = strPlaceholderpattern.substring(ENV_FUNCTION.length(), strPlaceholderpattern.lastIndexOf(")"));
+		Map<String, String> envMap = new HashMap<>();
+		if(envMap.containsKey(envVariable)){
+			return envMap.get(envVariable);
+		}
+		return System.getenv(envVariable);
+	}
+
+	private boolean isValidEnvFunction(String strPlaceholderpattern) {
+		return strPlaceholderpattern.startsWith(ENV_FUNCTION) && strPlaceholderpattern.endsWith(")");
 	}
 
 	private boolean isFixMessageFunction(String getType) {
