@@ -7,10 +7,10 @@
 		<Property Name="GLOBAL"/>
 	</RegionList>
 	<EnvList>
-		<Property Name="DEV"/>
 		<Property Name="CI"/>
-		<Property Name="PACE"/>
-		<Property Name="QA"/>
-		<Property Name="Lab"/>
+		<Property Name="DEV_1"/>
+		<Property Name="DEV_2"/>
+		<Property Name="DEV_3"/>
+		<Property Name="DEV_4"/>
 	</EnvList>
 </AutoPilotCommonEnv>
