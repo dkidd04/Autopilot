@@ -16,22 +16,23 @@ public enum OutputMsgNotifier {
 	private AceLogger logger = AceLogger.getLogger(this.getClass().getSimpleName());
 	private ValidationObject validationObject = null;
 	private List<Message> waiting = new ArrayList<Message>();
-	
+	private final boolean skipSymbolValidationOnOutput = Boolean.getBoolean("SkipSymbolValidationOnOutputMsg");
+
 	public synchronized void setup(ValidationObject validationObject) {
 		this.validationObject = validationObject;
 	}
-	
+
 	public synchronized boolean reset(int step, int expectedOutputMsgNumber) {
 		// ignore messages from previous testcase
 		if(step == 1) {
 			waiting.clear();
 		}
-		
+
 		this.waitOver = false;
 		this.step = step;
 		this.expectedOutputMsgNumber = expectedOutputMsgNumber;
 		this.validationObject.setupStep(step, expectedOutputMsgNumber);
-		
+
 		if(ApplicationContext.getConfig().isCompletenessCheck()) {
 			if(!waiting.isEmpty()) {
 				for(Message msg : waiting) {
@@ -41,24 +42,24 @@ public enum OutputMsgNotifier {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	public synchronized void clearWaitingSteps(){
 		waiting.clear();
 	}
-	
+
 	public synchronized void processOutputMsg(String strOutputMsg, String strTopic) {
 		String strSymbol = ApplicationContext.getFIXFactory().getTagValue(strOutputMsg, "55");
 		String topicID = ConnectionManager.INSTANCE.getAcceptorTopicId(strTopic);
-		
+
 		//do not save message if topic is not active
 		if(topicID != null && !ApplicationContext.getTopicManagerTableModel().isActiveTopic(topicID)){
 			return;
 		}
-		
-		if (validationObject == null || !validationObject.getAcceptingSymbols().contains(strSymbol)) {
+
+		if (validationObject == null || validateSymbol(strSymbol)) {
 			logger.warning("IGNOREMSG|Symbol:" + strSymbol);
 			return;
 		} else {
@@ -77,14 +78,22 @@ public enum OutputMsgNotifier {
 			}
 		}
 	}
-	
+
+	private boolean validateSymbol(String strSymbol) {
+		if(skipSymbolValidationOnOutput){
+			return false; 
+		} else {
+			return !validationObject.getAcceptingSymbols().contains(strSymbol);
+		}
+	}
+
 	public synchronized void waitForAllOutputMsg() throws InterruptedException {
 		if (expectedOutputMsgNumber > 0) {
 			logger.info("Start waiting for output messages");
 			wait(ApplicationContext.getConfig().getValidateTimeout());
 			logger.info("Finished waiting for output messages");
 		}
-		
+
 		waitOver = true;
 	}
 }
