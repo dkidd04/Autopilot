@@ -18,12 +18,12 @@
  				</entry>
  				<entry key ="ArbolToC4">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
-						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
-						<property name="user" value="${TOPIC.BROKER.USER}"/>
-						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="brokerURL" value="${ARBOL.TOPIC.BROKER.URL}"/>
+						<property name="user" value="${ARBOL.TOPIC.BROKER.USER}"/>
+						<property name="password" value="${ARBOL.TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="Autopilot.C4.3.ACTIONS"/>
+								<entry key="A-Z" value="ECOM.UKFF.BBE1.ACTIONS"/>
 							</map>
 						</property>
  					</bean>
