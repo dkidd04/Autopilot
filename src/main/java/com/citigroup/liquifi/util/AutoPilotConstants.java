@@ -14,6 +14,7 @@ public interface AutoPilotConstants {
 	public static final String PLACEHOLDER_CURRENTTIME = "@CURRENTTIME";
 	public static final String PLACEHOLDER_TIMEPLUS = "@TIMEPLUS";
 	public static final String PLACEHOLDER_TIME2PLUS = "@TIME2PLUS";
+	public static final String PLACEHOLDER_TIMESTAMP_HHMMSS = "@TIMESTAMP_HHmmss";
 	public static final String PLACEHOLDER_DELIMITER = ";";
 	public static final String PLACEHOLDER_ORDERID_DELIMITER = "#";
 
