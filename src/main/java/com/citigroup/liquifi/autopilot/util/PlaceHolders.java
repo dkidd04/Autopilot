@@ -361,35 +361,20 @@ public class PlaceHolders {
 				replacementStr = printCurrentDay();
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_TIMEPLUS)) {
 				int futureMillis = 500;
+				int timeToAddMillis = getTimeToAddMillis(strPlaceholderpattern, futureMillis);
 
-				int start = -1;
-				if (strPlaceholderpattern.contains("+")) {
-					start = strPlaceholderpattern.indexOf("+") + 1;
-				} else if (strPlaceholderpattern.contains("-")) {
-					start = strPlaceholderpattern.indexOf("-");
-				}
-
-				if (start > -1) {
-					futureMillis = Integer.parseInt(strPlaceholderpattern.substring(start, strPlaceholderpattern.length()));
-				}
-
-				replacementStr = printCurrentTimePlus(futureMillis);
+				replacementStr = printCurrentTimePlus(timeToAddMillis);
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_TIME2PLUS)) {
 				int futureMillis = 500;
+				int timeToAddMillis = getTimeToAddMillis(strPlaceholderpattern, futureMillis);
 
-				int start = -1;
-				if (strPlaceholderpattern.contains("+")) {
-					start = strPlaceholderpattern.indexOf("+") + 1;
-				} else if (strPlaceholderpattern.contains("-")) {
-					start = strPlaceholderpattern.indexOf("-");
-				}
-
-				if (start > -1) {
-					futureMillis = Integer.parseInt(strPlaceholderpattern.substring(start, strPlaceholderpattern.length()));
-				}
-
-				replacementStr = printCurrentTime2Plus(futureMillis);
-			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_TESTCASE)) {
+				replacementStr = printCurrentTime2Plus(timeToAddMillis);
+			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_TIMESTAMP_HHMMSS)) {
+				int futureMillis = 0;
+				int timeToAddMillis = getTimeToAddMillis(strPlaceholderpattern, futureMillis);
+				
+				replacementStr = currentTimeHHmmssPlus(timeToAddMillis);
+			}	else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_TESTCASE)) {
 				replacementStr = tCase.getName();
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_REMOVE)) {
 				// find the end of the previous fix tag's value
@@ -425,7 +410,7 @@ public class PlaceHolders {
 					}
 
 					String strActualInputMsg = rOutputLocal.getInboundStep(intInputStep).message;
-					
+
 					String getType = m2.group(2);
 					String strTagID = m2.group(3);
 					if(isFixMessageFunction(getType) ){
@@ -470,12 +455,28 @@ public class PlaceHolders {
 		return strFixMessage;
 	}
 
+	private int getTimeToAddMillis(String strPlaceholderpattern, int defaultTimeToAddMillis) {
+		int futureMillis=0;
+		int start = -1;
+		if (strPlaceholderpattern.contains("+")) {
+			start = strPlaceholderpattern.indexOf("+") + 1;
+		} else if (strPlaceholderpattern.contains("-")) {
+			start = strPlaceholderpattern.indexOf("-");
+		}
+
+		if (start > -1) {
+			futureMillis = Integer.parseInt(strPlaceholderpattern.substring(start, strPlaceholderpattern.length()));
+		}
+
+		return futureMillis==0 ? defaultTimeToAddMillis : futureMillis;
+	}
+
 	private String handleEnvPlaceholder(String strFixMessage, String strPlaceholderpattern) {
 		//retrieve env variable to replace
 		if(!isValidEnvFunction(strPlaceholderpattern)){
 			return null;
 		}
-		
+
 		String envVariable = strPlaceholderpattern.substring(ENV_FUNCTION.length(), strPlaceholderpattern.lastIndexOf(")"));
 		Map<String, String> envMap = new HashMap<>();
 		if(envMap.containsKey(envVariable)){
@@ -624,6 +625,18 @@ public class PlaceHolders {
 		return null;
 	}
 
+	ThreadLocal<SimpleDateFormat> hourMinuteSecondDateFormat = new ThreadLocal<SimpleDateFormat>(){
+		protected SimpleDateFormat initialValue() {
+			return new SimpleDateFormat("HH:mm:ss");
+		}
+	};
+	private String currentTimeHHmmssPlus(int millisToAdd) {
+		return timestampPlus(hourMinuteSecondDateFormat.get(), millisToAdd);
+	}
+	
+	private String timestampPlus(SimpleDateFormat dateFormat, int millisToAdd){
+		return dateFormat.format(ApplicationContext.getClock().currentTimeMillis() + millisToAdd);
+	}
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd:HH:mm:ss.SSS");
 	private String printCurrentTimePlus(int plus) {
