@@ -16,6 +16,18 @@
 						</property>
  					</bean>
  				</entry>
+ 				<entry key ="CLSToC4">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="Autopilot.C4.CLS.2"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
  				<entry key ="ArbolToC4">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
 						<property name="brokerURL" value="${ARBOL.TOPIC.BROKER.URL}"/>
@@ -160,6 +172,18 @@
 						<property name="setup">
 							<map>
 								<entry key="A-Z" value="C4.Autopilot.2.Client"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="C4ToCLS">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="C4.Autopilot.CLS.2"/>
 							</map>
 						</property>
  					</bean>
