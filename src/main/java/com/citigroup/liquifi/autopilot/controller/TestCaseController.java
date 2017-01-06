@@ -8,12 +8,15 @@ import java.util.Map;
 import java.util.Set;
 
 import com.citigroup.get.quantum.messaging.Initiator;
+import com.citigroup.get.quantum.messaging.MessagingException;
+import com.citigroup.get.quantum.messaging.QuantumTransportHeaderProperties;
 import com.citigroup.liquifi.autopilot.bootstrap.ApplicationContext;
 import com.citigroup.liquifi.autopilot.bootstrap.AutoPilotBootstrap;
 import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.autopilot.message.FIXMessage;
 import com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfoFactory;
 import com.citigroup.liquifi.autopilot.messaging.ConnectionManager;
+import com.citigroup.liquifi.autopilot.messaging.QueueInitiator;
 import com.citigroup.liquifi.autopilot.socket.ClientSocket;
 import com.citigroup.liquifi.autopilot.util.Command;
 import com.citigroup.liquifi.autopilot.util.ValidationResult;
@@ -41,33 +44,33 @@ public enum TestCaseController {
 		String symbolToUse = "";
 		try {
 			// If the user does not provide Symbol, get a default value from config
-			
+
 			if (symbolStr != null && symbolStr.trim().length() > 0) {
 				symbolToUse = symbolStr;
 			} else {
 				int intSecurityClass = testcase.getSecurityClass();
 				symbolToUse = ApplicationContext.getConfig().getDefaultSymbolMap().get(intSecurityClass);
-				
+
 				if (symbolToUse == null) {
 					throw new Exception("No symbol definned for security class " + intSecurityClass + " - please use different security class or add one to config.xml");
 				}
 			}
-			
+
 			logger.info("Symbol:" + symbolToUse);
 
 			// construct validation object
 			ValidationObject validationObject = new ValidationObject(testcase, symbolToUse);
-			
+
 			// setup notifiers
 			AdminMsgNotifier.INSTANCE.setup(validationObject);
 			OutputMsgNotifier.INSTANCE.setup(validationObject);
-			
+
 			// start up all acceptors and sockets associated with the symbol
 			for(String autoPilotTopic : ApplicationContext.getBrokerFactory().getAcceptorBrokerMapping().keySet()) {
 				ConnectionManager.INSTANCE.getAcceptor(symbolToUse, autoPilotTopic);
 			}
-			
-			
+
+
 			// setup the sockets by find out what is relevant for the testcase - sockets and TIBCO topics should be merged into one concept and handled the same way
 			if (ApplicationContext.getSocketFactory() != null) {
 				for (LFTestInputSteps inputStep : testcase.getInputStepList()) {
@@ -76,11 +79,11 @@ public enum TestCaseController {
 							ApplicationContext.getSocketFactory().setupSocket(outputStep.getTopicID());
 						}
 					}
-	
+
 					ApplicationContext.getSocketFactory().setupSocket(inputStep.getTopicID());
 				}
 			}
-			
+
 			return validationObject;
 		} catch (Exception ex) {
 			AutoPilotBootstrap.getFailedTestcases().add(testcase.getTestID()+"NULLED");
@@ -96,13 +99,13 @@ public enum TestCaseController {
 			if (!state.hasNext()) {
 				return false;
 			}
-	
+
 			String inputMsg = "";
 			Set<Tag> overwrite = new HashSet<Tag>();
 			String strMsgType = "";
-	
+
 			state.next();
-	
+
 			logger.info("Running Testcase|Step:" + state.getInputStepNumber());
 
 			if (state.getInputStep() == null) {
@@ -110,11 +113,11 @@ public enum TestCaseController {
 			} else {
 				List<LFOutputMsg> outputSteps = state.getInputStep().getOutputStepList();
 				strMsgType = state.getInputStep().getMsgType();
-				
+
 				int expectedOutputMsgNumber = getActiveOutputStepsNum(outputSteps);
-				
+
 				boolean success = OutputMsgNotifier.INSTANCE.reset(state.getInputStepNumber(), outputSteps == null ? 0 : expectedOutputMsgNumber);
-				
+
 				// fails if the output msg notifier receives messages between steps
 				if(!success) {
 					state.setAndSaveValidationResult(false, state.getInputStep().getActionSequence(), /*expectedOutputMsg.getOutputMsgID()*/ -1, "Received messages after completing previous step, but before starting the next");
@@ -123,7 +126,7 @@ public enum TestCaseController {
 
 				if (AutoPilotConstants.MSG_TYPE_XML.equalsIgnoreCase(strMsgType)) {
 					List<Command> commands = new ArrayList<Command>();
-					
+
 					// Add any overwrite tags
 					overwrite.addAll(state.getInputStep().getInputTagsValueList());
 
@@ -146,19 +149,19 @@ public enum TestCaseController {
 					}
 
 					// TODO: merge all these parsing methods
-										
+
 					if (inputMsg.contains("<AdminOrderRequest>") || inputMsg.contains("<AdminMessage>")) {
 						inputMsg = ApplicationContext.getXmlFactory().overWriteTags(inputMsg, overwrite);
 					} else if(!inputMsg.contains("<AdminOrderRequest2>")) {
 						inputMsg = ApplicationContext.getXmlFactory().overWriteTagsGeneric(inputMsg, overwrite);
 					}
-					
+
 					inputMsg = ApplicationContext.getXmlFactory().overwriteAdminOrderRequest2XMLMessage(inputMsg, overwrite);
 					inputMsg = ApplicationContext.getPlaceHolders().parseAPVarPlaceholdersString(inputMsg, overwrite);
 					inputMsg = ApplicationContext.getPlaceHolders().parsePlaceholders(inputMsg, false, state.getTestcase(), state.getInputStep().getActionSequence(), state.getSymbol(), state);
 					inputMsg = ApplicationContext.getXmlFactory().extractCommands(inputMsg, commands);
-					
-					
+
+
 					// if the initiator has a reply topic then setup listener
 					String replyAcceptor = brokerFactory.getInitiatorBrokerMapping().get(state.getInputStep().getTopicID()).getReplyAcceptor();
 					if (replyAcceptor != null) {
@@ -183,24 +186,13 @@ public enum TestCaseController {
 					}
 
 					if (!found) {
-						Initiator initiatorAdminLocal = ConnectionManager.INSTANCE.getInitiator(state.getSymbol(), state.getInputStep().getTopicID());
-						String topic = ConnectionManager.INSTANCE.getInitiatorTopic(state.getSymbol(), state.getInputStep().getTopicID());
-
-						logger.info("sending message to " + initiatorAdminLocal.getTransportSender().getUrl() + "/" + topic);
-
-						if (System.getProperty("use.xstream", "false").equals("true")) {
-							initiatorAdminLocal.send(inputMsg);
-						} else {
-							// send as normal text message
-							// reqMsgAdmin = initiatorAdminLocal.createRequestMessage(inputMsg);
-							initiatorAdminLocal.send(inputMsg);
-						}
+						sendMessageEMS(state, inputMsg);
 					}
 
 					// wait for reply on reply topic
 					if (replyAcceptor != null) {
 						AdminMsgNotifier.INSTANCE.waitForAdminMsg();
-						
+
 						switch(AdminMsgNotifier.INSTANCE.getStatus()) {
 						case NO_REPLY:
 							logger.severe("pausing limit passed - allowing user to continue");
@@ -215,7 +207,7 @@ public enum TestCaseController {
 							break;
 						}
 					}
-					
+
 					if(state.getInputStep().getTemplate() != null){
 						// TotalTouch uses the adjustable clock object to manage time - lets reset time to 11:30 which is the same in TT
 						if (state.getInputStep().getTemplate().equals("A_SETUP")) {
@@ -247,7 +239,7 @@ public enum TestCaseController {
 							}
 						}
 					}
-				} else if (AutoPilotConstants.MSG_TYPE_CONTROL.equalsIgnoreCase(strMsgType) || "Others".equalsIgnoreCase(strMsgType)) {
+				} else if (AutoPilotConstants.MSG_TYPE_CONTROL.equalsIgnoreCase(strMsgType)) {
 					logger.info("Current InputStep is an AutoPilot Control message.");
 
 					if (state.getInputStep().getMessage() != null && state.getInputStep().getMessage().trim().length() > 0 && state.getInputStep().getTemplate() == null) {
@@ -264,6 +256,18 @@ public enum TestCaseController {
 					} else {
 						logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputStepIsEmpty + " InputStep=" + state.getInputStep().getActionSequence());
 					}
+				} else if ("Others".equalsIgnoreCase(strMsgType)) {
+					if (state.getInputStep().getMessage() != null && state.getInputStep().getMessage().trim().length() > 0 && state.getInputStep().getTemplate() == null) {
+						inputMsg = state.getInputStep().getMessage();
+					} else if (state.getInputStep().getTemplate() != null && state.getInputStep().getTemplate().trim().length() > 0) {
+						inputMsg = DBUtil.getInstance().getTem().getAllTemplateMap().get(state.getInputStep().getTemplate()).getMsgTemplate();
+
+					} else {
+						logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputStepIsEmpty + " InputStep=" + state.getInputStep().getActionSequence());
+					}
+
+					sendMessageEMS(state, inputMsg);
+
 				} else {
 					// Add any overwrite tags
 					overwrite.addAll(state.getInputStep().getInputTagsValueList());
@@ -328,26 +332,26 @@ public enum TestCaseController {
 				ValidationInputStep iStep = new ValidationInputStep(state.getInputStep().getActionSequence(), inputMsg, ConnectionManager.INSTANCE.getInitiatorTopic(state.getSymbol(), state.getInputStep().getTopicID()), strMsgType);
 				state.storeCurrentInbound(state.getInputStep().getActionSequence(), iStep.getMsg(), iStep.getTopic());
 
-				
+
 				// if running the testcase individually or step-by-step then we can go slow and try to capture bad messages
 				// if last step then do a slight pause to attempt to catch any messages that haven't been definned in the testcase
 				boolean lastStep = !state.hasNext();
 				if (lastStep || canTakeItSlow) {
 					Thread.sleep(50);
 				}
-				
+
 				if(ApplicationContext.getTopicManagerTableModel().isActiveTopic(state.getInputStep().getTopicID())){
 					OutputMsgNotifier.INSTANCE.waitForAllOutputMsg();
 				}
 				// Check if InputStep topic is active
-					
+
 				// validate output stages even if none are expected
 				ValidationResult result = state.validate(state.getInputStepNumber(), outputSteps, isBenchMarkModeOn);
-				
+
 				if(!ApplicationContext.getTopicManagerTableModel().isActiveTopic(state.getInputStep().getTopicID())){
 					return true;
 				}
-					
+
 				if (!result.isSuccess()) {
 					state.setAndSaveValidationResult(false, state.getInputStep().getActionSequence(), /*expectedOutputMsg.getOutputMsgID()*/ -1, result.getReason());
 					return false;
@@ -364,6 +368,21 @@ public enum TestCaseController {
 			logger.severe("TestCaseID:" + state.getTestcase().getTestID() + "|Symbol:" + state.getSymbol() + "|InputStep:" + state.getInputStep().getActionSequence() + "|" + AutoPilotConstants.ValidationFailed_CannotProcessInputMsg);
 			return false;
 		}
+	}
+
+	private void sendMessageEMS(ValidationObject state, String inputMsg) throws MessagingException {
+		Initiator initiatorLocal = ConnectionManager.INSTANCE.getInitiator(state.getSymbol(), state.getInputStep().getTopicID());
+		String topic = ConnectionManager.INSTANCE.getInitiatorTopic(state.getSymbol(), state.getInputStep().getTopicID());
+		if(initiatorLocal instanceof QueueInitiator){
+			QueueInitiator queue = (QueueInitiator) initiatorLocal;
+			QuantumTransportHeaderProperties createTransportHeaderProperties = initiatorLocal.createTransportHeaderProperties();
+			createTransportHeaderProperties.setTransportHeaderStringProperty("JMSCorrelationID", queue.getSelector());
+			initiatorLocal.send(inputMsg, createTransportHeaderProperties);
+		} else {
+			initiatorLocal.send(inputMsg);
+		}
+
+		logger.info("sending message to " + initiatorLocal.getTransportSender().getUrl() + "/" + topic);
 	}
 
 	private int getActiveOutputStepsNum(List<LFOutputMsg> outputSteps) {
@@ -406,7 +425,7 @@ public enum TestCaseController {
 		if (tcLocal == null) {
 			tcLocal = DBUtil.getInstance().getTestCase(strTestCaseID);
 		}
-		
+
 		// this method is called when running batch testcases, therefore, don't take it slow
 		return runTestCase(tcLocal, symbolStr, false, isBenchMarkModeOn);
 	}
@@ -471,7 +490,7 @@ public enum TestCaseController {
 
 		if (strTopicName == null || (strTopicName.trim().length() < 1)) {
 			logger.warning("cannot find the topic name for topicID:" + strTopicID);
-			
+
 			//TODO: DR45414 should be removed once TOB is retired
 			// WARNING this is a terrible hack to make sockets work in EMEA - the socket logic should be rewritten!!!!!!!!
 			if (strTopicID.equals("TOBtoAutoPilot")) {
