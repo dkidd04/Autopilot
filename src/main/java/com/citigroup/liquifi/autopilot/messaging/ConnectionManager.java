@@ -50,7 +50,7 @@ public enum ConnectionManager {
 				transportInfo.setSendDestinationName(topic);
 				transportInfo.setTransportCredentials(tc);
 				transportInfo.setDeliveryMode(JMSTransportInfo.DeliveryMode.Reliable);
-				if(isQueueAcceptor(broker)){
+				if(isQueueConfiguration(broker)){
 					transportInfo.setSelector(broker.getSelector());
 					transportInfo.setPointToPoint(true);
 					initiator = new QueueInitiator(transportInfo);
@@ -67,7 +67,7 @@ public enum ConnectionManager {
 		return initiator;
 	}
 
-	private boolean isQueueAcceptor(AutoPilotBrokerInfo broker) {
+	private boolean isQueueConfiguration(AutoPilotBrokerInfo broker) {
 		return broker.getSelector()!=null;
 	}
 
@@ -100,7 +100,7 @@ public enum ConnectionManager {
 				transportInfo.setUrl(broker.getBrokerURL());
 				transportInfo.setReceiveDestinationNames(new String[]{topic});
 				transportInfo.setTransportCredentials(tc);
-				if(isQueueAcceptor(broker)){
+				if(isQueueConfiguration(broker)){
 					transportInfo.setSelector("JMSCorrelationID = '"+broker.getSelector()+"'");
 					transportInfo.setPointToPoint(true);
 				}
