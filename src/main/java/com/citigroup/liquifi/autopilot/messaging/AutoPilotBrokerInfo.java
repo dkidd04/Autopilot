@@ -30,6 +30,7 @@ public class AutoPilotBrokerInfo {
 	private Map<String, String> setup;
 	private String replyAcceptor;
 	private boolean defaultTopic;
+	private String selector;
 
 	public void setBrokerURL(String brokerURL) {
 		this.brokerURL = brokerURL;
@@ -89,5 +90,13 @@ public class AutoPilotBrokerInfo {
 
 	public void setDefaultTopic(boolean defaultTopic) {
 		this.defaultTopic = defaultTopic;
+	}
+
+	public void setSelector(String selector){
+		this.selector = selector;
+	}
+	
+	public String getSelector() {
+		return this.selector;
 	}
 }
