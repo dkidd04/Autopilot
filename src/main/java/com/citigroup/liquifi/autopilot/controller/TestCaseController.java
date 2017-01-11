@@ -406,14 +406,15 @@ public enum TestCaseController {
 		return inputMsg;
 	}
 
-private void sendMessageEMS(ValidationObject state, String inputMsg) throws MessagingException {
+	private void sendMessageEMS(ValidationObject state, String inputMsg) throws MessagingException {
 		Initiator initiatorLocal = ConnectionManager.INSTANCE.getInitiator(state.getSymbol(), state.getInputStep().getTopicID());
 		String topic = ConnectionManager.INSTANCE.getInitiatorTopic(state.getSymbol(), state.getInputStep().getTopicID());
 		if(initiatorLocal instanceof QueueInitiator){
 			QueueInitiator queue = (QueueInitiator) initiatorLocal;
 			QuantumTransportHeaderProperties createTransportHeaderProperties = initiatorLocal.createTransportHeaderProperties();
 			createTransportHeaderProperties.setTransportHeaderStringProperty("JMSCorrelationID", queue.getSelector());
-			initiatorLocal.send(inputMsg, createTransportHeaderProperties);
+			createTransportHeaderProperties.setTransportHeaderStringProperty("resp", inputMsg);
+			initiatorLocal.send("", createTransportHeaderProperties);
 		} else {
 			initiatorLocal.send(inputMsg);
 		}
