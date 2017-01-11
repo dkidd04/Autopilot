@@ -16,6 +16,31 @@
 						</property>
  					</bean>
  				</entry>
+ 				<entry key ="CLSToC4">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="Autopilot.C4.CLS.CI"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
+ 				<entry key ="RTCSToC4">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${C4.SECONDARY.TOPIC.BROKER.URL}"/>
+						<property name="user" value="${C4.SECONDARY.TOPIC.BROKER.USER}"/>
+						<property name="password" value="${C4.SECONDARY.TOPIC.BROKER.PASSWORD}"/>
+						<property name="selector" value="CFORE-C4XO_UKDEV_CI_1"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="rtcredit.monitoring.check.eqty.reply"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>
  				<entry key ="ArbolToC4">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
 						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
@@ -164,6 +189,31 @@
 						</property>
  					</bean>
 				</entry>
+				<entry key ="C4ToCLS">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="C4.Autopilot.CLS.CI"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="C4ToRTCS">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${C4.SECONDARY.TOPIC.BROKER.URL}"/>
+						<property name="user" value="${C4.SECONDARY.TOPIC.BROKER.USER}"/>
+						<property name="password" value="${C4.SECONDARY.TOPIC.BROKER.PASSWORD}"/>
+						<property name="selector" value="CFORE-C4XO_UKDEV_CI_1"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="rtcredit.monitoring.check.eqty.request"/>
+							</map>
+						</property>
+ 					</bean>
+ 				</entry>				
 				<entry key ="C4ToArbol">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
 						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>

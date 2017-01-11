@@ -188,7 +188,7 @@ public class AdminXMLFactory implements XMLFactory {
 	}
 
 	private String sanitise(String msg) {
-		return msg.replaceAll(String.valueOf('\001'), "^A");
+		return msg.replaceAll(String.valueOf('\001'), "^A").replaceAll(String.valueOf('\005'), "^E").replaceAll(String.valueOf('\006'), "^F");
 	}
 
 	@Override
