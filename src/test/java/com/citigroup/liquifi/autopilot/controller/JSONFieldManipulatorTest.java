@@ -28,7 +28,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldNotChangeObjectWhenNoOverwriteFieldsInput() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 
 		jsonUpdator.overwriteJSONFields(val, overwriteFields);
@@ -39,7 +39,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldNotChangeExistingDoubleValueWhenNewValueIsNotDouble() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequestQtyValue();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("qty", "abcd"));
 
@@ -51,7 +51,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldNotAddNewFieldWhenFieldNameIsPlaceHolder() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequestQtyValue();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("@qty", "abcd"));
 
@@ -63,7 +63,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldChangeExistingBooleanValueToFalseNewValueIsNotBoolean() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("checkOk", "dummy"));
 
@@ -76,7 +76,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldNotCreateObjectInListWhenNoListElementsExist() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("newList.listValue.abc", "false"));
 
@@ -88,7 +88,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldNotCreateObjectWhenNoObjectExists() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("newObj.abc", "false"));
 
@@ -100,7 +100,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldChangeBooleanValueWhenRootLevelFieldChange() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("checkOk", "false"));
 
@@ -113,7 +113,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldChangeDoubleValueWhenRootLevelFieldChange() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequestQtyValue();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("qty", "0.3"));
 
@@ -126,7 +126,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldChangeStringValueWhenRootLevelFieldChange() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("sourceSystem", "ABC"));
 
@@ -139,7 +139,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldCreateNewStringFieldAndValueWhenNoRootLevelField() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("newField", "false"));
 
@@ -152,7 +152,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldChangeStringValueOnList() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("facilityList.listValue.facilityId", "ABC"));
 
@@ -165,7 +165,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldChangeDoubleValueOnList() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("facilityList.listValue.subLimitQty", "5.1"));
 
@@ -178,7 +178,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldChangeBooleanValueOnList() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequestFacilityOk();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("facilityList.listValue.facilityOk", "false"));
 
@@ -191,7 +191,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldCreateNewStringFieldAndValueOnListWhenDoesNotExist() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("facilityList.listValue.newField", "false"));
 
@@ -204,7 +204,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldChangeDoubleValueOnObject() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("pseDetail.requestPseUsage.w1", "60.1"));
 
@@ -217,7 +217,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldChangeBooleanValueOnObject() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequestWithUpdatedRequestPseUsage();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String, Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("pseDetail.requestPseUsage.isOk", "true"));
 
@@ -230,7 +230,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldChangeStringValueOnObject() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequestWithUpdatedRequestPseUsage();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("pseDetail.requestPseUsage.type", "delta"));
 
@@ -243,7 +243,7 @@ public class JSONFieldManipulatorTest {
 	@Test
 	public void shouldCreateStringFieldAndValueOnObjectWhereNoneExists() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequestWithUpdatedRequestPseUsage();
-		Map<?,?> val = convertToMap(rtcsRequestString);
+		Map<String,Object> val = convertToMap(rtcsRequestString);
 		HashSet<Tag> overwriteFields = new HashSet<Tag>();
 		overwriteFields.add(new Tag("pseDetail.requestPseUsage.facilityLevel", "beta"));
 
@@ -253,11 +253,11 @@ public class JSONFieldManipulatorTest {
 		assertEquals(expected, resultJSON);
 	}
 	
-	private String jsonObjectToString(Map<?,?> object) throws JsonGenerationException, JsonMappingException, IOException{
+	private String jsonObjectToString(Map<String,Object> object) throws JsonGenerationException, JsonMappingException, IOException{
 		return mapper.writeValueAsString(object);
 	}
 
-	private Map<?,?> convertToMap(String rawJSON) throws JsonParseException, JsonMappingException, IOException{
+	private Map<String,Object> convertToMap(String rawJSON) throws JsonParseException, JsonMappingException, IOException{
 		return mapper.readValue(rawJSON, Map.class);
 	}
 

@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.citigroup.get.util.date.DateUtil;
 import com.citigroup.liquifi.autopilot.bootstrap.ApplicationContext;
+import com.citigroup.liquifi.autopilot.controller.JSONFieldManipulator;
 import com.citigroup.liquifi.autopilot.controller.ValidationObject;
 import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.autopilot.message.FIXMessage;
@@ -581,7 +582,7 @@ public class PlaceHolders {
 		if (functionName.equals("getXMLFieldText")){
 			return ApplicationContext.getXmlFactory().getField(referenceMessage, tag);
 		} else if (functionName.equals("getJSONFieldText")){
-			
+			return new JSONFieldManipulator().getFieldValueForJSONObject(referenceMessage, tag);
 		}
 		return null;
 	}
