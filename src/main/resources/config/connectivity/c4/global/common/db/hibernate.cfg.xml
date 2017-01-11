@@ -5,9 +5,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.sybase.jdbc3.jdbc.SybDriver</property>
-        <property name="hibernate.connection.password">zeusdev</property>
-        <property name="hibernate.connection.url">jdbc:sybase:Tds:eqdb3d.eur.nsroot.net:6100/LIQUIFI_AUTOPILOT</property>
-        <property name="hibernate.connection.username">zeusdev</property>
+        <property name="hibernate.connection.password">far4prod</property>
+        <property name="hibernate.connection.url">jdbc:sybase:Tds:eqdb3d.eur.nsroot.net:6100/C4_REPORTING</property>
+        <property name="hibernate.connection.username">farmprod</property>
        	<property name="hibernate.connection.autocommit">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.SybaseDialect</property>
     	<property name="hibernate.connection.ENCRYPT_PASSWORD">true</property>
