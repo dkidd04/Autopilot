@@ -49,6 +49,18 @@ public class JSONFieldManipulatorTest {
 	}
 	
 	@Test
+	public void shouldNotAddNewFieldWhenFieldNameIsPlaceHolder() throws JsonParseException, JsonMappingException, IOException {
+		String rtcsRequestString = rtcsRequestQtyValue();
+		Map<?,?> val = convertToMap(rtcsRequestString);
+		HashSet<Tag> overwriteFields = new HashSet<Tag>();
+		overwriteFields.add(new Tag("@qty", "abcd"));
+
+		jsonUpdator.overwriteJSONFields(val, overwriteFields);
+		String resultJSON = jsonObjectToString(val);
+		assertEquals(rtcsRequestString, resultJSON);
+	}
+	
+	@Test
 	public void shouldChangeExistingBooleanValueToFalseNewValueIsNotBoolean() throws JsonParseException, JsonMappingException, IOException {
 		String rtcsRequestString = rtcsRequest();
 		Map<?,?> val = convertToMap(rtcsRequestString);

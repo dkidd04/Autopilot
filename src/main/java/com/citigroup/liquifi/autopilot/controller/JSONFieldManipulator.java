@@ -1,6 +1,7 @@
 package com.citigroup.liquifi.autopilot.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +12,9 @@ import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.entities.Tag;
 
 class JSONFieldManipulator {
-	
+
 	private static AceLogger logger =  AceLogger.getLogger(JSONFieldManipulator.class.getSimpleName());
-	
+
 	/**
 	 * Supports overwriting of fields in objects
 	 * Does not allow overwriting of anything other than the first object in a list
@@ -22,12 +23,24 @@ class JSONFieldManipulator {
 	 * @param jsonMsgMap
 	 * @param overwriteFields
 	 */
-	public void overwriteJSONFields(Map<?, ?> jsonMsgMap, Set<Tag> overwriteFields) {
+	public Map<String, String> overwriteJSONFields(Map<?, ?> jsonMsgMap, Set<Tag> overwriteFields) {
+		Map<String, String> placeholderFields = new HashMap<String, String>();
 		for(Tag field : overwriteFields){
+			if(isPlaceholderField(field)){
+				placeholderFields.put(field.getTagID(), field.getTagValue());
+				continue;
+			}
+
 			String[] fieldTree = fieldTree(field);
 			Queue<String> fieldPath = new LinkedList<>(Arrays.asList(fieldTree));
-			overwriteJSONField(jsonMsgMap, fieldPath, field.getTagValue());
+			overwriteField(jsonMsgMap, fieldPath, field);
 		}
+
+		return placeholderFields;
+	}
+
+	private boolean isPlaceholderField(Tag field) {
+		return field.getTagID().startsWith("@");
 	}
 
 	private String[] fieldTree(Tag field) {
@@ -37,12 +50,28 @@ class JSONFieldManipulator {
 		return fieldTree;
 	}
 
-	private void overwriteJSONField(Map<?,?> jsonObject, Queue<String> fieldPath, String value) {
+	private String getFieldName(Tag field) {
+		String tagID = field.getTagID();
+		if(!tagID.contains("\\.")){
+			return tagID;
+		}
+		return tagID.substring(tagID.lastIndexOf("\\."));
+	}
+
+	private void overwriteField(Map<?,?> jsonObject, Queue<String> fieldPath, Tag field){
+		String value = field.getTagValue();
+		Map<String, Object> parentObject = getParentObject(jsonObject, fieldPath, value);
+		String fieldName = getFieldName(field);
+		if (parentObject!=null){
+			overwriteField(jsonObject, value, fieldName);
+		}
+	}
+
+	private Map<String,Object> getParentObject(Map<?,?> jsonObject, Queue<String> fieldPath, String value) {
 		try{
 			String nextField = getNextField(fieldPath);
 			if(fieldPath.isEmpty()){
-				overwriteField(jsonObject, value, nextField);
-				return;
+				return (Map<String, Object>)jsonObject;
 			}
 			boolean isListElement = "listValue".equals(fieldPath.peek());
 			Map<?,?> nextObject;
@@ -52,23 +81,26 @@ class JSONFieldManipulator {
 			} else{
 				nextObject = getJSONObject(jsonObject, nextField);
 			}
-			overwriteJSONField(nextObject, fieldPath, value);
+			return getParentObject(nextObject, fieldPath, value);
 		}catch (Exception e){
 			logger.warning("Failed to set field " + fieldPath);
 		}
+		return null;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void overwriteField(Map jsonObject, String value, String nextField) {
 		Object object = jsonObject.get(nextField);
 		if(object!=null){
-			if(object instanceof Boolean){
-				jsonObject.put(nextField, Boolean.valueOf(value));
-			} else if (object instanceof Double){
-				jsonObject.put(nextField, Double.valueOf(value));
-			} else {
-				jsonObject.put(nextField, value);
-			}
+			try{
+				if(object instanceof Boolean){
+					jsonObject.put(nextField, Boolean.valueOf(value));
+				} else if (object instanceof Double){
+					jsonObject.put(nextField, Double.valueOf(value));
+				} else {
+					jsonObject.put(nextField, value);
+				}
+			} catch (Exception e){}
 		} else {
 			jsonObject.put(nextField, value);
 		}
@@ -89,5 +121,5 @@ class JSONFieldManipulator {
 	private String getNextField(Queue<String> fieldPath){
 		return fieldPath.poll();
 	}
-	
+
 }
