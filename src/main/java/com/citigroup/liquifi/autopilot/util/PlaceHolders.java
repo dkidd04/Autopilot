@@ -40,26 +40,16 @@ public class PlaceHolders {
 		symfiiMap.put(symbol, ApplicationContext.getProductApiUtil().getFiiStr(symbol));
 	}
 
-	public String parseAPVarPlaceholdersString(String str, Set<Tag> overwrite) {
+	public String parseAPVarPlaceholdersString(String str, Set<Tag> overwriteTags) {
+		Map<String, String> apvarMapping = getAPVARMapping(overwriteTags);
 		try {
 			int start = -1;
 			while ((start = str.indexOf(AutoPilotConstants.PLACEHOLDER_APVAR)) > -1) {
 				int end = str.indexOf(")", start) + 1;
 				String val = str.substring(start, end);
-				String strAPVarKey = null, strAPVarVal = null;
-
-				if (val.contains(AutoPilotConstants.SEPERATOR_APVAR)) {
-					strAPVarKey = val.substring(0, val.indexOf(AutoPilotConstants.SEPERATOR_APVAR));
-				} else {
-					strAPVarKey = val;
-				}
-
-				for (Tag tag : overwrite) {
-					if (tag.getTagID().equals(strAPVarKey)) {
-						strAPVarVal = tag.getTagValue();
-						break;
-					}
-				}
+				
+				String strAPVarKey = getAPVARPlaceholderName(val);
+				String strAPVarVal = apvarMapping.get(strAPVarKey);
 
 				if (strAPVarVal == null || strAPVarVal.trim().length() < 1) {
 					logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_CannotParseAPVariable + " strAPVarKey:" + strAPVarKey + " strAPVarVal:" + strAPVarVal);
@@ -76,9 +66,47 @@ public class PlaceHolders {
 			return str;
 		}
 
+		updateAPVARPlaceholderValuesOnOverwriteTagsList(overwriteTags, apvarMapping);
+
 		return str;
 	}
 
+	private String getAPVARPlaceholderName(String val) {
+		String strAPVarKey;
+		if (val.contains(AutoPilotConstants.SEPERATOR_APVAR)) {
+			strAPVarKey = val.substring(0, val.indexOf(AutoPilotConstants.SEPERATOR_APVAR));
+		} else {
+			strAPVarKey = val;
+		}
+		return strAPVarKey;
+	}
+
+	private void updateAPVARPlaceholderValuesOnOverwriteTagsList(Set<Tag> overwriteTags, Map<String, String> apvarMapping) {
+		for(Tag overwriteTag : overwriteTags){
+			String value = overwriteTag.getTagValue();
+			if(value.startsWith(AutoPilotConstants.PLACEHOLDER_APVAR)){
+				String apVarPlaceholderName = getAPVARPlaceholderName(value);
+				if(apvarMapping.containsKey(apVarPlaceholderName)){
+					overwriteTag.setTagValue(value.replace(apVarPlaceholderName, apvarMapping.get(apVarPlaceholderName)));
+				}
+			}
+		}
+	}
+
+	private Map<String, String> getAPVARMapping(Set<Tag> overwriteTags) {
+		Map<String, String> apvarMapping = new HashMap<>();
+		Iterator<Tag> overwriteTagIterator = overwriteTags.iterator();
+		while(overwriteTagIterator.hasNext()){
+			Tag overwriteTag = overwriteTagIterator.next();
+			String value = overwriteTag.getTagValue();
+			String tagName = overwriteTag.getTagID();
+			if (tagName.startsWith(AutoPilotConstants.PLACEHOLDER_APVAR)){
+				apvarMapping.put(tagName, value);
+				overwriteTagIterator.remove();
+			}
+		}
+		return apvarMapping;
+	}
 
 	public String parseRepeatingGroup(String strFixMessage){
 
@@ -246,12 +274,7 @@ public class PlaceHolders {
 				logger.info("Found APVarible: " + val);
 			}
 
-			if (val.contains(AutoPilotConstants.SEPERATOR_APVAR)) {
-				strAPVarKey = val.substring(0, val.indexOf(AutoPilotConstants.SEPERATOR_APVAR));
-
-			} else {
-				strAPVarKey = val;
-			}
+			strAPVarKey = getAPVARPlaceholderName(val);
 
 			strAPVarVal = tagMapTemp.get(strAPVarKey);
 
@@ -670,10 +693,10 @@ public class PlaceHolders {
 }
 
 interface FunctionType {
-	
+
 	public String getFunctionName();
 	public String getFunctionValue();
-	
+
 }
 
 class InputFunctionType implements FunctionType {
@@ -740,7 +763,7 @@ class OutputFunctionType implements FunctionType {
 	public int getInputStep() {
 		return inputStep;
 	}
-	
+
 	public int getOutputStep() {
 		return outputStep;
 	}
