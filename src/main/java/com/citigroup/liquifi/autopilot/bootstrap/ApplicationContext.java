@@ -1,10 +1,8 @@
 package com.citigroup.liquifi.autopilot.bootstrap;
 
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
@@ -28,8 +26,8 @@ import com.citigroup.liquifi.autopilot.gui.model.RepeatingGroupTableModel;
 import com.citigroup.liquifi.autopilot.gui.model.SecurityTableModel;
 import com.citigroup.liquifi.autopilot.gui.model.TagTableModel;
 import com.citigroup.liquifi.autopilot.gui.model.TopicManagerTableModel;
-import com.citigroup.liquifi.autopilot.helper.AutoPilotConfiguration;
 import com.citigroup.liquifi.autopilot.helper.AutoPilotBenchmarkConfiguration;
+import com.citigroup.liquifi.autopilot.helper.AutoPilotConfiguration;
 import com.citigroup.liquifi.autopilot.helper.TestCaseHelper;
 import com.citigroup.liquifi.autopilot.message.FIXFactory;
 import com.citigroup.liquifi.autopilot.message.XMLFactory;

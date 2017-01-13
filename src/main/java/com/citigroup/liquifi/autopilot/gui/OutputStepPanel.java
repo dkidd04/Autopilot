@@ -167,7 +167,7 @@ public class OutputStepPanel extends javax.swing.JPanel implements TableModelLis
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
 
-        msgTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "FixMsg", "XML", "CONTROL", "Others" }));
+        msgTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "FixMsg", "XML", "CONTROL", "JSON", "Others" }));
         msgTypeComboBox.setSelectedItem(templateMap.get((String)templateComboBox.getSelectedItem()).getMsgType());
         msgTypeComboBox.setName("msgTypeComboBox"); // NOI18N
 

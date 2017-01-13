@@ -136,7 +136,7 @@ public class InputTemplatePanel extends javax.swing.JPanel implements TableModel
         jLabel3.setText("Msg Type");
         jLabel3.setName("jLabel3"); // NOI18N
 
-		msgTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { AutoPilotConstants.MSG_TYPE_FIXMSG, AutoPilotConstants.MSG_TYPE_XML, AutoPilotConstants.MSG_TYPE_CONTROL, AutoPilotConstants.MSG_TYPE_CONFIG}));
+		msgTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { AutoPilotConstants.MSG_TYPE_FIXMSG, AutoPilotConstants.MSG_TYPE_XML, AutoPilotConstants.MSG_TYPE_CONTROL, "JSON", AutoPilotConstants.MSG_TYPE_CONFIG}));
         msgTypeComboBox.setName("msgTypeComboBox"); // NOI18N
 
         jLabel4.setText("Message Template");

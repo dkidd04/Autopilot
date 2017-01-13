@@ -2,10 +2,13 @@ package com.citigroup.liquifi.autopilot.controller;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.codehaus.jackson.map.ObjectMapper;
 
 import com.citigroup.get.quantum.messaging.Initiator;
 import com.citigroup.get.quantum.messaging.MessagingException;
@@ -38,6 +41,8 @@ public enum TestCaseController {
 	private Map<String, LFTemplate> templateMap = DBUtil.getInstance().getTem().getAllTemplateMap();
 	private Map<String, List<LFCommonOverwriteTag>> commonOverwriteTagMap = DBUtil.getInstance().getCom().getCommonOverwriteTagMap();
 	private AutoPilotBrokerInfoFactory brokerFactory = ApplicationContext.getBrokerFactory();
+	private JSONFieldManipulator jsonManipulator = new JSONFieldManipulator();
+	private JSONPlaceHolderParser jsonPlaceholderParser = new JSONPlaceHolderParser();
 	public static final boolean OMIT_XML_DECLARATION = Boolean.getBoolean("OMIT_XML_DECLARATION");
 
 	public ValidationObject loadState(LFTestCase testcase, String symbolStr) {
@@ -261,13 +266,39 @@ public enum TestCaseController {
 						inputMsg = state.getInputStep().getMessage();
 					} else if (state.getInputStep().getTemplate() != null && state.getInputStep().getTemplate().trim().length() > 0) {
 						inputMsg = DBUtil.getInstance().getTem().getAllTemplateMap().get(state.getInputStep().getTemplate()).getMsgTemplate();
-
 					} else {
 						logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputStepIsEmpty + " InputStep=" + state.getInputStep().getActionSequence());
 					}
 
 					sendMessageEMS(state, inputMsg);
 
+				} else if ("JSON".equalsIgnoreCase(strMsgType)) {
+					overwrite.addAll(state.getInputStep().getInputTagsValueList());
+
+					// Add any step common tags to the overwrite set.
+					if (state.getInputStep().getCommonTags() != null) {
+						overwrite.addAll(commonOverwriteTagMap.get(state.getInputStep().getCommonTags()));
+					}
+
+					inputMsg = getInputMsg(state, overwrite);
+
+					//parse json msg
+					ObjectMapper jsonMapper = new ObjectMapper();
+					@SuppressWarnings("unchecked")
+					Map<String,Object> jsonMsgMap = (Map<String, Object>)jsonMapper.readValue(inputMsg, Map.class);
+					Map<String, String> placeholderFields = Collections.emptyMap();
+					//replace/create tags from overwrite list
+					if(!overwrite.isEmpty()){
+						placeholderFields = jsonManipulator.overwriteJSONFields(jsonMsgMap, overwrite);
+					}
+					
+					jsonPlaceholderParser.parsePlaceholders(jsonMsgMap, placeholderFields, state);
+					
+					inputMsg = jsonMapper.writeValueAsString(jsonMsgMap);
+					//evaluate placeholders
+					ApplicationContext.getPlaceHolders().parsePlaceholders(inputMsg, false, state.getTestcase(), state.getInputStep().getActionSequence(), state.getSymbol(), state);
+
+					sendMessageEMS(state, inputMsg);
 				} else {
 					// Add any overwrite tags
 					overwrite.addAll(state.getInputStep().getInputTagsValueList());
@@ -277,19 +308,7 @@ public enum TestCaseController {
 						overwrite.addAll(commonOverwriteTagMap.get(state.getInputStep().getCommonTags()));
 					}
 
-					// Get either the base message or template (possible comes with common tags)
-					if (state.getInputStep().getTemplate() != null && state.getInputStep().getTemplate().trim().length() > 0) {
-						LFTemplate template = templateMap.get(state.getInputStep().getTemplate());
-						inputMsg = template.getMsgTemplate();
-						if (template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.ComboBoxEmptyItem)) {
-							overwrite.addAll(commonOverwriteTagMap.get(template.getCommonOverwriteTagListName()));
-						}
-					} else if (state.getInputStep().getMessage() != null && state.getInputStep().getMessage().trim().length() > 0) {
-						inputMsg = state.getInputStep().getMessage();
-					} else {
-						// to add CustValidationClass logic for control msg type
-						logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputStepIsEmpty + " InputStep=" + state.getInputStep().getActionSequence());
-					}
+					inputMsg = getInputMsg(state, overwrite);
 
 					if (ApplicationContext.getConfig().isDebug()) {
 						logger.info("strBeforeParsePlaceHolder=" + inputMsg);
@@ -370,6 +389,23 @@ public enum TestCaseController {
 		}
 	}
 
+	private String getInputMsg(ValidationObject state, Set<Tag> overwrite) {
+		String inputMsg="";
+		if (state.getInputStep().getTemplate() != null && state.getInputStep().getTemplate().trim().length() > 0) {
+			LFTemplate template = templateMap.get(state.getInputStep().getTemplate());
+			inputMsg = template.getMsgTemplate();
+			if (template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.ComboBoxEmptyItem)) {
+				overwrite.addAll(commonOverwriteTagMap.get(template.getCommonOverwriteTagListName()));
+			}
+		} else if (state.getInputStep().getMessage() != null && state.getInputStep().getMessage().trim().length() > 0) {
+			inputMsg = state.getInputStep().getMessage();
+		} else {
+			// to add CustValidationClass logic for control msg type
+			logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputStepIsEmpty + " InputStep=" + state.getInputStep().getActionSequence());
+		}
+		return inputMsg;
+	}
+
 	private void sendMessageEMS(ValidationObject state, String inputMsg) throws MessagingException {
 		Initiator initiatorLocal = ConnectionManager.INSTANCE.getInitiator(state.getSymbol(), state.getInputStep().getTopicID());
 		String topic = ConnectionManager.INSTANCE.getInitiatorTopic(state.getSymbol(), state.getInputStep().getTopicID());
@@ -377,7 +413,8 @@ public enum TestCaseController {
 			QueueInitiator queue = (QueueInitiator) initiatorLocal;
 			QuantumTransportHeaderProperties createTransportHeaderProperties = initiatorLocal.createTransportHeaderProperties();
 			createTransportHeaderProperties.setTransportHeaderStringProperty("JMSCorrelationID", queue.getSelector());
-			initiatorLocal.send(inputMsg, createTransportHeaderProperties);
+			createTransportHeaderProperties.setTransportHeaderStringProperty("resp", inputMsg);
+			initiatorLocal.send("", createTransportHeaderProperties);
 		} else {
 			initiatorLocal.send(inputMsg);
 		}

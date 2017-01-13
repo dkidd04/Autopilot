@@ -182,7 +182,7 @@ public class InputStepPanel extends JPanel implements TableModelListener {
 		jLabel3.setText("Msg Type"); // NOI18N
 		jLabel3.setName("jLabel3"); // NOI18N
 
-		msgTypeComboBox.setModel(new DefaultComboBoxModel(new String[] { "FixMsg", "XML", "CONTROL", "Others" }));
+		msgTypeComboBox.setModel(new DefaultComboBoxModel(new String[] { "FixMsg", "XML", "CONTROL", "JSON", "Others" }));
 		// String msgType =
 		// templateMap.get((String)templateComboBox.getSelectedItem()).getMsgType();
 		msgTypeComboBox.setSelectedItem("XML");

@@ -19,4 +19,9 @@ public class Message {
 			this.state[i] = null;
 		}
 	}
+	
+	public String getMessage(){
+		return message;
+	}
+	
 }

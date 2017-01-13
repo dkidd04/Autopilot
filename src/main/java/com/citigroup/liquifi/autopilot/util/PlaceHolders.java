@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.citigroup.get.util.date.DateUtil;
 import com.citigroup.liquifi.autopilot.bootstrap.ApplicationContext;
+import com.citigroup.liquifi.autopilot.controller.JSONFieldManipulator;
 import com.citigroup.liquifi.autopilot.controller.ValidationObject;
 import com.citigroup.liquifi.autopilot.logger.AceLogger;
 import com.citigroup.liquifi.autopilot.message.FIXMessage;
@@ -372,7 +373,7 @@ public class PlaceHolders {
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_TIMESTAMP_HHMMSS)) {
 				int futureMillis = 0;
 				int timeToAddMillis = getTimeToAddMillis(strPlaceholderpattern, futureMillis);
-				
+
 				replacementStr = currentTimeHHmmssPlus(timeToAddMillis);
 			}	else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_TESTCASE)) {
 				replacementStr = tCase.getName();
@@ -395,38 +396,14 @@ public class PlaceHolders {
 
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_INPUT)) {
 
-				// @IP[{8}].{getTags}({55,76}) => three matches: 
-				// 1: 8, 2: getTags, 3: 55,76
-				// @IP[{8}].{getXMLFieldText}({clordId}) => three matches: 
-				// 1: 8, 2: getXMLFieldText, 3: clordId
-				Matcher m2 = inputPattern.matcher(strPlaceholderpattern);
-
-				if (m2.find() && m2.groupCount() == 3) {
-					int intInputStep = Integer.valueOf(m2.group(1));
-
-					if (intCurrentInputStep < intInputStep) {
-						logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputstepCannotBeReferencedYet + ". CurrentInputStep/InputStepReferenced:" + intCurrentInputStep + "/" + intInputStep);
-						continue;
-					}
-
-					String strActualInputMsg = rOutputLocal.getInboundStep(intInputStep).message;
-
-					String getType = m2.group(2);
-					String strTagID = m2.group(3);
-					if(isFixMessageFunction(getType) ){
-						replacementStr = handleFixMessageFunctions(strFixMessage, strActualInputMsg, getType, strTagID);
-					} else {
-						replacementStr = handleNonFixMessageFunctions(strActualInputMsg, getType, strTagID);
-					}
-
-				}else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_REPEATING_GROUP)){
-					// do nothing, will be handled later
-				}else {
-					logger.warning("unable to parse placeholder|" + strPlaceholderpattern);
-				}
+				replacementStr = parsePlaceHolderInput(strFixMessage, intCurrentInputStep, rOutputLocal, strPlaceholderpattern);
 
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_ENV)){
 				replacementStr = handleEnvPlaceholder(strFixMessage, strPlaceholderpattern);
+			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_REPEATING_GROUP)){
+				// do nothing, will be handled later
+			}else {
+				logger.warning("unable to parse placeholder|" + strPlaceholderpattern);
 			}
 
 			// replace the strToReturn based the pattern found in strToBeParsed and update the strToBeParsed
@@ -453,6 +430,32 @@ public class PlaceHolders {
 		}
 
 		return strFixMessage;
+	}
+
+	public String parsePlaceHolderInput(String strFixMessage, int intCurrentInputStep, ValidationObject rOutputLocal, String strPlaceholderpattern) {
+		// @IP[{8}].{getTags}({55,76}) => three matches: 
+		// 1: 8, 2: getTags, 3: 55,76
+		// @IP[{8}].{getXMLFieldText}({clordId}) => three matches: 
+		// 1: 8, 2: getXMLFieldText, 3: clordId
+		String replacementStr=null;
+		Matcher m2 = inputPattern.matcher(strPlaceholderpattern);
+		InputFunctionType input = new InputFunctionType(m2);
+
+		if (input.isValid()) {
+
+			int inputStep = input.getInputStep();
+			if (intCurrentInputStep < inputStep) {
+				logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputstepCannotBeReferencedYet + ". CurrentInputStep/InputStepReferenced:" + intCurrentInputStep + "/" + inputStep);
+			}
+
+			String strActualInputMsg = rOutputLocal.getInboundStep(inputStep).message;
+			if(isFixMessageFunction(input.getFunctionName()) ){
+				replacementStr = handleFixMessageFunctions(strFixMessage, strActualInputMsg, input);
+			} else {
+				replacementStr = handleNonFixMessageFunctions(strActualInputMsg, input);
+			}
+		}
+		return replacementStr;
 	}
 
 	private int getTimeToAddMillis(String strPlaceholderpattern, int defaultTimeToAddMillis) {
@@ -502,7 +505,7 @@ public class PlaceHolders {
 	 * @return
 	 * @throws Exception
 	 */
-	private String parsePlaceHolderOutput (final String strFixMessage, final int intCurrentInputStep, final String strPlaceholderpattern, final ValidationObject rOutputLocal) throws Exception {
+	public String parsePlaceHolderOutput (final String strFixMessage, final int intCurrentInputStep, final String strPlaceholderpattern, final ValidationObject rOutputLocal) {
 
 
 		String [] parts = strPlaceholderpattern.split("\\+");
@@ -536,7 +539,7 @@ public class PlaceHolders {
 	 * @return
 	 * @throws Exception
 	 */
-	private String parsePlaceHolderOutputA (final String strFixMessage, final int intCurrentInputStep, final String strPlaceholderpattern, final ValidationObject rOutputLocal) throws Exception {		
+	private String parsePlaceHolderOutputA (final String strFixMessage, final int intCurrentInputStep, final String strPlaceholderpattern, final ValidationObject rOutputLocal) {		
 
 
 		// @OP[{8}][{3}].{getTags}({55,76}) => four matches: 
@@ -544,14 +547,15 @@ public class PlaceHolders {
 		// @OP[{8}][{3}].{getXMLFieldText}({clordId}) => four matches: 
 		// 1: 8, 2: 3, 3: getXMLFieldText, 4: clordId
 		Matcher m2 = outputPattern.matcher(strPlaceholderpattern);
+		OutputFunctionType outputStep = new OutputFunctionType(m2);
 
-		if (m2.find() == false || m2.groupCount() != 4) {
+		if (!outputStep.isValid()) {
 			logger.warning("unable to parse placeholder ("+strPlaceholderpattern+")");
 			return strPlaceholderpattern;
 		}
 
-		int intInputStep = Integer.valueOf(m2.group(1));
-		int intOutputMsgID = Integer.valueOf(m2.group(2));
+		int intInputStep = outputStep.getInputStep();
+		int intOutputMsgID = outputStep.getOutputStep();
 
 		if (intCurrentInputStep < intInputStep) {
 			logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputstepCannotBeReferencedYet + ". CurrentInputStep/InputStepReferenced:" + intCurrentInputStep + "/" + intInputStep);
@@ -561,26 +565,31 @@ public class PlaceHolders {
 		String strResultedOutputMsg = rOutputLocal.getOutputMsgByStepAndOutputMsgID(intInputStep, intOutputMsgID);
 
 		if(strResultedOutputMsg == null) {
-			throw new Exception("linkage is wrong ("+strPlaceholderpattern+")");
+			throw new IllegalArgumentException("linkage is wrong ("+strPlaceholderpattern+")");
 		}
 
-		String getType = m2.group(3);
-		String strTagID = m2.group(4);
+		String getType = outputStep.getFunctionName();
 		if(isFixMessageFunction(getType)){
-			return handleFixMessageFunctions(strFixMessage, strResultedOutputMsg, getType, strTagID); 
+			return handleFixMessageFunctions(strFixMessage, strResultedOutputMsg, outputStep); 
 		} else {
-			return handleNonFixMessageFunctions(strResultedOutputMsg, getType, strTagID);
+			return handleNonFixMessageFunctions(strResultedOutputMsg, outputStep);
 		}
 	}
 
-	private String handleNonFixMessageFunctions(String referenceMessage, String functionName, String tag) {
+	private String handleNonFixMessageFunctions(String referenceMessage, FunctionType function) {
+		String functionName = function.getFunctionName();
+		String tag = function.getFunctionValue();
 		if (functionName.equals("getXMLFieldText")){
 			return ApplicationContext.getXmlFactory().getField(referenceMessage, tag);
+		} else if (functionName.equals("getJSONFieldText")){
+			return new JSONFieldManipulator().getFieldValueForJSONObject(referenceMessage, tag);
 		}
 		return null;
 	}
 
-	private String handleFixMessageFunctions(final String currentFixMessage, String referenceMessage, String functionName, String tag) {
+	private String handleFixMessageFunctions(final String currentFixMessage, String referenceMessage, FunctionType function) {
+		String functionName = function.getFunctionName();
+		String tag = function.getFunctionValue();
 		if (functionName.equals("getTag")) {
 			return ApplicationContext.getFIXFactory().getTagValue(referenceMessage, tag);
 		} else if (functionName.equals("getTags") || functionName.equals("getTagList")) {
@@ -633,7 +642,7 @@ public class PlaceHolders {
 	private String currentTimeHHmmssPlus(int millisToAdd) {
 		return timestampPlus(hourMinuteSecondDateFormat.get(), millisToAdd);
 	}
-	
+
 	private String timestampPlus(SimpleDateFormat dateFormat, int millisToAdd){
 		return dateFormat.format(ApplicationContext.getClock().currentTimeMillis() + millisToAdd);
 	}
@@ -658,4 +667,94 @@ public class PlaceHolders {
 			return sdf3.format(ApplicationContext.getClock().currentTimeMillis());
 		}
 	}
+}
+
+interface FunctionType {
+	
+	public String getFunctionName();
+	public String getFunctionValue();
+	
+}
+
+class InputFunctionType implements FunctionType {
+
+	private final int inputStep;
+	private final String type;
+	private final String tagID;
+	private final boolean isValid;
+
+	public InputFunctionType(Matcher matchResult){
+		isValid = (matchResult.find() && matchResult.groupCount() == 3);
+		if(isValid){
+			inputStep = Integer.valueOf(matchResult.group(1));
+			type = matchResult.group(2);
+			tagID = matchResult.group(3);
+		} else {
+			inputStep = 0;
+			type = null;
+			tagID = null;
+		}
+	}
+
+	public int getInputStep() {
+		return inputStep;
+	}
+
+	public String getFunctionName() {
+		return type;
+	}
+
+	public String getFunctionValue() {
+		return tagID;
+	}
+
+	public boolean isValid() {
+		return isValid;
+	}
+
+}
+
+class OutputFunctionType implements FunctionType {
+
+	private final int inputStep;
+	private final int outputStep;
+	private final String functionName;
+	private final String functionValue;
+	private final boolean isValid;
+
+	public OutputFunctionType(Matcher matchResult){
+		isValid = (matchResult.find() && matchResult.groupCount() == 4);
+		if(isValid){
+			inputStep = Integer.valueOf(matchResult.group(1));
+			outputStep = Integer.valueOf(matchResult.group(2));
+			functionName = matchResult.group(3);
+			functionValue = matchResult.group(4);
+		} else {
+			inputStep = 0;
+			outputStep = 0;
+			functionName = null;
+			functionValue = null;
+		}
+	}
+
+	public int getInputStep() {
+		return inputStep;
+	}
+	
+	public int getOutputStep() {
+		return outputStep;
+	}
+
+	public String getFunctionName() {
+		return functionName;
+	}
+
+	public String getFunctionValue() {
+		return functionValue;
+	}
+
+	public boolean isValid() {
+		return isValid;
+	}
+
 }
