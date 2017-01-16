@@ -22,7 +22,7 @@ import com.citigroup.liquifi.util.DBUtil;
 import com.citigroup.liquifi.util.Util;
 import com.sonicsw.blackbird.sys.SysObject;
 
-public class AutoPilotDuplicateTestCases extends AutoPilotBootstrap{
+public class LiqFiAutoPilotDuplicator extends AutoPilotBootstrap{
 	private static String testCaseNameSeperator = "_";
 	private static String fromLabel = "(CAT)WholeSaleVsInstitution";
 	private static String toLabel = "(CAT)WholeSaleVsProp";
