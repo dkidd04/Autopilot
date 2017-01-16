@@ -154,6 +154,7 @@ public enum TestCaseController {
 					}
 
 					// TODO: merge all these parsing methods
+					inputMsg = ApplicationContext.getPlaceHolders().parseAPVarPlaceholdersString(inputMsg, overwrite);
 
 					if (inputMsg.contains("<AdminOrderRequest>") || inputMsg.contains("<AdminMessage>")) {
 						inputMsg = ApplicationContext.getXmlFactory().overWriteTags(inputMsg, overwrite);
@@ -162,7 +163,6 @@ public enum TestCaseController {
 					}
 
 					inputMsg = ApplicationContext.getXmlFactory().overwriteAdminOrderRequest2XMLMessage(inputMsg, overwrite);
-					inputMsg = ApplicationContext.getPlaceHolders().parseAPVarPlaceholdersString(inputMsg, overwrite);
 					inputMsg = ApplicationContext.getPlaceHolders().parsePlaceholders(inputMsg, false, state.getTestcase(), state.getInputStep().getActionSequence(), state.getSymbol(), state);
 					inputMsg = ApplicationContext.getXmlFactory().extractCommands(inputMsg, commands);
 
