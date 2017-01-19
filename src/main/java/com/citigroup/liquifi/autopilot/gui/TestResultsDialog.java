@@ -227,15 +227,31 @@ public class TestResultsDialog extends javax.swing.JDialog {
 				bw.write("Total Number of Tests," + (passedCases.size() + failedCases.size()) + "\r\n");
 				bw.write("Number of Passed Tests," + passedCases.size() + "\r\n");
 				bw.write("Number of Failed Tests," + failedCases.size() + "\r\n");
-				bw.write("\r\nResult,TestID,Test Case Name,Label,Category,Region,Release Num, Test Date, JIRA# \r\n");
+				bw.write("\r\nResult,TestID,Test Case Name,Label,"
+						+ "Category,Region,Release Num, "
+						+ "Test Date, "
+						+ "JIRA#,FailedStepID,Reason \r\n");
 				
 				for(ValidationObject pcase : passedCases){
 					String labelArrayString = DBUtil.getInstance().getLbm().getLabelNames(pcase.getTestcase().getTestID()); // find all labels that the test belong to
 					bw.write("Passed," + pcase.getTestcase().getTestID() + "," + pcase.getTestcase().getName() + "," + labelArrayString + "," + pcase.getTestcase().getCategory() + "," + pcase.getTestcase().getRegion() + "," + pcase.getTestcase().getReleaseNum() + "," + date + "," + pcase.getTestcase().getJiraNum() + "\r\n");
 				}
 				for(ValidationObject fcase : failedCases){
-					String labelArrayString = DBUtil.getInstance().getLbm().getLabelNames(fcase.getTestcase().getTestID()); // find all labels that the test belong to
-					bw.write("Failed," + fcase.getTestcase().getTestID() + "," + fcase.getTestcase().getName() + "," + labelArrayString + "," + fcase.getTestcase().getCategory() + "," + fcase.getTestcase().getRegion() + "," + fcase.getTestcase().getReleaseNum() + "," + date + "," + fcase.getTestcase().getJiraNum() + "\r\n");
+					
+					LFTestCase testcase = fcase.getTestcase();
+					String labelArrayString = DBUtil.getInstance().getLbm().getLabelNames(testcase.getTestID()); // find all labels that the test belong to
+					bw.write("Failed," + 
+					testcase.getTestID() + "," + 
+					testcase.getName() + "," + 
+					labelArrayString + "," + 
+					testcase.getCategory() + "," + 
+					testcase.getRegion() + "," + 
+					testcase.getReleaseNum() + "," + 
+					date + "," + 
+					testcase.getJiraNum() + ","+
+					fcase.getFailedInputStep() + "."+
+					fcase.getFailedOutputMsgID()+ "," +
+					fcase.getValidationResultMsg() + "\r\n");
 				}
 				
 				bw.close();
