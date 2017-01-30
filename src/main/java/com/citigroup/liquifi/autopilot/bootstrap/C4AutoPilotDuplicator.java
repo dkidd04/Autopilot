@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
+
 import com.citigroup.liquifi.entities.LFOutputMsg;
 import com.citigroup.liquifi.entities.LFOutputTag;
 import com.citigroup.liquifi.entities.LFTag;
@@ -19,8 +21,8 @@ import com.citigroup.liquifi.util.Util;
 
 public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	private static String testCaseNameSeperator = "_";
-	private static String fromLabel = "New Currency Profiles";
-	private static String toLabel = "New Currency Profiles";
+	private static String fromLabel = "Temp";
+	private static String toLabel = "Temp3";
 	private static Map<String, String> inboundReplacements = new HashMap<>();
 	private static Map<String, String> outboundReplacements = new HashMap<>();
 	private static int casesLeft=0;
@@ -131,13 +133,22 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		return tmp;
 	}
 	
+	
 	private static void duplicate() {
 		Set<LFTestCase> testcases = getTestCases(fromLabel);
+		Set<LFTestCase> clones = new HashSet<LFTestCase>();
 		testcases.forEach(testCase -> {
 			String description = testCase.getDescription();
 			LFTestCase clone = testCase.clone(Util.getTestIDSequencer());
-			filterTestCases(clone, description,false);
+			clone.setDescription(description);
+			clones.add(clone);
+			
 		});
+		clones.forEach(clone -> {
+			filterTestCases(clone, clone.getDescription(),false);
+			
+		});
+		
 	}
 
 	private static void massAlterTags() {
@@ -159,7 +170,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		System.out.println("Cases Remaining = "+casesLeft);
 		System.out.println("-------------------------------------------");
 	}
-
+	
 	private static void updateTestCase(LFTestCase testCase, boolean update, String description) {
 		testCase.getInputStepList().stream().filter(ipStep -> "XML".equals(ipStep.getMsgType()))
 		.forEach(filtered -> {inboundReplacements.keySet().forEach(key -> {
@@ -337,7 +348,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 			System.out.println("Error saving to DB ");
 		}
 	}
-	
+
 	private static void updateDB(LFTestCase testCase) {
 		try {
 			DBUtil.getInstance().updateDB(testCase);
