@@ -47,6 +47,22 @@ public class TestCaseManager {
 
 	}
 
+	public void SaveOrUpdateTestCase(LFTestCase testcase)
+			throws Exception {
+		try {
+			session.clear();
+			tx = session.beginTransaction();
+			session.saveOrUpdate(testcase);
+			session.flush();
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			throw new Exception(e);
+		} finally {
+		}
+	}
+
 	public void updateTestCase(LFTestCase orig, LFTestCase testcase)
 			throws Exception {
 		try {

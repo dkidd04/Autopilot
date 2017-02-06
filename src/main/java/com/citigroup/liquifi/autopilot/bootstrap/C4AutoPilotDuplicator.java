@@ -21,7 +21,7 @@ import com.citigroup.liquifi.util.Util;
 
 public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	private static String testCaseNameSeperator = "_";
-	private static String fromLabel = "Temp";
+	private static String fromLabel = "PB90047";
 	private static String toLabel = "Temp3";
 	private static Map<String, String> inboundReplacements = new HashMap<>();
 	private static Map<String, String> outboundReplacements = new HashMap<>();
@@ -41,7 +41,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	 * Main method launching the application.
 	 */
 	public static void main(String[] args) {
-		System.setProperty("Mode", "duplicate");
+		System.setProperty("Mode", "massaltertags");
 
 		addTagsToReplace();
 		try {
@@ -92,7 +92,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 
 	private static void addTagsToReplace() {
 		//inboundReplacements.put("Parameters.Customer.RemoveProfile.GBPFlag.listValue","GBPFlag");
-		inboundReplacements.put("Parameters.Customer.RemoveProfile.ILSFlag.listValue","ILSFlag");
+		//inboundReplacements.put("Parameters.Customer.RemoveProfile.ILSFlag.listValue","ILSFlag");
 		//inboundReplacements.put("Parameters.Customer.RemoveProfile.ZARFlag.listValue","ZARFlag");
 		//inboundReplacements.put("Parameters.Customer.SetProfile.GBCurrHandling.listValue","Traded");
 		//inboundReplacements.put("Parameters.Customer.SetProfile.SACurrHandling.listValue","U");
@@ -105,15 +105,15 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		inboundReplacements.put("44","193200");
 		inboundReplacements.put("99","193300");
 		inboundReplacements.put("426","193100.0");
-		
-		outboundReplacements.put("55","CGEN.TA");
-		outboundReplacements.put("15","ILA");
-		outboundReplacements.put("6","193100");
-		outboundReplacements.put("31","193100");
-		outboundReplacements.put("44","193200");
-		outboundReplacements.put("99","193300");
-		outboundReplacements.put("426","193100.0");
 		*/
+		//outboundReplacements.put("55","CGEN.TA");
+		outboundReplacements.put("15","GBL");
+		//outboundReplacements.put("6","193100");
+		//outboundReplacements.put("31","193100");
+		//outboundReplacements.put("44","193200");
+		//outboundReplacements.put("99","193300");
+		//outboundReplacements.put("426","193100.0");
+		
 	}
 
 	private static List<String> getFilteredTestCases() {
@@ -155,13 +155,32 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		Set<LFTestCase> testcases = getTestCases(fromLabel);
 		testcases.forEach(testCase -> {
 			String description = testCase.getDescription();
-			filterTestCases(testCase, description,true);
+			filterTestCasesNoDBUpdate(testCase, description);
 		});
+		try{
+			DBUtil.getInstance().updateListtoDB(testcases);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	private static void filterTestCasesNoDBUpdate(LFTestCase testCase, String description) {
+		//if(description.contains(filterDescription) && testCase.getName().contains(filterName)){
+			updateTestCase(testCase,description);
+			
+		//}
+	//	else {
+	//		System.out.println("Ignoring -> "+testCase.getName());
+	//	}
+		casesLeft--;
+		System.out.println("Cases Remaining = "+casesLeft);
+		System.out.println("-------------------------------------------");
 	}
 
 	private static void filterTestCases(LFTestCase testCase, String description, boolean update) {
 		if(description.contains(filterDescription) && testCase.getName().contains(filterName)){
 			updateTestCase(testCase, update, description);
+			
 		}
 		else {
 			System.out.println("Ignoring -> "+testCase.getName());
@@ -171,8 +190,21 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		System.out.println("-------------------------------------------");
 	}
 	
+	private static void updateTestCase(LFTestCase testCase,String description) {
+		testCase.getInputStepList().stream().filter(ipStep -> !"XML".equals(ipStep.getMsgType()))
+		.forEach(filtered -> {inboundReplacements.keySet().forEach(key -> {
+				replaceInboundTags(key, inboundReplacements.get(key), filtered);
+			});
+			outboundReplacements.keySet().forEach(key -> {
+				replaceOutputTags(key, outboundReplacements.get(key), filtered);
+			});
+		});
+		stepCount = 0;
+		changeNameAndDescription(description, testCase, 18);
+	}
+	
 	private static void updateTestCase(LFTestCase testCase, boolean update, String description) {
-		testCase.getInputStepList().stream().filter(ipStep -> "XML".equals(ipStep.getMsgType()))
+		testCase.getInputStepList().stream().filter(ipStep -> !"XML".equals(ipStep.getMsgType()))
 		.forEach(filtered -> {inboundReplacements.keySet().forEach(key -> {
 				replaceInboundTags(key, inboundReplacements.get(key), filtered);
 			});
@@ -189,12 +221,13 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 			System.out.println("Cloning -> "+testCase.getName());
 			saveToDB(testCase);
 		}
+		
 	}
 
 	private static void replaceOutputTags(String tagToReplace, String newValue,
 			LFTestInputSteps filtered) {
 		List<LFOutputMsg> outPutMessage = filtered.getOutputStepList().stream()
-				//.filter(step -> step.getTopicID().contains("EUCB2"))
+				.filter(step -> step.getTopicID().contains("Arbol"))
 				.collect(Collectors.toList());
 		replaceOutboundExistingTag(tagToReplace, newValue, outPutMessage);
 	}
