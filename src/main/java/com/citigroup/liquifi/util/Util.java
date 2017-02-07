@@ -54,7 +54,7 @@ public class Util {
 	
 	public static String getTestIDSequencer(){
 		String sequencer = null;
-		long julianDate = (long) (DateUtil.convertDateToJulianDate(new Date())*1000000);
+		long julianDate = System.currentTimeMillis() * 2;
 		sequencer = String.valueOf(julianDate);
 		logger.info("New TestID: " + sequencer);
 		return sequencer;
