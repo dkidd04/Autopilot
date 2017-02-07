@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
-
 import com.citigroup.liquifi.entities.LFOutputMsg;
 import com.citigroup.liquifi.entities.LFOutputTag;
 import com.citigroup.liquifi.entities.LFTag;
@@ -21,15 +19,15 @@ import com.citigroup.liquifi.util.Util;
 
 public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	private static String testCaseNameSeperator = "_";
-	private static String fromLabel = "Temp";
-	private static String toLabel = "Temp3";
+	private static String fromLabel = "Old Currency Profiles";
+	private static String toLabel = "Sell";
 	private static Map<String, String> inboundReplacements = new HashMap<>();
 	private static Map<String, String> outboundReplacements = new HashMap<>();
 	private static int casesLeft=0;
 	private static int stepCount = 0;
 	private static boolean contains = false;
-	private static String descriptFrom = "pounds";
-	private static String descriptionTo = "pence";
+	private static String descriptFrom = "buy";
+	private static String descriptionTo = "sell";
 	private static String nameFrom = "Major";
 	private static String nameTo = "Traded";
 	private static String filterName = "Traded";
@@ -56,99 +54,85 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	protected static void chooseMode() {
 		switch(System.getProperty("Mode","null").toLowerCase()){
 		case "duplicate":
-			System.out.println("Launching AutoPilot in duplicate mode...");
+			logger.info("Launching AutoPilot in duplicate mode...");
 			duplicate();
 			break;
 		case "massaltertags":
-			System.out.println("Launching AutoPilot in massAlterTags mode...");
+			logger.info("Launching AutoPilot in massAlterTags mode...");
 			massAlterTags();
 			break;
 		case "copylabels":
-			System.out.println("Launching AutoPilot in copylabels mode...");
+			logger.info("Launching AutoPilot in copylabels mode...");
 			copyFromLabels();
 			break;
 		case "changenumbers":
-			System.out.println("Launching AutoPilot in changeNumbers mode...");
+			logger.info("Launching AutoPilot in changeNumbers mode...");
 			changeNumbers();
 			break;
 		case "removelabel":
-			System.out.println("Launching AutoPilot in removelabel mode...");
+			logger.info("Launching AutoPilot in removelabel mode...");
 			removeLabel();
 			break;
 		case "swaptopics":
-			System.out.println("Launching AutoPilot in swaptopics mode...");
+			logger.info("Launching AutoPilot in swaptopics mode...");
 			swapToAdminTopics();
 			break;
 		case "massaltername":
-			System.out.println("Launching AutoPilot in massaltername mode...");
+			logger.info("Launching AutoPilot in massaltername mode...");
 			massAlterName();
 			break;
 		default:
-			System.out.println("Launching AutoPilot in default mode...");
+			logger.info("Launching AutoPilot in default mode...");
 			massAlterTags();
 			break;
 		}
 	}
 
 	private static void addTagsToReplace() {
-		//inboundReplacements.put("Parameters.Customer.RemoveProfile.GBPFlag.listValue","GBPFlag");
-		inboundReplacements.put("Parameters.Customer.RemoveProfile.ILSFlag.listValue","ILSFlag");
-		//inboundReplacements.put("Parameters.Customer.RemoveProfile.ZARFlag.listValue","ZARFlag");
-		//inboundReplacements.put("Parameters.Customer.SetProfile.GBCurrHandling.listValue","Traded");
-		//inboundReplacements.put("Parameters.Customer.SetProfile.SACurrHandling.listValue","U");
-		//inboundReplacements.put("Parameters.Customer.SetProfile.ILCurrHandling.listValue","U");
 		/*
-		inboundReplacements.put("55","CGEN.TA");
-		inboundReplacements.put("15","ILA");
-		inboundReplacements.put("6","193100");
-		inboundReplacements.put("31","193100");
-		inboundReplacements.put("44","193200");
-		inboundReplacements.put("99","193300");
-		inboundReplacements.put("426","193100.0");
-		
-		outboundReplacements.put("55","CGEN.TA");
-		outboundReplacements.put("15","ILA");
-		outboundReplacements.put("6","193100");
-		outboundReplacements.put("31","193100");
-		outboundReplacements.put("44","193200");
-		outboundReplacements.put("99","193300");
-		outboundReplacements.put("426","193100.0");
-		*/
+		 * The following are examples of how to 
+		 * add tags to XML messages and FIX 
+		 * messages for both inbound and 
+		 * outbound flows
+		 */
+		//inboundReplacements.put("Parameters.Customer.SetProfile.ILCurrHandling.listValue","U");
+		//inboundReplacements.put("54","2");
+		//outboundReplacements.put("54","2");
 	}
 
 	private static List<String> getFilteredTestCases() {
-		System.out.println("Getting Labels");
+		logger.info("Getting Labels");
 		return DBUtil.getInstance().getLbm().getLabels().stream()
 				.filter(label -> label.getLabel().contains(labelFilter)).map(filtered -> filtered.getLabel()).collect(Collectors.toList());
 	}
 
 	private static Set<LFTestCase> getTestCases(String ... labels) {
-		System.out.println("Getting TestCases");
+		logger.info("Getting TestCases");
 		Set<LFTestCase> tmp = new HashSet<>();
 		for(String label : labels) {
 			tmp.addAll(DBUtil.getInstance().getTestCasesForLabel(label));
 		}
 		casesLeft = tmp.size();
-		System.out.println("TotalCases = "+tmp.size());
+		logger.info("TotalCases = "+tmp.size());
 		return tmp;
 	}
 	
 	
 	private static void duplicate() {
 		Set<LFTestCase> testcases = getTestCases(fromLabel);
+		logger.info("Size: " + casesLeft);
 		Set<LFTestCase> clones = new HashSet<LFTestCase>();
 		testcases.forEach(testCase -> {
 			String description = testCase.getDescription();
 			LFTestCase clone = testCase.clone(Util.getTestIDSequencer());
 			clone.setDescription(description);
-			clones.add(clone);
-			
+			clones.add(clone);	
 		});
+		logger.info("Clone size:" + clones.size());
 		clones.forEach(clone -> {
 			filterTestCases(clone, clone.getDescription(),false);
 			
 		});
-		
 	}
 
 	private static void massAlterTags() {
@@ -160,19 +144,19 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	}
 
 	private static void filterTestCases(LFTestCase testCase, String description, boolean update) {
-		if(description.contains(filterDescription) && testCase.getName().contains(filterName)){
+		if(description.contains(filterDescription)){
 			updateTestCase(testCase, update, description);
 		}
 		else {
-			System.out.println("Ignoring -> "+testCase.getName());
+			logger.info("Ignoring -> "+testCase.getName());
 		}
 		casesLeft--;
-		System.out.println("Cases Remaining = "+casesLeft);
-		System.out.println("-------------------------------------------");
+		logger.info("Cases Remaining = "+casesLeft);
+		logger.info("-------------------------------------------");
 	}
 	
 	private static void updateTestCase(LFTestCase testCase, boolean update, String description) {
-		testCase.getInputStepList().stream().filter(ipStep -> "XML".equals(ipStep.getMsgType()))
+		testCase.getInputStepList().stream().filter(ipStep -> !"XML".equals(ipStep.getMsgType()))
 		.forEach(filtered -> {inboundReplacements.keySet().forEach(key -> {
 				replaceInboundTags(key, inboundReplacements.get(key), filtered);
 			});
@@ -183,10 +167,10 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		stepCount = 0;
 		changeNameAndDescription(description, testCase, 18);
 		if(update){
-			System.out.println("Updating -> "+testCase.getName());
+			logger.info("Updating -> "+testCase.getName());
 			updateDB(testCase);
 		} else {
-			System.out.println("Cloning -> "+testCase.getName());
+			logger.info("Cloning -> "+testCase.getName());
 			saveToDB(testCase);
 		}
 	}
@@ -194,23 +178,23 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	private static void replaceOutputTags(String tagToReplace, String newValue,
 			LFTestInputSteps filtered) {
 		List<LFOutputMsg> outPutMessage = filtered.getOutputStepList().stream()
-				//.filter(step -> step.getTopicID().contains("EUCB2"))
+				//.filter(step -> step.getTopicID().contains("C4-GM-ToArbol"))
 				.collect(Collectors.toList());
 		replaceOutboundExistingTag(tagToReplace, newValue, outPutMessage);
 	}
 
 	private static void replaceOutboundExistingTag(String tagToReplace, String newValue,List<LFOutputMsg> outPutMessages) {
-		outPutMessages.stream().filter(step -> /*step.getTopicID().contains("EUCB2"))/* &&*/ !step.getTopicID().contains("OES")).forEach(filtered -> {
+		outPutMessages.stream()/*.filter(step -> step.getTopicID().contains("EUCB2")) && !step.getTopicID().contains("OES"))*/.forEach(filtered -> {
 			List<LFOutputTag> contained = filtered.getOutputTagList().stream().filter(tag -> tag.getTagID().equals(tagToReplace)).collect(Collectors.toList());
 			if(!contained.isEmpty()){
 				contained.get(0).setTagValue(newValue);
-			}/* else {
+			} else {
 				LFOutputTag newTag = new LFOutputTag(tagToReplace, newValue);
-				newTag.setOutputMsgID(step.getOutputMsgID());
-				newTag.setActionSequence(step.getActionSequence());
-				newTag.setTestID(step.getTestID());
-				step.addToOutputTagList(newTag);
-			}*/
+				newTag.setOutputMsgID(filtered.getOutputMsgID());
+				newTag.setActionSequence(filtered.getActionSequence());
+				newTag.setTestID(filtered.getTestID());
+				filtered.addToOutputTagList(newTag);
+			}
 		});
 	}
 
@@ -231,12 +215,12 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 
 	private static void massAlterName() {
 		List<String> labels = getFilteredTestCases();
-		labels.forEach(label -> System.out.println(label));
+		labels.forEach(label -> logger.info(label));
 		Set<LFTestCase> testcases = getTestCases(labels.toArray(new String[labels.size()]));
 		testcases.forEach(testCase -> {
-			System.out.println("BEFORE -> "+testCase.getName());
+			logger.info("BEFORE -> "+testCase.getName());
 			changeName(testCase,0);
-			System.out.println("AFTER -> "+testCase.getName());
+			logger.info("AFTER -> "+testCase.getName());
 			try {
 				DBUtil.getInstance().updateDB(testCase);
 			} catch (Exception e) {
@@ -250,18 +234,18 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		testcases.forEach(testcase -> {
 			testcase.getInputStepList().forEach(step -> {
 				if("XML".equals(step.getMsgType()) && "AutoPilotToLiqFi".equals(step.getTopicID())){
-					System.out.println("Error replacing step for case "+testcase.getName());
+					logger.info("Error replacing step for case "+testcase.getName());
 					step.setTopicID("AutoPilotToLiqFiAdmin");
 					try {
 						DBUtil.getInstance().updateDB(testcase);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					System.out.println("-------------------------------------");
+					logger.info("-------------------------------------");
 				} 
 			});
 			casesLeft--;
-			System.out.println("Remaining :: "+casesLeft);
+			logger.info("Remaining :: "+casesLeft);
 		});
 	}
 
@@ -275,7 +259,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 				e.printStackTrace();
 			}
 			casesLeft--;
-			System.out.println("Remaining "+casesLeft);
+			logger.info("Remaining "+casesLeft);
 		});
 	}
 
@@ -283,10 +267,10 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		Set<LFTestCase> testcases = getTestCases(fromLabel);
 		testcases.forEach(testCase -> {
 			if(testCase.getDescription().contains(filterDescription)){
-				System.out.println("TC = "+testCase.getName());
+				logger.info("TC = "+testCase.getName());
 				//Set<LFLabel> modifiedLabels = testCase.getLabelSet().stream().filter(label -> !"UpscaledVsUpscaled".equals(label.getLabel())).collect(Collectors.toSet());
 				//modifiedLabels.forEach(label -> {
-					System.out.println("LABEL : "+fromLabel);
+					logger.info("LABEL : "+fromLabel);
 					try {
 						DBUtil.getInstance().getLbm().removeLabelFromTestcase(fromLabel, testCase.getTestID());
 					} catch (Exception e) {
@@ -295,7 +279,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 				//});
 	
 				casesLeft--;
-				System.out.println("Saved, Remaining : "+casesLeft);
+				logger.info("Saved, Remaining : "+casesLeft);
 			}
 		});
 	}
@@ -315,24 +299,24 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 			if(testCase.getDescription().contains(filterDescription)){
 				for(String label : labels){
 					try {
-						System.out.println("Adding "+testCase.getName()+" To "+label+" label...");
+						logger.info("Adding "+testCase.getName()+" To "+label+" label...");
 						DBUtil.getInstance().getLbm().addTestCaseToLabel(label,testCase.getTestID()); 
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			} else {
-				System.out.println("Ignoring"+testCase.getName()+" To Label ...");
+				logger.info("Ignoring"+testCase.getName()+" To Label ...");
 			}
 			casesLeft--;
-			System.out.println("Updated, Remaining : "+casesLeft);
+			logger.info("Updated, Remaining : "+casesLeft);
 		});
 	}
 
 	private static void changeNameAndDescription(String description, LFTestCase testCase, int offset) {
 		//testCase.setLastEditedUser(name);
-		//testCase.setDescription(description.replace(descriptFrom, descriptionTo));
-		changeName(testCase, offset);
+		testCase.setDescription(description.replace(descriptFrom, descriptionTo));
+		//changeName(testCase, offset);
 	}
 
 	private static void changeName(LFTestCase testCase, int offset) {
@@ -345,7 +329,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		try {
 			DBUtil.getInstance().getLbm().addTestCaseToLabel(toLabel,testCase.getTestID());
 		} catch (Exception e) {
-			System.out.println("Error saving to DB ");
+			logger.warning("Error saving to DB ");
 		}
 	}
 
@@ -353,7 +337,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		try {
 			DBUtil.getInstance().updateDB(testCase);
 		} catch (Exception e) {
-			System.out.println("Error saving to DB ");
+			logger.warning("Error saving to DB ");
 		}
 	}
 
