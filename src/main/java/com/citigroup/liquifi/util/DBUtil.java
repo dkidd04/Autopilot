@@ -257,7 +257,22 @@ public class DBUtil {
 		return tcm.getTestCase(testID);
 	}
 
-
+	public void updateListtoDB(Set<LFTestCase> testcases) throws Exception{
+		if(tcm.getSession() != null && tcm.getSession().isOpen()){
+			tcm.getSession().close();
+		}
+		if(lbm.getSession() != null && lbm.getSession().isOpen()){
+			lbm.getSession().close();
+		}
+		lbm.setSession(openSession());
+		tcm.setSession(openSession());
+		
+		for (LFTestCase tempcase : testcases) {
+			tcm.SaveOrUpdateTestCase(tempcase);
+		}
+	}
+	
+	
 	public void updateDB(LFTestCase testcase) throws Exception{
 			if(tcm.getSession() != null && tcm.getSession().isOpen()){
 				tcm.getSession().close();

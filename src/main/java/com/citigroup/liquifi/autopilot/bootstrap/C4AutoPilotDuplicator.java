@@ -19,7 +19,7 @@ import com.citigroup.liquifi.util.Util;
 
 public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	private static String testCaseNameSeperator = "_";
-	private static String fromLabel = "Old Currency Profiles";
+	private static String fromLabel = "Temp";
 	private static String toLabel = "Sell";
 	private static Map<String, String> inboundReplacements = new HashMap<>();
 	private static Map<String, String> outboundReplacements = new HashMap<>();
@@ -39,7 +39,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	 * Main method launching the application.
 	 */
 	public static void main(String[] args) {
-		System.setProperty("Mode", "duplicate");
+		System.setProperty("Mode", "massaltertags");
 
 		addTagsToReplace();
 		try {
@@ -94,10 +94,15 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		 * add tags to XML messages and FIX 
 		 * messages for both inbound and 
 		 * outbound flows
-		 */
-		//inboundReplacements.put("Parameters.Customer.SetProfile.ILCurrHandling.listValue","U");
-		//inboundReplacements.put("54","2");
-		//outboundReplacements.put("54","2");
+		
+		outboundReplacements.put("55","CGEN.TA");
+		outboundReplacements.put("15","GBL");
+		outboundReplacements.put("6","193100");
+		outboundReplacements.put("31","193100");
+		outboundReplacements.put("44","193200");
+		outboundReplacements.put("99","193300");
+		outboundReplacements.put("426","193100.0");
+		*/
 	}
 
 	private static List<String> getFilteredTestCases() {
@@ -139,13 +144,32 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		Set<LFTestCase> testcases = getTestCases(fromLabel);
 		testcases.forEach(testCase -> {
 			String description = testCase.getDescription();
-			filterTestCases(testCase, description,true);
+			filterTestCasesNoDBUpdate(testCase, description);
 		});
+		try{
+			DBUtil.getInstance().updateListtoDB(testcases);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	private static void filterTestCasesNoDBUpdate(LFTestCase testCase, String description) {
+		//if(description.contains(filterDescription) && testCase.getName().contains(filterName)){
+			updateTestCase(testCase,description);
+			
+		//}
+	//	else {
+	//		System.out.println("Ignoring -> "+testCase.getName());
+	//	}
+		casesLeft--;
+		System.out.println("Cases Remaining = "+casesLeft);
+		System.out.println("-------------------------------------------");
 	}
 
 	private static void filterTestCases(LFTestCase testCase, String description, boolean update) {
 		if(description.contains(filterDescription)){
 			updateTestCase(testCase, update, description);
+			
 		}
 		else {
 			logger.info("Ignoring -> "+testCase.getName());
@@ -153,6 +177,19 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		casesLeft--;
 		logger.info("Cases Remaining = "+casesLeft);
 		logger.info("-------------------------------------------");
+	}
+	
+	private static void updateTestCase(LFTestCase testCase,String description) {
+		testCase.getInputStepList().stream().filter(ipStep -> !"XML".equals(ipStep.getMsgType()))
+		.forEach(filtered -> {inboundReplacements.keySet().forEach(key -> {
+				replaceInboundTags(key, inboundReplacements.get(key), filtered);
+			});
+			outboundReplacements.keySet().forEach(key -> {
+				replaceOutputTags(key, outboundReplacements.get(key), filtered);
+			});
+		});
+		stepCount = 0;
+		changeNameAndDescription(description, testCase, 18);
 	}
 	
 	private static void updateTestCase(LFTestCase testCase, boolean update, String description) {
@@ -173,12 +210,13 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 			logger.info("Cloning -> "+testCase.getName());
 			saveToDB(testCase);
 		}
+		
 	}
 
 	private static void replaceOutputTags(String tagToReplace, String newValue,
 			LFTestInputSteps filtered) {
 		List<LFOutputMsg> outPutMessage = filtered.getOutputStepList().stream()
-				//.filter(step -> step.getTopicID().contains("C4-GM-ToArbol"))
+				.filter(step -> step.getTopicID().contains("Arbol"))
 				.collect(Collectors.toList());
 		replaceOutboundExistingTag(tagToReplace, newValue, outPutMessage);
 	}

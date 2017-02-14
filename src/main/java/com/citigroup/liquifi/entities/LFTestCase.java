@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.transaction.annotation.Transactional;
+
 public class LFTestCase implements Serializable, Cloneable{
 	
 	private static final long serialVersionUID = 1L;
@@ -90,7 +92,7 @@ public class LFTestCase implements Serializable, Cloneable{
 	public void setActive(char active) {
 		this.active = active;
 	}
-
+	
 	public List<LFTestInputSteps> getInputStepList() {
 		return inputStepList;
 	}
