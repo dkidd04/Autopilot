@@ -125,7 +125,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		Set<LFTestCase> clones = new HashSet<LFTestCase>();
 		testcases.forEach(testCase -> {
 			String description = testCase.getDescription();
-			LFTestCase clone = testCase.clone(Util.getTestIDSequencer(true));
+			LFTestCase clone = testCase.clone(Util.getTestIDSequencer(false));
 			clone.setDescription(description);
 			clones.add(clone);	
 		});

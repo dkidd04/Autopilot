@@ -805,7 +805,7 @@ public class TestCaseHelper {
 	}
 
 	public LFTestCase getTestcaseClone() {
-		LFTestCase testcaseClone = testcase.clone(Util.getTestIDSequencer());
+		LFTestCase testcaseClone = testcase.clone(Util.getTestIDSequencer(true));
 		//LFTestCase testcaseClone = (LFTestCase) testcase.clone();
 		return testcaseClone;
 	}

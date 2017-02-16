@@ -1053,7 +1053,7 @@ public class InputTestCasePanel extends javax.swing.JPanel implements TableModel
 		jLabel3.setName("jLabel3"); // NOI18N
 
 		testIDTextField.setEditable(false);
-		testIDTextField.setText(Util.getTestIDSequencer());
+		testIDTextField.setText(Util.getTestIDSequencer(true));
 		testIDTextField.setName("testIDTextField"); // NOI18N
 
 		jLabel7.setFont(resourceMap.getFont("jLabel7.font")); // NOI18N
@@ -2210,7 +2210,7 @@ public class InputTestCasePanel extends javax.swing.JPanel implements TableModel
 
 	public void createNewTestcase() {
 		LFTestCase testcase = new LFTestCase();
-		testcase.setTestID(Util.getTestIDSequencer());
+		testcase.setTestID(Util.getTestIDSequencer(true));
 
 		testcaseHelper.setTestcase(testcase);
 		testcaseHelper.createDefaultSteps();
