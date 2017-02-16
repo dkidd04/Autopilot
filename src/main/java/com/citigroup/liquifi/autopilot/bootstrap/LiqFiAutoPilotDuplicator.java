@@ -200,7 +200,7 @@ public class LiqFiAutoPilotDuplicator extends AutoPilotBootstrap{
 			logger.info("Cloning -> "+testCase.getName());
 			String description = testCase.getDescription();
 
-			LFTestCase clone = testCase.clone(Util.getTestIDSequencer());
+			LFTestCase clone = testCase.clone(Util.getTestIDSequencer(true));
 			clone.getInputStepList().stream()
 			.filter(ipStep -> !"XML".equals(ipStep.getMsgType()) && (isOfOrderType(NEW,ipStep) && isSecond()) || isOfOrderType(MODACK,ipStep)).forEach(filtered -> {
 				inboundReplacements.keySet().forEach(key -> {

@@ -52,9 +52,10 @@ public class Util {
 		return hostNameProp;
 	}
 	
-	public static String getTestIDSequencer(){
+	public static String getTestIDSequencer(boolean isJulian){
 		String sequencer = null;
-		long julianDate = (long) (DateUtil.convertDateToJulianDate(new Date())*1000000);
+		long julianDate = isJulian ? (long) (DateUtil.convertDateToJulianDate(new Date())*1000000)
+				: System.currentTimeMillis() * 2;
 		sequencer = String.valueOf(julianDate);
 		logger.info("New TestID: " + sequencer);
 		return sequencer;
