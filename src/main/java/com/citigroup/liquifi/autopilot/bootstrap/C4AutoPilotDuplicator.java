@@ -19,7 +19,7 @@ import com.citigroup.liquifi.util.Util;
 
 public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	private static String testCaseNameSeperator = "_";
-	private static String fromLabel = "Temp";
+	private static String fromLabel = "New Currency Profiles";
 	private static String toLabel = "Sell";
 	private static Map<String, String> inboundReplacements = new HashMap<>();
 	private static Map<String, String> outboundReplacements = new HashMap<>();
@@ -30,8 +30,8 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	private static String descriptionTo = "sell";
 	private static String nameFrom = "Major";
 	private static String nameTo = "Traded";
-	private static String filterName = "Traded";
-	private static String filterDescription = "pounds";
+	private static String filterName = "Minor";
+	private static String filterDescription = "agora";
 	private static String labelFilter = "CAT";
 	private static String name = "pb90047";
 
@@ -94,15 +94,11 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		 * add tags to XML messages and FIX 
 		 * messages for both inbound and 
 		 * outbound flows
+		*/
 		
-		outboundReplacements.put("55","CGEN.TA");
-		outboundReplacements.put("15","GBL");
-		outboundReplacements.put("6","193100");
-		outboundReplacements.put("31","193100");
+		outboundReplacements.put("15","ILA");
 		outboundReplacements.put("44","193200");
 		outboundReplacements.put("99","193300");
-		outboundReplacements.put("426","193100.0");
-		*/
 	}
 
 	private static List<String> getFilteredTestCases() {
@@ -129,7 +125,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 		Set<LFTestCase> clones = new HashSet<LFTestCase>();
 		testcases.forEach(testCase -> {
 			String description = testCase.getDescription();
-			LFTestCase clone = testCase.clone(Util.getTestIDSequencer());
+			LFTestCase clone = testCase.clone(Util.getTestIDSequencer(true));
 			clone.setDescription(description);
 			clones.add(clone);	
 		});
@@ -154,16 +150,16 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	}
 	
 	private static void filterTestCasesNoDBUpdate(LFTestCase testCase, String description) {
-		//if(description.contains(filterDescription) && testCase.getName().contains(filterName)){
+		if(description.contains(filterDescription) && testCase.getName().contains(filterName)){
 			updateTestCase(testCase,description);
-			
-		//}
-	//	else {
-	//		System.out.println("Ignoring -> "+testCase.getName());
-	//	}
+			logger.info("Updating -> "+testCase.getName());
+		}
+		else {
+			logger.info("Ignoring -> "+testCase.getName());
+		}
 		casesLeft--;
-		System.out.println("Cases Remaining = "+casesLeft);
-		System.out.println("-------------------------------------------");
+		logger.info("Cases Remaining = "+casesLeft);
+		logger.info("-------------------------------------------");
 	}
 
 	private static void filterTestCases(LFTestCase testCase, String description, boolean update) {
@@ -216,7 +212,7 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 	private static void replaceOutputTags(String tagToReplace, String newValue,
 			LFTestInputSteps filtered) {
 		List<LFOutputMsg> outPutMessage = filtered.getOutputStepList().stream()
-				.filter(step -> step.getTopicID().contains("Arbol"))
+				.filter(step -> step.getTopicID().contains("Arbol") && !step.getTemplate().contains("PENDING"))
 				.collect(Collectors.toList());
 		replaceOutboundExistingTag(tagToReplace, newValue, outPutMessage);
 	}
@@ -227,11 +223,11 @@ public class C4AutoPilotDuplicator extends AutoPilotBootstrap{
 			if(!contained.isEmpty()){
 				contained.get(0).setTagValue(newValue);
 			} else {
-				LFOutputTag newTag = new LFOutputTag(tagToReplace, newValue);
-				newTag.setOutputMsgID(filtered.getOutputMsgID());
-				newTag.setActionSequence(filtered.getActionSequence());
-				newTag.setTestID(filtered.getTestID());
-				filtered.addToOutputTagList(newTag);
+				//LFOutputTag newTag = new LFOutputTag(tagToReplace, newValue);
+				//newTag.setOutputMsgID(filtered.getOutputMsgID());
+				//newTag.setActionSequence(filtered.getActionSequence());
+				//newTag.setTestID(filtered.getTestID());
+				//filtered.addToOutputTagList(newTag);
 			}
 		});
 	}
