@@ -90,6 +90,27 @@
 							</map>
 						</property>
 					</bean>
+				</entry>
+				
+				<entry key="TotalTouch.To.RIO">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TT_TOPIC.BROKER.URL}" />
+						<property name="user" value="${TT_TOPIC.BROKER.USER}" />
+						<property name="password" value="${TT_TOPIC.BROKER.PASSWORD}" />
+						<property name="setup">
+							<map>
+								<entry key=".-B" value="TT.DIST.P1"/>
+								<entry key="C-D" value="TT.DIST.P2"/>
+								<entry key="E-G" value="TT.DIST.P3"/>
+								<entry key="H-K" value="TT.DIST.P4"/>
+								<entry key="L-N" value="TT.DIST.P5"/>
+								<entry key="O-R" value="TT.DIST.P6"/>
+								<entry key="S-T" value="TT.DIST.P7"/>
+								<entry key="U-Z" value="TT.DIST.P8"/>
+							</map>
+						</property>
+					</bean>
 				</entry>	
  			</map>
 		</property>		
