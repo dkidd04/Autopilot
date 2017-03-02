@@ -12,4 +12,4 @@ APP=$2
 ENVIRONMENT=$3
 LABELS=$4
 
-./start_emea.sh $1 $2 $3 $4 ""
+./start_emea.sh $1 $2 $3 $4 "" true

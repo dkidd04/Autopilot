@@ -18,6 +18,12 @@ ENVIRONMENT=$3
 LABELS=$4
 RELEASES=$5
 
+if [[ -z "$6" ]] 
+	SKIPSYMBOLVALIDATION=$6
+else 
+	SKIPSYMBOLVALIDATION=false
+fi
+
 export JAVA_HOME=/xenv/java/X/1.8.0_91l64
 AUTO_HOME="/opt/liquifi/AutoPilot/currentVersion"
 
@@ -42,7 +48,8 @@ APP_OPTS="-Dconfig.home=$CONFIG_HOME \
 -Dregion=$REGION \
 -Denv=$ENVIRONMENT \
 -DtestCaseLabels=$LABELS \
--Dreleases=$RELEASES "
+-Dreleases=$RELEASES \
+-DSkipSymbolValidationOnOutputMsg=$SKIPSYMBOLVALIDATION "
 
 TEMPLOGDIR=/opt/loghome/autopilot
 TEMPLOG=$TEMPLOGDIR/AutopilotLiquifiCore$DATE.log
