@@ -81,7 +81,10 @@ public class TemplateManager {
 		if (strApplication!=null && strApplication.trim().length()>0) {
 			//todo - update the AppName on db
 			if (strApplication.equalsIgnoreCase("AEE")) {
-				strApplication="LIQUIFI";				
+				strApplication="LIQUIFI";
+			}
+			else if (strApplication.equalsIgnoreCase("CONNECTIVITY/C4")) {
+				strApplication="C4";
 			}
 			strQuery = "from LFTemplate as templates where upper(templates.appName) ='"+strApplication.toUpperCase()+"' order by templates.templateName  ";			
 		}

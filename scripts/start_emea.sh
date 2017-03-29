@@ -18,9 +18,9 @@ ENVIRONMENT=$3
 LABELS=$4
 RELEASES=$5
 
-if [[ -z "$6" ]] 
+if [[ -z "$6" ]]; then
 	SKIPSYMBOLVALIDATION=$6
-else 
+else
 	SKIPSYMBOLVALIDATION=false
 fi
 
