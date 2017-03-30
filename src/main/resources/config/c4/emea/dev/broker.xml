@@ -11,19 +11,19 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="Autopilot.C4.3.Client"/>
+								<entry key="A-Z" value="Autopilot.C4.${instance}.Client"/>
 							</map>
 						</property>
  					</bean>
  				</entry>
-				<entry key ="CLSToC4">
+ 				<entry key ="CLSToC4">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
 						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
 						<property name="user" value="${TOPIC.BROKER.USER}"/>
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="Autopilot.C4.CLS.3"/>
+								<entry key="A-Z" value="Autopilot.C4.CLS.${instance}"/>
 							</map>
 						</property>
  					</bean>
@@ -33,14 +33,14 @@
 						<property name="brokerURL" value="${C4.SECONDARY.TOPIC.BROKER.URL}"/>
 						<property name="user" value="${C4.SECONDARY.TOPIC.BROKER.USER}"/>
 						<property name="password" value="${C4.SECONDARY.TOPIC.BROKER.PASSWORD}"/>
-						<property name="selector" value="CFORE-C4XO_UKDEV_C4C1P_3"/>
+						<property name="selector" value="CFORE-C4XO_UKDEV_C4C1P_${instance}"/>
 						<property name="setup">
 							<map>
 								<entry key="A-Z" value="rtcredit.monitoring.check.eqty.reply"/>
 							</map>
 						</property>
  					</bean>
- 				</entry>
+ 				</entry> 				
  				<entry key ="ArbolToC4">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
 						<property name="brokerURL" value="${ARBOL.TOPIC.BROKER.URL}"/>
@@ -60,7 +60,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="Autopilot.C4.3.EVENT"/>
+								<entry key="A-Z" value="Autopilot.C4.${instance}.EVENT"/>
 							</map>
 						</property>
  					</bean>
@@ -72,7 +72,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="Autopilot.C4.3.CCM.EVENTS"/>
+								<entry key="A-Z" value="Autopilot.C4.${instance}.CCM.EVENTS"/>
 							</map>
 						</property>
  					</bean>
@@ -84,7 +84,7 @@
 						<property name="password" value="${ARBOL.TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="DEV.EMEA.ARBOL.C4.OES.C4XO_UKDEV_C4C1P_3"/>
+								<entry key="A-Z" value="DEV.EMEA.ARBOL.C4.OES.C4XO_UKDEV_C4C1P_${instance}"/>
 							</map>
 						</property>
  					</bean>
@@ -96,7 +96,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="Autopilot.C4.3.Destination.EUCB2"/>
+								<entry key="A-Z" value="Autopilot.C4.${instance}.Destination.EUCB2"/>
 							</map>
 						</property>
  					</bean>
@@ -108,7 +108,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="Autopilot.C4.3.Destination.UKSMART"/>
+								<entry key="A-Z" value="Autopilot.C4.${instance}.Destination.UKSMART"/>
 							</map>
 						</property>
  					</bean>
@@ -120,7 +120,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="Autopilot.C4.3.Destination.EUCMTTR"/>
+								<entry key="A-Z" value="Autopilot.C4.${instance}.Destination.EUCMTTR"/>
 							</map>
 						</property>
  					</bean>
@@ -132,7 +132,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="Autopilot.C4.3.Destination.EUDCA"/>
+								<entry key="A-Z" value="Autopilot.C4.${instance}.Destination.EUDCA"/>
 							</map>
 						</property>
  					</bean>
@@ -184,7 +184,19 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="C4.Autopilot.3.Client"/>
+								<entry key="A-Z" value="C4.Autopilot.${instance}.Client"/>
+							</map>
+						</property>
+ 					</bean>
+				</entry>
+				<entry key ="C4ToCLS">
+					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key="A-Z" value="C4.Autopilot.CLS.${instance}"/>
 							</map>
 						</property>
  					</bean>
@@ -194,26 +206,14 @@
 						<property name="brokerURL" value="${C4.SECONDARY.TOPIC.BROKER.URL}"/>
 						<property name="user" value="${C4.SECONDARY.TOPIC.BROKER.USER}"/>
 						<property name="password" value="${C4.SECONDARY.TOPIC.BROKER.PASSWORD}"/>
-						<property name="selector" value="CFORE-C4XO_UKDEV_C4C1P_3"/>
+						<property name="selector" value="CFORE-C4XO_UKDEV_C4C1P_${instance}"/>
 						<property name="setup">
 							<map>
 								<entry key="A-Z" value="rtcredit.monitoring.check.eqty.request"/>
 							</map>
 						</property>
  					</bean>
- 				</entry>
-				<entry key ="C4ToCLS">
-					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
-						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
-						<property name="user" value="${TOPIC.BROKER.USER}"/>
-						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
-						<property name="setup">
-							<map>
-								<entry key="A-Z" value="C4.Autopilot.CLS.3"/>
-							</map>
-						</property>
- 					</bean>
-				</entry>
+ 				</entry>				
 				<entry key ="C4ToArbol">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
 						<property name="brokerURL" value="${ARBOL.TOPIC.BROKER.URL}"/>
@@ -233,7 +233,7 @@
 						<property name="password" value="${ARBOL.TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="EMEA.C4.DIST.3"/>
+								<entry key="A-Z" value="EMEA.C4.DIST.${instance}"/>
 							</map>
 						</property>
  					</bean>
@@ -245,7 +245,7 @@
 						<property name="password" value="${ARBOL.TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="EMEA.C4.ARBOL.CL.ORDER.3"/>
+								<entry key="A-Z" value="EMEA.C4.ARBOL.CL.ORDER.${instance}"/>
 							</map>
 						</property>
  					</bean>
@@ -257,7 +257,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="C4.Autopilot.3.Destination.EUCB2"/>
+								<entry key="A-Z" value="C4.Autopilot.${instance}.Destination.EUCB2"/>
 							</map>
 						</property>
  					</bean>
@@ -269,7 +269,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="C4.Autopilot.3.Destination.UKSMART"/>
+								<entry key="A-Z" value="C4.Autopilot.${instance}.Destination.UKSMART"/>
 							</map>
 						</property>
  					</bean>
@@ -281,7 +281,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="C4.Autopilot.3.Destination.EUCMTTR"/>
+								<entry key="A-Z" value="C4.Autopilot.${instance}.Destination.EUCMTTR"/>
 							</map>
 						</property>
  					</bean>
@@ -293,7 +293,7 @@
 						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
 						<property name="setup">
 							<map>
-								<entry key="A-Z" value="C4.Autopilot.3.Destination.EUDCA"/>
+								<entry key="A-Z" value="C4.Autopilot.${instance}.Destination.EUDCA"/>
 							</map>
 						</property>
  					</bean>
