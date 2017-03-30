@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AutoPilotCommonEnv>
 	<ApplictionList>
+		<Property Name="C4" AppID="148325"/>
 		<Property Name="TOTALTOUCH" AppID="35318"/>
 		<Property Name="AEE" AppID="35318"/>
 		<Property Name="CX" AppID="35318"/>

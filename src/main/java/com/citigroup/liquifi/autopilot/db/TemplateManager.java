@@ -83,9 +83,6 @@ public class TemplateManager {
 			if (strApplication.equalsIgnoreCase("AEE")) {
 				strApplication="LIQUIFI";
 			}
-			else if (strApplication.equalsIgnoreCase("CONNECTIVITY/C4")) {
-				strApplication="C4";
-			}
 			strQuery = "from LFTemplate as templates where upper(templates.appName) ='"+strApplication.toUpperCase()+"' order by templates.templateName  ";			
 		}
 		else {
