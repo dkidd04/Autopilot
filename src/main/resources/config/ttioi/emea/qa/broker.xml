@@ -80,6 +80,19 @@
 						</property>
 					</bean>
 				</entry>
+				<entry key="TTIOI.Ack">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key=".-Z" value="TTIOI.IOI.COMET.GIOI" />
+							</map>
+						</property>
+					</bean>
+				</entry>
  			</map>
 		</property>
 		<property name='senderCompID' value="${SENDERCOMPID}"></property>
