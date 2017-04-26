@@ -40,7 +40,7 @@ public class AutoPilotConstants {
 	public static final String PLACEHOLDER_OUTPUT = "@OP";
 	public static final String PLACEHOLDER_INPUT = "@IP";
 	public static final String PLACEHOLDER_APVAR = "@APVAR";
-	
+	public static final String PLACEHOLDER_VALID_UNTIL = "@VALIDUNTIL";
 	public static final String PLACEHOLDER_REPEATING_GROUP = "@INJECT";
 	public static final String PLACEHOLDER_ENV = "@ENV";
 
@@ -74,6 +74,7 @@ public class AutoPilotConstants {
 	public static final String AUTOPILOT_PREFIX = "AP";
 	
 	public static final String EMPTY_COMBO_STRING = " ";
+
 	
 	private AutoPilotConstants(){}
 	

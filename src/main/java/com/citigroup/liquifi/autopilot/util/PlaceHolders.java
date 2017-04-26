@@ -1,5 +1,6 @@
 package com.citigroup.liquifi.autopilot.util;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,7 +146,6 @@ public class PlaceHolders {
 		FIXMessage fixMsgToReturn = null;
 
 		try {
-			// String strToReturn = strFixMessage;
 			FIXMessage fixMsgToParse = new FIXMessage(strFixMessage);
 			fixMsgToReturn = new FIXMessage(strFixMessage);
 
@@ -167,8 +167,6 @@ public class PlaceHolders {
 					if(val != null) {
 						fixMsgToReturn.setValue(key, val);
 					}
-
-					// res += key + "=" + tagMap.get(key) + FIXMessage.SEPERATOR;
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -306,7 +304,7 @@ public class PlaceHolders {
 	 * @throws Exception
 	 */
 	public String parsePlaceholders(String strFixMessage, boolean isFIX, LFTestCase tCase, int intCurrentInputStep, String strSymbol, ValidationObject rOutputLocal) throws Exception {
-		HashMap<String, String> cache = new HashMap<String, String>();
+		HashMap<String, String> cache = new HashMap<>();
 
 		if (isFIX) {
 			strFixMessage = parseAPVarPlaceholders(strFixMessage);
@@ -346,7 +344,6 @@ public class PlaceHolders {
 					cache.put(AutoPilotConstants.PLACEHOLDER_CLORDID, replacementStr);
 				}
 
-				// replacementStr = AutoPilotConstants.AUTOPILOT_PREFIX + ID.generate(10);
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_SYMBOL)) {
 				Matcher m2 = replacePattern.matcher(strPlaceholderpattern);
 
@@ -383,7 +380,9 @@ public class PlaceHolders {
 				replacementStr = printCurrentTimePlus(0);
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_CURRENT_DAY)) {
 				replacementStr = printCurrentDay();
-			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_TIMEPLUS)) {
+			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_VALID_UNTIL)) {
+				replacementStr = new SimpleDateFormat("yyyyMMdd-HH:mm:ss.SSS").format(new Timestamp(System.currentTimeMillis()+7200000));
+			}else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_TIMEPLUS)) {
 				int futureMillis = 500;
 				int timeToAddMillis = getTimeToAddMillis(strPlaceholderpattern, futureMillis);
 
