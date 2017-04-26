@@ -175,7 +175,7 @@ public class OutputStepPanel extends javax.swing.JPanel implements TableModelLis
         jLabel8.setName("jLabel8"); // NOI18N
 
         commonTagListComboBox.setModel(new javax.swing.DefaultComboBoxModel((String[]) commonOverwriteTagMap.keySet().toArray(new String[commonOverwriteTagMap.keySet().size()])));
-        commonTagListComboBox.addItem(AutoPilotConstants.ComboBoxEmptyItem);
+        commonTagListComboBox.addItem(AutoPilotConstants.EMPTY_COMBO_STRING);
         commonTagListComboBox.setName("commonTagListComboBox"); // NOI18N
         commonTagListComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -355,7 +355,7 @@ public class OutputStepPanel extends javax.swing.JPanel implements TableModelLis
 			currentOutputStep.setMsgType((String)msgTypeComboBox.getSelectedItem());
 
 			String commonTagSelection = (String)commonTagListComboBox.getSelectedItem();
-			if(commonTagSelection.equals(AutoPilotConstants.ComboBoxEmptyItem)) {
+			if(commonTagSelection.equals(AutoPilotConstants.EMPTY_COMBO_STRING)) {
 				currentOutputStep.setCommonTags(null);
 			} else {
 				currentOutputStep.setCommonTags(commonTagSelection);
@@ -427,7 +427,7 @@ public class OutputStepPanel extends javax.swing.JPanel implements TableModelLis
 				}
 			}
 		} else {
-			commonTagListComboBox.setSelectedItem(AutoPilotConstants.ComboBoxEmptyItem);
+			commonTagListComboBox.setSelectedItem(AutoPilotConstants.EMPTY_COMBO_STRING);
 		}
 		
 		// Set defaults for new step
@@ -442,7 +442,7 @@ public class OutputStepPanel extends javax.swing.JPanel implements TableModelLis
 				}
 			}
 			
-			commonTagListComboBox.setSelectedItem(AutoPilotConstants.ComboBoxEmptyItem);
+			commonTagListComboBox.setSelectedItem(AutoPilotConstants.EMPTY_COMBO_STRING);
 		}
 			
 		resetForm();
@@ -454,7 +454,7 @@ public class OutputStepPanel extends javax.swing.JPanel implements TableModelLis
 
 	public void resetCommonTags() {
 		commonTagListComboBox.setModel(new javax.swing.DefaultComboBoxModel((String[]) commonOverwriteTagMap.keySet().toArray(new String[commonOverwriteTagMap.keySet().size()])));
-		commonTagListComboBox.addItem(AutoPilotConstants.ComboBoxEmptyItem);
+		commonTagListComboBox.addItem(AutoPilotConstants.EMPTY_COMBO_STRING);
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

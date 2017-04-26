@@ -52,12 +52,12 @@ public class AutoPilotControlMessageHandler {
         		Thread.sleep(intPause);
         	}
         	else {
-        		logger.warning(AutoPilotConstants.Error_CannotProcessControlMessage + " CONTROL_REQUEST_TYPE:" + strArray[0]);
+        		logger.warning(AutoPilotConstants.ERROR_CANNOT_PROCESS_CONTROL + " CONTROL_REQUEST_TYPE:" + strArray[0]);
         		return false;
         	}
     	} catch (Exception ex) {
     		ex.printStackTrace();
-    		logger.warning(AutoPilotConstants.Error_CannotProcessControlMessage + " Msg:" + aoreq);
+    		logger.warning(AutoPilotConstants.ERROR_CANNOT_PROCESS_CONTROL + " Msg:" + aoreq);
     		return false;
     	}
     	

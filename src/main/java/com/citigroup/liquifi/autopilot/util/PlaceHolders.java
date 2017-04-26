@@ -52,7 +52,7 @@ public class PlaceHolders {
 				String strAPVarVal = apvarMapping.get(strAPVarKey);
 
 				if (strAPVarVal == null || strAPVarVal.trim().length() < 1) {
-					logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_CannotParseAPVariable + " strAPVarKey:" + strAPVarKey + " strAPVarVal:" + strAPVarVal);
+					logger.warning(AutoPilotConstants.WARN_CANNOT_PARSE_APVAR + " strAPVarKey:" + strAPVarKey + " strAPVarVal:" + strAPVarVal);
 					throw new Exception("No linking found " + val);
 				} else {
 					val = val.replace(strAPVarKey, strAPVarVal);
@@ -62,7 +62,7 @@ public class PlaceHolders {
 			}
 
 		} catch (Exception ex) {
-			logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_CannotParseAPVariable);
+			logger.warning(AutoPilotConstants.WARN_CANNOT_PARSE_APVAR);
 			return str;
 		}
 
@@ -172,7 +172,7 @@ public class PlaceHolders {
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_CannotParseAPVariable);
+					logger.warning(AutoPilotConstants.WARN_CANNOT_PARSE_APVAR);
 					continue;
 					// return strToReturn;
 				}
@@ -194,14 +194,14 @@ public class PlaceHolders {
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_CannotParseAPVariable);
+					logger.warning(AutoPilotConstants.WARN_CANNOT_PARSE_APVAR);
 					continue;
 				}
 
 			}
 
 		} catch (Exception ex) {
-			logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_CannotParseAPVariable);
+			logger.warning(AutoPilotConstants.WARN_CANNOT_PARSE_APVAR);
 			return strFixMessage;
 		}
 
@@ -279,7 +279,7 @@ public class PlaceHolders {
 			strAPVarVal = tagMapTemp.get(strAPVarKey);
 
 			if ((strAPVarVal == null) || strAPVarVal.trim().length() < 1) {
-				logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_CannotParseAPVariable + " strAPVarKey:" + strAPVarKey + " strAPVarVal:" + strAPVarVal);
+				logger.warning(AutoPilotConstants.WARN_CANNOT_PARSE_APVAR + " strAPVarKey:" + strAPVarKey + " strAPVarVal:" + strAPVarVal);
 				return null;
 			} 
 
@@ -373,15 +373,15 @@ public class PlaceHolders {
 					symfiiMap.put(strSymbol, ApplicationContext.getProductApiUtil().getFiiStr(strSymbol));
 					replacementStr = symfiiMap.get(strSymbol);
 				}
-			}else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_sendingTime)) {
+			}else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_SENDING_TIME)) {
 				replacementStr = printCurrentTimePlus(0);
-			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_transactTime)) {
+			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_TRANSACT_TIME)) {
 				replacementStr = printCurrentTimePlus(0);
-			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_quoteTime)) {
+			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_QUOTE_TIME)) {
 				replacementStr = printCurrentTimePlus(120000000);
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_CURRENTTIME)) {
 				replacementStr = printCurrentTimePlus(0);
-			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_currentDay)) {
+			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_CURRENT_DAY)) {
 				replacementStr = printCurrentDay();
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_TIMEPLUS)) {
 				int futureMillis = 500;
@@ -434,7 +434,7 @@ public class PlaceHolders {
 				strFixMessage = StringUtils.replaceOnce(strFixMessage, strPlaceholderpattern, replacementStr);
 			} else {
 				if (!strPlaceholderpattern.equals(AutoPilotConstants.PLACEHOLDER_ISSET) && !strPlaceholderpattern.equals(AutoPilotConstants.PLACEHOLDER_ISNOTSET) && !strPlaceholderpattern.equals(AutoPilotConstants.PLACEHOLDER_NOTEQUALTO) && !strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_MATCH) && !strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_NOTMATCH)) {
-					logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InvalidPlaceholder + " : " + strPlaceholderpattern);
+					logger.warning(AutoPilotConstants.WARN_INVALID_PLACEHOLDER + " : " + strPlaceholderpattern);
 				}
 			}
 		}
@@ -468,7 +468,7 @@ public class PlaceHolders {
 
 			int inputStep = input.getInputStep();
 			if (intCurrentInputStep < inputStep) {
-				logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputstepCannotBeReferencedYet + ". CurrentInputStep/InputStepReferenced:" + intCurrentInputStep + "/" + inputStep);
+				logger.warning(AutoPilotConstants.WARN_CANNOT_BE_REFERENCED + ". CurrentInputStep/InputStepReferenced:" + intCurrentInputStep + "/" + inputStep);
 			}
 
 			String strActualInputMsg = rOutputLocal.getInboundStep(inputStep).message;
@@ -581,7 +581,7 @@ public class PlaceHolders {
 		int intOutputMsgID = outputStep.getOutputStep();
 
 		if (intCurrentInputStep < intInputStep) {
-			logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputstepCannotBeReferencedYet + ". CurrentInputStep/InputStepReferenced:" + intCurrentInputStep + "/" + intInputStep);
+			logger.warning(AutoPilotConstants.WARN_CANNOT_BE_REFERENCED + ". CurrentInputStep/InputStepReferenced:" + intCurrentInputStep + "/" + intInputStep);
 			return null;
 		}
 
@@ -647,7 +647,7 @@ public class PlaceHolders {
 					sBuffReplaceLocal.append(strTagValueLocal);
 					shouldAppendSeperator = true;
 				} else {
-					logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseRuntime_CannoFindSpecifiedTagInReferedMsg + " Tag:" + strTagIDLocal);
+					logger.warning(AutoPilotConstants.WARN_CANNOT_FIND_TAG + " Tag:" + strTagIDLocal);
 					continue;
 				}
 			}

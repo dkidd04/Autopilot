@@ -16,7 +16,10 @@ public enum ValidationManager {
 
 	private final ValidationResult validationSuccess = new ValidationResult(true, "Success");
 	private final Pattern matchPattern = Pattern.compile("@.*?MATCH\\((.*?)\\)");
-
+	private static final int[] NUMERIC_TAG_LIST = {14,32,38,151,31,44,6,99,12,211,132,133,134,135,111,110};
+	private static final int[] ROUNDABLE_TAG_LIST = {14,32,38,151,31,44,6};
+	
+	
 	public ValidationResult validate(String expectedMsgStr, String actualMsgStr) {
 		if (expectedMsgStr == null || expectedMsgStr.equals("")) {
 			return validationSuccess;
@@ -163,7 +166,7 @@ public enum ValidationManager {
 	}
 
 	private boolean isNumbericTag(String strTagID) {
-		int[] NumericTags = AutoPilotConstants.NumbericTagList;
+		int[] NumericTags = NUMERIC_TAG_LIST;
 		for (int i = 0; i < NumericTags.length; i++) {
 			if (strTagID.equals(String.valueOf(NumericTags[i])))
 				return true;
@@ -173,7 +176,7 @@ public enum ValidationManager {
 	}
 
 	public boolean isRounableTag(String strTagID) {
-		int[] NumericTags = AutoPilotConstants.RoundbaleTagList;
+		int[] NumericTags = ROUNDABLE_TAG_LIST;
 		for (int i = 0; i < NumericTags.length; i++) {
 			if (strTagID.equals(String.valueOf(NumericTags[i])))
 				return true;

@@ -92,7 +92,7 @@ public enum TestCaseController {
 			return validationObject;
 		} catch (Exception ex) {
 			AutoPilotBootstrap.getFailedTestcases().add(testcase.getTestID()+"NULLED");
-			logger.severe("TestCaseID:" + testcase.getTestID() + "|Symbol:" + symbolToUse + "|" + AutoPilotConstants.ValidationFailed_CannotLoadTestCase);
+			logger.severe("TestCaseID:" + testcase.getTestID() + "|Symbol:" + symbolToUse + "|" + AutoPilotConstants.FAIL_CANNOT_LOAD_TESTCASE);
 			logger.severe(Util.getStackTrace(ex));
 		}
 
@@ -144,7 +144,7 @@ public enum TestCaseController {
 					if (state.getInputStep().getTemplate() != null && state.getInputStep().getTemplate().trim().length() > 0) {
 						LFTemplate template = templateMap.get(state.getInputStep().getTemplate());
 						inputMsg = template.getMsgTemplate();
-						if (template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.ComboBoxEmptyItem)) {
+						if (template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.EMPTY_COMBO_STRING)) {
 							overwrite.addAll(commonOverwriteTagMap.get(template.getCommonOverwriteTagListName()));
 						}
 					} else if (state.getInputStep().getMessage() != null && state.getInputStep().getMessage().trim().length() > 0) {
@@ -204,7 +204,7 @@ public enum TestCaseController {
 							break;
 						case FAIL:
 							state.storeCurrentInbound(state.getInputStep().getActionSequence(), inputMsg, ConnectionManager.INSTANCE.getInitiatorTopic(state.getSymbol(), state.getInputStep().getTopicID()));
-							state.setAndSaveValidationResult(false, state.getInputStep().getActionSequence(), 0, AutoPilotConstants.ValidationFailed_AdminCommandFailed);
+							state.setAndSaveValidationResult(false, state.getInputStep().getActionSequence(), 0, AutoPilotConstants.FAIL_ADMIN_COMMAND);
 							return false;
 						case SUCCESS:
 							break;
@@ -259,7 +259,7 @@ public enum TestCaseController {
 
 						AutoPilotControlMessageHandler.getInstance().processControlMessage(inputMsg);
 					} else {
-						logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputStepIsEmpty + " InputStep=" + state.getInputStep().getActionSequence());
+						logger.warning(AutoPilotConstants.WARN_INPUT_EMPTY + " InputStep=" + state.getInputStep().getActionSequence());
 					}
 				} else if ("Others".equalsIgnoreCase(strMsgType)) {
 					if (state.getInputStep().getMessage() != null && state.getInputStep().getMessage().trim().length() > 0 && state.getInputStep().getTemplate() == null) {
@@ -267,7 +267,7 @@ public enum TestCaseController {
 					} else if (state.getInputStep().getTemplate() != null && state.getInputStep().getTemplate().trim().length() > 0) {
 						inputMsg = DBUtil.getInstance().getTem().getAllTemplateMap().get(state.getInputStep().getTemplate()).getMsgTemplate();
 					} else {
-						logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputStepIsEmpty + " InputStep=" + state.getInputStep().getActionSequence());
+						logger.warning(AutoPilotConstants.WARN_INPUT_EMPTY + " InputStep=" + state.getInputStep().getActionSequence());
 					}
 
 					sendMessageEMS(state, inputMsg);
@@ -384,7 +384,7 @@ public enum TestCaseController {
 			state.setAndSaveValidationResult(false, state.getInputStep().getActionSequence(), 0, ex.getMessage());
 
 			logger.severe(Util.getStackTrace(ex));
-			logger.severe("TestCaseID:" + state.getTestcase().getTestID() + "|Symbol:" + state.getSymbol() + "|InputStep:" + state.getInputStep().getActionSequence() + "|" + AutoPilotConstants.ValidationFailed_CannotProcessInputMsg);
+			logger.severe("TestCaseID:" + state.getTestcase().getTestID() + "|Symbol:" + state.getSymbol() + "|InputStep:" + state.getInputStep().getActionSequence() + "|" + AutoPilotConstants.FAIL_CANNOT_PROCESS_INPUT);
 			return false;
 		}
 	}
@@ -394,14 +394,14 @@ public enum TestCaseController {
 		if (state.getInputStep().getTemplate() != null && state.getInputStep().getTemplate().trim().length() > 0) {
 			LFTemplate template = templateMap.get(state.getInputStep().getTemplate());
 			inputMsg = template.getMsgTemplate();
-			if (template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.ComboBoxEmptyItem)) {
+			if (template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.EMPTY_COMBO_STRING)) {
 				overwrite.addAll(commonOverwriteTagMap.get(template.getCommonOverwriteTagListName()));
 			}
 		} else if (state.getInputStep().getMessage() != null && state.getInputStep().getMessage().trim().length() > 0) {
 			inputMsg = state.getInputStep().getMessage();
 		} else {
 			// to add CustValidationClass logic for control msg type
-			logger.warning(AutoPilotConstants.AutoPilotWarning_TestCaseDesign_InputStepIsEmpty + " InputStep=" + state.getInputStep().getActionSequence());
+			logger.warning(AutoPilotConstants.WARN_INPUT_EMPTY + " InputStep=" + state.getInputStep().getActionSequence());
 		}
 		return inputMsg;
 	}
@@ -453,7 +453,7 @@ public enum TestCaseController {
 	}
 
 	public void terminateTestCase(ValidationObject state) {
-		state.setAndSaveValidationResult(false, (state.getInputStep() == null) ? 0 : state.getInputStep().getActionSequence(), 0, AutoPilotConstants.ValidationFailed_UserTerminatedTestCase);
+		state.setAndSaveValidationResult(false, (state.getInputStep() == null) ? 0 : state.getInputStep().getActionSequence(), 0, AutoPilotConstants.FAIL_USER_TERMINATE);
 		finishTestCase(state);
 	}
 
@@ -570,7 +570,7 @@ public enum TestCaseController {
 		} catch (ClassNotFoundException cnfFx) {
 			// cnfFx.printStackTrace();
 			vObject.setValidationResultStatus(false);
-			vObject.setValidationResultMsg(AutoPilotConstants.ValidationFailed_CannotLoadCustomizedValidationClass + ":" + strCustValidationClassName);
+			vObject.setValidationResultMsg(AutoPilotConstants.FAIL_CANNOT_LOAD_CUSTOM_VALIDATION + ":" + strCustValidationClassName);
 			logger.info("\n\n\n");
 			logger.info("*******************************************************************************");
 			logger.warning("VALIDATIONFAILED|CUSTOMIZEDVALIDATION|CustValidationClassName:" + strCustValidationClassName + " | ResultMsg: " + vObject.getValidationResultMsg());

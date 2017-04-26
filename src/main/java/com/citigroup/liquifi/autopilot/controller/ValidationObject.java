@@ -179,7 +179,7 @@ public class ValidationObject {
 			if (expectedOutputMsg.getTemplate() != null && expectedOutputMsg.getTemplate().trim().length() != 0) {
 				LFTemplate template = templateMap.get(expectedOutputMsg.getTemplate());
 				exceptedOutputMsg = template.getMsgTemplate();
-				if (template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.ComboBoxEmptyItem)) {
+				if (template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.EMPTY_COMBO_STRING)) {
 					overwrite.addAll(commonOverwriteTagMap.get(template.getCommonOverwriteTagListName()));
 				}
 			} else if (expectedOutputMsg.getOutputMsg() != null && expectedOutputMsg.getOutputMsg().trim().length() != 0) {
