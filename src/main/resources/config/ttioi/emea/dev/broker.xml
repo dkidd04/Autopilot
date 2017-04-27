@@ -67,6 +67,19 @@
 						</property>
 					</bean>
 				</entry>
+				<entry key="TTIOI.BBRG"> 
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">						
+						<property name="brokerURL" value="${VENDOR.BROKER.URL}"/>
+						<property name="user" value="${VENDOR.BROKER.USER}"/>
+						<property name="password" value="${VENDOR.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>				
+								<entry key=".-Z" value="NY.IOI.QIOI.BBRG"/>
+							</map>
+						</property>
+					</bean>
+				</entry>
 				<entry key="TTIOI.FIXC">
 					<bean
 						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
@@ -79,6 +92,19 @@
 							</map>
 						</property>
 					</bean>
+				</entry>
+				<entry key="TTIOI.Ack">
+				<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${TOPIC.BROKER.URL}"/>
+						<property name="user" value="${TOPIC.BROKER.USER}"/>
+						<property name="password" value="${TOPIC.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key=".-Z" value="TTIOI.IOI.COMET.GIOI" />
+							</map>
+						</property>
+				</bean>
 				</entry>
  			</map>
 		</property>
