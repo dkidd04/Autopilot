@@ -26,15 +26,16 @@ import com.citigroup.liquifi.util.AutoPilotConstants;
 import com.citigroup.liquifi.util.UniqueId;
 
 public class PlaceHolders {
-	private AceLogger logger = AceLogger.getLogger(this.getClass().getSimpleName());
-	private UniqueId ID = null;
-	private Pattern inputPattern = Pattern.compile("@IP\\[([\\d]+)\\]\\.(get.*?)\\(([-?\\w., ]+)\\)");
-	private Pattern outputPattern = Pattern.compile("@OP\\[([\\d]+)\\]\\[([\\d]+)\\]\\.(get.*?)\\(([-?\\w., ]+)\\)");
-	private Pattern replacePattern = Pattern.compile("@.*?\\.replace\\('(.*?)',.*?'(.*?)'\\)");
+	private static final AceLogger logger = AceLogger.getLogger(PlaceHolders.class.getSimpleName());
+	private final UniqueId id;
+	private static final Pattern IP_PATTERN = Pattern.compile("@IP\\[([\\d]+)\\]\\.(get.*?)\\(([-?\\w., ]+)\\)");
+	private static final Pattern OP_PATTERN = Pattern.compile("@OP\\[([\\d]+)\\]\\[([\\d]+)\\]\\.(get.*?)\\(([-?\\w., ]+)\\)");
+	private static final Pattern REPLACE_PATERN = Pattern.compile("@.*?\\.replace\\('(.*?)',.*?'(.*?)'\\)");
 	private static final String ENV_FUNCTION = AutoPilotConstants.PLACEHOLDER_ENV + ".value(";
-	private static Map<String,String> symfiiMap = new HashMap<String,String>();
-	private PlaceHolders(UniqueId ID) {
-		this.ID = ID;
+	private static final  Map<String,String> symfiiMap = new HashMap<>();
+
+	private PlaceHolders(UniqueId id) {
+		this.id = id;
 	}
 
 	public static void addSymFiiMap(String symbol){
@@ -44,11 +45,11 @@ public class PlaceHolders {
 	public String parseAPVarPlaceholdersString(String str, Set<Tag> overwriteTags) {
 		Map<String, String> apvarMapping = getAPVARMapping(overwriteTags);
 		try {
-			int start = -1;
+			int start;
 			while ((start = str.indexOf(AutoPilotConstants.PLACEHOLDER_APVAR)) > -1) {
-				int end = str.indexOf(")", start) + 1;
+				int end = str.indexOf(')', start) + 1;
 				String val = str.substring(start, end);
-				
+
 				String strAPVarKey = getAPVARPlaceholderName(val);
 				String strAPVarVal = apvarMapping.get(strAPVarKey);
 
@@ -110,13 +111,9 @@ public class PlaceHolders {
 	}
 
 	public String parseRepeatingGroup(String strFixMessage){
-
-		List<String> repeatingGroupList = new ArrayList<String>();
-
-		FIXMessage fixMsgToReturn = null;
-
+		List<String> repeatingGroupList = new ArrayList<>();
+		FIXMessage fixMsgToReturn = new FIXMessage();
 		FIXMessage fixMsgToParse = new FIXMessage(strFixMessage);
-		fixMsgToReturn = new FIXMessage();
 
 		LinkedHashMap<String, String> tagMapTemp = fixMsgToParse.getTagMap();
 		Iterator<String> it = tagMapTemp.keySet().iterator();
@@ -157,11 +154,8 @@ public class PlaceHolders {
 			 */
 			while (it.hasNext()) {
 				try {
-
 					String key = it.next();
 					String val = tagMapTemp.get(key);
-
-
 					val = parseAPVarPlaceholderValue(tagMapTemp, fixMsgToReturn, key, val);
 
 					if(val != null) {
@@ -172,7 +166,6 @@ public class PlaceHolders {
 					ex.printStackTrace();
 					logger.warning(AutoPilotConstants.WARN_CANNOT_PARSE_APVAR);
 					continue;
-					// return strToReturn;
 				}
 
 			}
@@ -215,38 +208,23 @@ public class PlaceHolders {
 	 * @param val
 	 */
 	private String parseAPVarPlaceholderValue(final LinkedHashMap<String, String> tagMapTemp, FIXMessage fixMsgToReturn, final String key, String val) {
-
-
 		if (val.startsWith(AutoPilotConstants.PLACEHOLDER_APVAR)) {
-
 			StringBuilder b = new StringBuilder();
-
 			String [] parts = val.split("\\+");
-
 			for(String part : parts) {
-
 				part = part.replaceAll("\"", "");
 				part = part.trim();				
-
 				String v = parseAPVarPlaceholderSingleValue(tagMapTemp, fixMsgToReturn, key, part);
-
 				if(v != null) {
-
 					b.append( v );
 					b.append( "+" );
 				}
-
 			}
-
 
 			if(b.length() > 0 && b.charAt( b.length() -1 ) == '+') {
 				b.setLength( b.length() - 1 );
 			}
-
-			String s = b.toString();  
-
-			return s;
-
+			return b.toString();
 		}
 
 		return null;
@@ -261,32 +239,26 @@ public class PlaceHolders {
 	 * @return
 	 */
 	private String parseAPVarPlaceholderSingleValue(final LinkedHashMap<String, String> tagMapTemp, FIXMessage fixMsgToReturn, final String key, String val) {
-
-		String strAPVarKey = "";
-		String strAPVarVal = "";		
-
+		String strAPVarKey;
+		String strAPVarVal;		
 
 		if (val.startsWith(AutoPilotConstants.PLACEHOLDER_APVAR)) {
-
 			if (ApplicationContext.getConfig().isDebug()) {
 				logger.info("Found APVarible: " + val);
 			}
-
 			strAPVarKey = getAPVARPlaceholderName(val);
-
 			strAPVarVal = tagMapTemp.get(strAPVarKey);
-
 			if ((strAPVarVal == null) || strAPVarVal.trim().length() < 1) {
 				logger.warning(AutoPilotConstants.WARN_CANNOT_PARSE_APVAR + " strAPVarKey:" + strAPVarKey + " strAPVarVal:" + strAPVarVal);
 				return null;
 			} 
 
-			val = val.replace(strAPVarKey, strAPVarVal);
 
 			if (ApplicationContext.getConfig().isDebug()) {
 				logger.info("Parsed APVariable. strAPVarKey:" + strAPVarKey + " strAPVarVal:" + strAPVarVal);
 			}
 
+			return val.replace(strAPVarKey, strAPVarVal);
 		}
 
 		return val;
@@ -316,7 +288,7 @@ public class PlaceHolders {
 		while (m.find()) {
 			String strPlaceholderpattern = m.group(1);
 			String replacementStr = "";
-
+			
 			if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_ORDID)) {
 				/*
 				 * support the sequencial orderID and clientOrderID. e.g.: FIXNEW: 37=AP-123, 11=AP-123#0; FIXMOD.
@@ -331,7 +303,7 @@ public class PlaceHolders {
 				if (cache.containsKey(AutoPilotConstants.PLACEHOLDER_ORDID)) {
 					replacementStr = cache.get(AutoPilotConstants.PLACEHOLDER_ORDID);
 				} else {
-					replacementStr = AutoPilotConstants.AUTOPILOT_PREFIX + "-" + ID.generate(9);
+					replacementStr = AutoPilotConstants.AUTOPILOT_PREFIX + "-" + id.generate(9);
 					cache.put(AutoPilotConstants.PLACEHOLDER_ORDID, replacementStr);
 				}
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_CLORDID)) {
@@ -340,12 +312,12 @@ public class PlaceHolders {
 				if (cache.containsKey(AutoPilotConstants.PLACEHOLDER_CLORDID)) {
 					replacementStr = cache.get(AutoPilotConstants.PLACEHOLDER_CLORDID);
 				} else {
-					replacementStr = AutoPilotConstants.AUTOPILOT_PREFIX + "-" + ID.generate(9);
+					replacementStr = AutoPilotConstants.AUTOPILOT_PREFIX + "-" + id.generate(9);
 					cache.put(AutoPilotConstants.PLACEHOLDER_CLORDID, replacementStr);
 				}
 
 			} else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_SYMBOL)) {
-				Matcher m2 = replacePattern.matcher(strPlaceholderpattern);
+				Matcher m2 = REPLACE_PATERN.matcher(strPlaceholderpattern);
 
 				if(m2.find()) {
 					String what = m2.group(1);
@@ -360,7 +332,7 @@ public class PlaceHolders {
 				if (cache.containsKey(AutoPilotConstants.PLACEHOLDER_UTI)) {
 					replacementStr = cache.get(AutoPilotConstants.PLACEHOLDER_UTI);
 				} else {
-					replacementStr = AutoPilotConstants.AUTOPILOT_PREFIX + "UTI-" + ID.generate(10);
+					replacementStr = AutoPilotConstants.AUTOPILOT_PREFIX + "UTI-" + id.generate(10);
 					cache.put(AutoPilotConstants.PLACEHOLDER_UTI, replacementStr);
 				}
 			}else if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_FII)) {
@@ -444,9 +416,8 @@ public class PlaceHolders {
 		}
 
 		// unset tag that is value tagID=@UNSET
-		int i = -1;
+		int i;
 		while ((i = strFixMessage.indexOf(AutoPilotConstants.PLACEHOLDER_UNSET)) > -1) {
-			;
 			int start = strFixMessage.lastIndexOf("", i);
 			strFixMessage = strFixMessage.substring(0, start) + strFixMessage.substring(i + 6);
 		}
@@ -460,7 +431,7 @@ public class PlaceHolders {
 		// @IP[{8}].{getXMLFieldText}({clordId}) => three matches: 
 		// 1: 8, 2: getXMLFieldText, 3: clordId
 		String replacementStr=null;
-		Matcher m2 = inputPattern.matcher(strPlaceholderpattern);
+		Matcher m2 = IP_PATTERN.matcher(strPlaceholderpattern);
 		InputFunctionType input = new InputFunctionType(m2);
 
 		if (input.isValid()) {
@@ -568,7 +539,7 @@ public class PlaceHolders {
 		// 1: 8, 2: 3, 3: getTags, 4: 55,76
 		// @OP[{8}][{3}].{getXMLFieldText}({clordId}) => four matches: 
 		// 1: 8, 2: 3, 3: getXMLFieldText, 4: clordId
-		Matcher m2 = outputPattern.matcher(strPlaceholderpattern);
+		Matcher m2 = OP_PATTERN.matcher(strPlaceholderpattern);
 		OutputFunctionType outputStep = new OutputFunctionType(m2);
 
 		if (!outputStep.isValid()) {
