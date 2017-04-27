@@ -223,14 +223,14 @@ public class InputTemplatePanel extends javax.swing.JPanel implements TableModel
         isInputComboBox.setName("isInputComboBox"); // NOI18N
 
         commonTagListComboBox.setModel(new javax.swing.DefaultComboBoxModel((String[]) commonOverwriteTagMap.keySet().toArray(new String[commonOverwriteTagMap.keySet().size()])));
-        commonTagListComboBox.addItem(AutoPilotConstants.ComboBoxEmptyItem);
+        commonTagListComboBox.addItem(AutoPilotConstants.EMPTY_COMBO_STRING);
         commonTagListComboBox.setName("commonTagListComboBox"); // NOI18N
         commonTagListComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 commonTagListComboBoxActionPerformed(evt);
             }
         });
-        commonTagListComboBox.setSelectedItem(AutoPilotConstants.ComboBoxEmptyItem);
+        commonTagListComboBox.setSelectedItem(AutoPilotConstants.EMPTY_COMBO_STRING);
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -466,7 +466,7 @@ private void commonTagListComboBoxActionPerformed(java.awt.event.ActionEvent evt
 			commonTagListComboBox.setSelectedItem(strName);	
 		}
 		else {
-			commonTagListComboBox.setSelectedItem(AutoPilotConstants.ComboBoxEmptyItem);
+			commonTagListComboBox.setSelectedItem(AutoPilotConstants.EMPTY_COMBO_STRING);
 		}
 		commonTagListComboBoxActionPerformed(evt);
 		
@@ -488,7 +488,7 @@ private void commonTagListComboBoxActionPerformed(java.awt.event.ActionEvent evt
 	
 	public void resetCommonTags() {
 		commonTagListComboBox.setModel(new javax.swing.DefaultComboBoxModel((String[]) commonOverwriteTagMap.keySet().toArray(new String[commonOverwriteTagMap.keySet().size()])));
-		commonTagListComboBox.addItem(AutoPilotConstants.ComboBoxEmptyItem);
+		commonTagListComboBox.addItem(AutoPilotConstants.EMPTY_COMBO_STRING);
 	}
 
 	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {

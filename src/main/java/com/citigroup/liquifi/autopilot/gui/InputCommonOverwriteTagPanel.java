@@ -324,7 +324,7 @@ public class InputCommonOverwriteTagPanel extends javax.swing.JPanel implements 
 		AppNameTextField.setText("");
 		commonTagListNameTextField.setText("");
 		
-        commonTagListComboBox.setSelectedItem(AutoPilotConstants.ComboBoxEmptyItem);
+        commonTagListComboBox.setSelectedItem(AutoPilotConstants.EMPTY_COMBO_STRING);
         
 		commonTagTableModel.getData().clear();
 		//commonTagTableModel.setData(new LinkedHashSet<LFCommonOverwriteTag>());
@@ -385,8 +385,8 @@ private void deleteRowButton3ActionPerformed(java.awt.event.ActionEvent evt) {//
 		//commonTagListComboBox.setSelectedItem(commonTagListNameTextField.getText());
 		System.out.println("commonTagListNameTextField.getText()");
 	
-        commonTagListComboBox.addItem(AutoPilotConstants.ComboBoxEmptyItem);
-        commonTagListComboBox.setSelectedItem(AutoPilotConstants.ComboBoxEmptyItem);
+        commonTagListComboBox.addItem(AutoPilotConstants.EMPTY_COMBO_STRING);
+        commonTagListComboBox.setSelectedItem(AutoPilotConstants.EMPTY_COMBO_STRING);
         
 		commonTagTableModel.getData().clear();
 		//commonTagTableModel.setData(new LinkedHashSet<LFCommonOverwriteTag>());

@@ -416,7 +416,7 @@ public class TestCaseHelper {
 
 
 				// Tags from template common overwrite tags
-				if(template != null && template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.ComboBoxEmptyItem)) {
+				if(template != null && template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.EMPTY_COMBO_STRING)) {
 					List<LFCommonOverwriteTag> tags = commonOverwriteTagMap.get(template.getCommonOverwriteTagListName());
 
 					for(Tag tag : tags) {
@@ -500,7 +500,7 @@ public class TestCaseHelper {
 			type = template.getMsgType();
 
 			// Template common tags
-			if(template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.ComboBoxEmptyItem)) {
+			if(template.getCommonOverwriteTagListName() != null && !template.getCommonOverwriteTagListName().equals(AutoPilotConstants.EMPTY_COMBO_STRING)) {
 				commonTagsTempl = commonOverwriteTagMap.get(template.getCommonOverwriteTagListName());
 			}
 			// Otherwise get msg from the step

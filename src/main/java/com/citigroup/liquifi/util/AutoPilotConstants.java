@@ -1,6 +1,6 @@
 package com.citigroup.liquifi.util;
 
-public interface AutoPilotConstants {
+public class AutoPilotConstants {
 	
 	public static final String MSG_TYPE_FIXMSG = "FixMsg";
 	public static final String MSG_TYPE_XML = "XML";
@@ -15,14 +15,13 @@ public interface AutoPilotConstants {
 	public static final String PLACEHOLDER_TIMEPLUS = "@TIMEPLUS";
 	public static final String PLACEHOLDER_TIME2PLUS = "@TIME2PLUS";
 	public static final String PLACEHOLDER_TIMESTAMP_HHMMSS = "@TIMESTAMP_HHmmss";
-	public static final String PLACEHOLDER_DELIMITER = ";";
 	public static final String PLACEHOLDER_ORDERID_DELIMITER = "#";
 
 	
-	public static final String PLACEHOLDER_currentDay = "@CURRENTDAY";
-	public static final String PLACEHOLDER_sendingTime = "@SENDINGTIME";
-	public static final String PLACEHOLDER_transactTime = "@TRANSACTTIME";
-	public static final String PLACEHOLDER_quoteTime = "@QUOTETIME";
+	public static final String PLACEHOLDER_CURRENT_DAY = "@CURRENTDAY";
+	public static final String PLACEHOLDER_SENDING_TIME = "@SENDINGTIME";
+	public static final String PLACEHOLDER_TRANSACT_TIME = "@TRANSACTTIME";
+	public static final String PLACEHOLDER_QUOTE_TIME = "@QUOTETIME";
 	public static final String PLACEHOLDER_CLORDID = "@CLORDID";
 	public static final String PLACEHOLDER_ORDID = "@ORDID";
 	public static final String PLACEHOLDER_SYMBOL = "@SYMBOL";
@@ -41,7 +40,7 @@ public interface AutoPilotConstants {
 	public static final String PLACEHOLDER_OUTPUT = "@OP";
 	public static final String PLACEHOLDER_INPUT = "@IP";
 	public static final String PLACEHOLDER_APVAR = "@APVAR";
-	
+	public static final String PLACEHOLDER_VALID_UNTIL = "@VALIDUNTIL";
 	public static final String PLACEHOLDER_REPEATING_GROUP = "@INJECT";
 	public static final String PLACEHOLDER_ENV = "@ENV";
 
@@ -51,43 +50,32 @@ public interface AutoPilotConstants {
 	
 	public static final String SEPERATOR_ARRAY_START = "[";
 	public static final String SEPERATOR_ARRAY_END = "]";
-	public static final String SEPERATOR_TAG_START = "(";
-	public static final String SEPERATOR_TAG_END = ")";
 	public static final String SEPERATOR_TAGLIST = ",";
 	public static final String SEPERATOR_APVAR = ".";
 	
-	public static final String XMLSEPERATOR_START = "<";
+	public static final String WARN_INPUT_EMPTY = "AutoPilotWarning_TestCaseDesign_InputStepIsEmpty";
+	public static final String WARN_INVALID_PLACEHOLDER = "AutoPilotWarning_TestCaseDesign_InvalidPlaceholder";
+	public static final String WARN_CANNOT_PARSE_APVAR = "AutoPilotWarning_TestCaseDesign_CannotParseAPVariable";
 	
-	public static final String AutoPilotWarning_TestCaseDesign_InputStepIsEmpty = "AutoPilotWarning_TestCaseDesign_InputStepIsEmpty";
-	public static final String AutoPilotWarning_TestCaseDesign_InvalidPlaceholder = "AutoPilotWarning_TestCaseDesign_InvalidPlaceholder";
-	public static final String AutoPilotWarning_TestCaseDesign_CannotParseAPVariable = "AutoPilotWarning_TestCaseDesign_CannotParseAPVariable";
+	public static final String WARN_CANNOT_FIND_TAG = "AutoPilotWarning_TestCaseRuntime_CannoFindSpecifiedTagInReferedMsg";
+
+	public static final String WARN_CANNOT_BE_REFERENCED = "AutoPilotWarning_TestCaseDesign_InputstepCannotBeReferencedYet";
+
+	public static final String ERROR_CANNOT_CREATE_TOPIC = "AutoPilotError_CannotLoadTopicInitiator";	
+
+	public static final String FAIL_USER_TERMINATE = "User terminated testcase";
+	public static final String FAIL_CANNOT_PROCESS_INPUT = "Cannot process input msg";	
+	public static final String FAIL_CANNOT_LOAD_TESTCASE = "Cannot load testcase";	
+	public static final String FAIL_CANNOT_LOAD_CUSTOM_VALIDATION = "ValidationFailed_CannotLoadCustomizedValidationClass";
+	public static final String FAIL_ADMIN_COMMAND = "Admin Command Failed";
 	
-	public static final String AutoPilotWarning_TestCaseRuntime_CannoFindSpecifiedTagInReferedMsg = "AutoPilotWarning_TestCaseRuntime_CannoFindSpecifiedTagInReferedMsg";
-
-	public static final String AutoPilotWarning_TestCaseDesign_PlaceholderNotFound = "AutoPilotWarning_TestCaseDesign_PlaceholderNotFound";
-	public static final String AutoPilotWarning_PlaceholderParsingError = "AutoPilotWarning_PlaceholderParsingError";
-	public static final String AutoPilotWarning_TestCaseDesign_InputstepCannotBeReferencedYet = "AutoPilotWarning_TestCaseDesign_InputstepCannotBeReferencedYet";
-
-	public static final String AutoPilotError_CannotLoadTopicAcceptor = "AutoPilotConfigError_CannotLoadTopicAcceptor";
-	public static final String AutoPilotError_CannotLoadTopicInitiator = "AutoPilotError_CannotLoadTopicInitiator";	
-
-	public static final String ValidationFailed_UserTerminatedTestCase = "User terminated testcase";
-	public static final String ValidationFailed_CannotProcessActualOutputMsg = "Cannot process received output msg";	
-	public static final String ValidationFailed_CannotProcessInputMsg = "Cannot process input msg";	
-	public static final String ValidationFailed_CannotLoadTestCase = "Cannot load testcase";	
-	public static final String ValidationFailed_CannotLoadCustomizedValidationClass = "ValidationFailed_CannotLoadCustomizedValidationClass";
-	public static final String ValidationFailed_CompletnessCheckFailed = "ValidationFailed_CompletnessCheckFailed";
-	public static final String ValidationFailed_AdminCommandFailed = "Admin Command Failed";
-	
-	public static final String Error_CannotProcessControlMessage = "Error_CannotProcessControlMessage";	
+	public static final String ERROR_CANNOT_PROCESS_CONTROL = "Error_CannotProcessControlMessage";	
 
 	public static final String AUTOPILOT_PREFIX = "AP";
-	public static final String USERID_AutoPilotServerMode = "AutoPilotServerMode";
 	
-	public static final int[] NumbericTagList = {14,32,38,151,31,44,6,99,12,211,132,133,134,135,111,110};
-	public static final int[] RoundbaleTagList = {14,32,38,151,31,44,6};
+	public static final String EMPTY_COMBO_STRING = " ";
+
 	
-	public static final String ComboBoxEmptyItem = " ";
+	private AutoPilotConstants(){}
 	
-	public static final String NO_MESSAGE = "NO_MESSAGE";
 }

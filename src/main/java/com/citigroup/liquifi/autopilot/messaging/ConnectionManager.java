@@ -28,7 +28,7 @@ public enum ConnectionManager {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.severe(AutoPilotConstants.AutoPilotError_CannotLoadTopicInitiator);
+			logger.severe(AutoPilotConstants.ERROR_CANNOT_CREATE_TOPIC);
 		}
 	}
 

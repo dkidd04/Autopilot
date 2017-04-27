@@ -238,7 +238,7 @@ public class InputStepPanel extends JPanel implements TableModelListener {
 
 		commonTagListComboBox.setModel(new DefaultComboBoxModel(
 				(String[]) commonOverwriteTagMap.keySet().toArray(new String[commonOverwriteTagMap.keySet().size()])));
-		commonTagListComboBox.addItem(AutoPilotConstants.ComboBoxEmptyItem);
+		commonTagListComboBox.addItem(AutoPilotConstants.EMPTY_COMBO_STRING);
 		commonTagListComboBox.setName("commonTagListComboBox"); // NOI18N
 		commonTagListComboBox.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -376,7 +376,7 @@ public class InputStepPanel extends JPanel implements TableModelListener {
 			inputStep.setComments(commentsTextField.getText());
 
 			String commonTagSelection = (String) commonTagListComboBox.getSelectedItem();
-			if (commonTagSelection.equals(AutoPilotConstants.ComboBoxEmptyItem)) {
+			if (commonTagSelection.equals(AutoPilotConstants.EMPTY_COMBO_STRING)) {
 				inputStep.setCommonTags(null);
 			} else {
 				inputStep.setCommonTags(commonTagSelection);
@@ -514,7 +514,7 @@ public class InputStepPanel extends JPanel implements TableModelListener {
 				}
 			}
 		} else {
-			commonTagListComboBox.setSelectedItem(AutoPilotConstants.ComboBoxEmptyItem);
+			commonTagListComboBox.setSelectedItem(AutoPilotConstants.EMPTY_COMBO_STRING);
 		}
 
 		// Set defaults for new step
@@ -529,7 +529,7 @@ public class InputStepPanel extends JPanel implements TableModelListener {
 				}
 			}
 
-			commonTagListComboBox.setSelectedItem(AutoPilotConstants.ComboBoxEmptyItem);
+			commonTagListComboBox.setSelectedItem(AutoPilotConstants.EMPTY_COMBO_STRING);
 		}
 		resetForm();
 	}
@@ -547,7 +547,7 @@ public class InputStepPanel extends JPanel implements TableModelListener {
 	public void resetCommonTags() {
 		commonTagListComboBox.setModel(new DefaultComboBoxModel(
 				(String[]) commonOverwriteTagMap.keySet().toArray(new String[commonOverwriteTagMap.keySet().size()])));
-		commonTagListComboBox.addItem(AutoPilotConstants.ComboBoxEmptyItem);
+		commonTagListComboBox.addItem(AutoPilotConstants.EMPTY_COMBO_STRING);
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
