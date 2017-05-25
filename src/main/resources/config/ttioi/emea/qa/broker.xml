@@ -90,6 +90,45 @@
                         </property>
                     </bean>
                 </entry>
+                <entry key="TTIOI.IOIN">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${VENDOR.BROKER.URL}"/>
+						<property name="user" value="${VENDOR.BROKER.USER}"/>
+						<property name="password" value="${VENDOR.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key=".-Z" value="NY.IOI.QIOI.IOIN"/>
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TTIOI.INST">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${VENDOR.BROKER.URL}"/>
+						<property name="user" value="${VENDOR.BROKER.USER}"/>
+						<property name="password" value="${VENDOR.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key=".-Z" value="NY.IOI.QIOI.IOIN"/>
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="TTIOI.ITGI">
+					<bean
+						class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
+						<property name="brokerURL" value="${VENDOR.BROKER.URL}"/>
+						<property name="user" value="${VENDOR.BROKER.USER}"/>
+						<property name="password" value="${VENDOR.BROKER.PASSWORD}"/>
+						<property name="setup">
+							<map>
+								<entry key=".-Z" value="NY.IOI.QIOI.ITGI"/>
+							</map>
+						</property>
+					</bean>
+				</entry>
                 <entry key="TTIOI.Ack">
                     <bean
                             class="com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
