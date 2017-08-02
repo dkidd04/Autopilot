@@ -166,7 +166,7 @@
 				</entry>
 				<entry key ="LiqFiToCRIO">
 					<bean class = "com.citigroup.liquifi.autopilot.messaging.AutoPilotBrokerInfo">
-						<property name="brokerURL" value="tcp://tibems068-u1.eur.nsroot.net:7068,tcp://tibems068-u2.eur.nsroot.net:7068"/>
+						<property name="brokerURL" value="tcp://tibems068-d1.eur.nsroot.net:7068,tcp://tibems068-d2.eur.nsroot.net:7068"/>
 						<property name="user" value="pA8SLnfXbH4="/>
 						<property name="password" value="HSpQolKXMKMvWivhLanYkA=="/>
 						<property name="setup">
