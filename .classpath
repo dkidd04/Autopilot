@@ -55,7 +55,6 @@
 	<classpathentry kind="lib" path="lib/commons-lang3-3.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.4.jar"/>
 	<classpathentry kind="lib" path="lib/gentlyweb-utils-1.5.jar"/>
-	<classpathentry kind="lib" path="lib/LiqFiSmtRouter.jar"/>
 	<classpathentry kind="lib" path="lib/org.apache.servicemix.bundles.josql-1.5_1.jar"/>
 	<classpathentry kind="lib" path="lib/sonic_Client.jar"/>
 	<classpathentry kind="lib" path="lib/sonic_Crypto.jar"/>
@@ -90,5 +89,6 @@
 	<classpathentry kind="lib" path="lib/commons-pool-1.5.5.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-all-1.9.6.jar"/>
 	<classpathentry kind="lib" path="lib/mockito-all-1.8.5.jar"/>
+	<classpathentry kind="lib" path="lib/LiqFiSmtRouter.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
