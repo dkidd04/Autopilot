@@ -2,6 +2,8 @@ package com.citigroup.liquifi.autopilot.util;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,7 +16,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.citigroup.get.util.date.DateUtil;
 import com.citigroup.liquifi.autopilot.bootstrap.ApplicationContext;
 import com.citigroup.liquifi.autopilot.controller.JSONFieldManipulator;
 import com.citigroup.liquifi.autopilot.controller.ValidationObject;
@@ -288,7 +289,7 @@ public class PlaceHolders {
 		while (m.find()) {
 			String strPlaceholderpattern = m.group(1);
 			String replacementStr = "";
-			
+
 			if (strPlaceholderpattern.startsWith(AutoPilotConstants.PLACEHOLDER_ORDID)) {
 				/*
 				 * support the sequencial orderID and clientOrderID. e.g.: FIXNEW: 37=AP-123, 11=AP-123#0; FIXMOD.
@@ -640,26 +641,22 @@ public class PlaceHolders {
 		return dateFormat.format(ApplicationContext.getClock().currentTimeMillis() + millisToAdd);
 	}
 
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd:HH:mm:ss.SSS");
 	private String printCurrentTimePlus(int plus) {
-		synchronized(sdf) {
-			return sdf.format(DateUtil.convertToGMTDate(ApplicationContext.getClock().currentTimeMillis() + plus));
-		}
+		//DO NOT USE RANDOM NUMBERS IN REAL CODE, CURRENT CITI CLOCK FOR MICROS DOES NOT WORK ON WINDOWS
+		return printCurrentDay(plus, DateTimeFormatter.ofPattern("yyyyMMdd-HH:mm:ss.SSS"));
 	}
 
-	private SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss.SSS");
 	private String printCurrentTime2Plus(int plus) {
-		synchronized(sdf2) {
-			return sdf2.format(ApplicationContext.getClock().currentTimeMillis() + plus);
-		}
+		return printCurrentDay(plus,DateTimeFormatter.ofPattern("HH:mm:ss.SSS"));
 	}
 
-	private SimpleDateFormat sdf3 = new SimpleDateFormat("yyyyMMdd");
 	private String printCurrentDay() {
-		synchronized(sdf3) {
-			return sdf3.format(ApplicationContext.getClock().currentTimeMillis());
-		}
+		return printCurrentDay(0,DateTimeFormatter.ofPattern("yyyyMMdd"));
 	}
+	private String printCurrentDay(int plus,DateTimeFormatter dtf ) {
+		return ZonedDateTime.now().plusSeconds(plus).format(dtf)+ Math.round(Math.random()*1000);
+	}
+	
 }
 
 interface FunctionType {
