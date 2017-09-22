@@ -38,7 +38,7 @@
     
     <!--  Helper Beans -->
     <bean id = "testcaseHelper" class = "com.citigroup.liquifi.autopilot.helper.TestCaseHelper" singleton ="true"/>
-    <bean id = "xmlFactory" class = "com.citigroup.liquifi.autopilot.message.XStreamXMLFactory" singleton ="true"/>
+    <bean id = "xmlFactory" class = "com.citigroup.liquifi.autopilot.message.AdminXMLFactory" singleton ="true"/>
     <bean id = "fixFactory" class = "com.citigroup.liquifi.autopilot.message.FIXFactory" singleton = "true"/>
     <bean id = "idGenerator" class = "com.citigroup.liquifi.util.UniqueIdGenerator" singleton ="true"/>
     <bean id = "placeHolder" class = "com.citigroup.liquifi.autopilot.util.PlaceHolders" singleton = "true">
