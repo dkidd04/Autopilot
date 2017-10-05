@@ -4,14 +4,14 @@
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.connection.driver_class">com.sybase.jdbc3.jdbc.SybDriver</property>
+        <property name="hibernate.connection.driver_class">com.sybase.jdbc4.jdbc.SybDriver</property>
         <property name="hibernate.connection.password">far4prod</property>
         <property name="hibernate.connection.url">jdbc:sybase:Tds:sd-512d-afce.nam.nsroot.net:4100/C4_AUTOPILOT</property>
         <property name="hibernate.connection.username">farmprod</property>
        	<property name="hibernate.connection.autocommit">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.SybaseDialect</property>
     	<property name="hibernate.connection.ENCRYPT_PASSWORD">true</property>
-    	<property name="hibernate.connection.DJCE_PROVIDER_CLASS">com.certicom.ecc.jcae.Certicom</property>
+    	<property name="hibernate.connection.JCE_PROVIDER_CLASS">com.certicom.ecc.jcae.Certicom</property>
     	
     	<mapping resource = "LFBrokerInfo.hbm.xml"/>
     	<mapping resource = "LFTemplate.hbm.xml"/>
